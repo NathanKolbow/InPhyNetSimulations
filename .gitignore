@@ -1,0 +1,8 @@
+error/
+
+data/est-gt-output/
+data/true-gt-output/
+
+est-gts/condor/logs/
+est-gts/condor/submits/*.tab
+est-gts/simulation-data/
