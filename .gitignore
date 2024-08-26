@@ -2,6 +2,7 @@ error/
 
 data/est-gt-output/
 data/true-gt-output/
+data/D_std0_l1.csv
 
 est-gts/condor/logs/
 est-gts/condor/submits/*.tab
