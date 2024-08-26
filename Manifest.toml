@@ -905,9 +905,11 @@ version = "0.1.3"
 
 [[deps.PhyloNetworks]]
 deps = ["BioSequences", "BioSymbols", "CSV", "Combinatorics", "DataFrames", "DataStructures", "Dates", "Distributed", "Distributions", "FASTX", "Functors", "GLM", "LinearAlgebra", "NLopt", "Printf", "Random", "StaticArrays", "Statistics", "StatsBase", "StatsFuns", "StatsModels"]
-git-tree-sha1 = "66c2a637bd4d4e7064b60c0e5a0e6db2db3116a1"
+git-tree-sha1 = "4403c8bf57b1acb2abf8a711047e432e6a0341c6"
+repo-rev = "master"
+repo-url = "https://github.com/tkchafin/PhyloNetworks.jl"
 uuid = "33ad39ac-ed31-50eb-9b15-43d0656eaa72"
-version = "0.16.4"
+version = "0.16.3"
 
 [[deps.Pidfile]]
 deps = ["FileWatching", "Test"]

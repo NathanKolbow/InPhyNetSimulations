@@ -1,35 +1,41 @@
 using InPhyNet, PhyloNetworks, StatsBase, DataFrames, CSV, Random
 include("robustness-fxns.jl")
 
-# FILE PATH HELPERS
+#####################
+# FILE PATH HELPERS #
+#####################
+
 function getBaseDir()
-    basedir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/simulation-study/"
+    basedir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/"
     if !isdir(basedir)
+        throw(ErrorException("bad link"))
         basedir = "C:\\Users\\Nathan\\repos\\network-merging\\simulation-study\\"
     end
     if !isdir(basedir)
+        throw(ErrorException("bad link"))
         basedir = "/Users/nkolbow/repos/network-merging/simulation-study/"
     end
     return basedir
 end
 
-getDataDir() = joinpath(getBaseDir(), "data")
-getNetworkFilepath(netid::String) = joinpath(getDataDir(), "networks", "$(netid).netfile")
-getNetworkFilepathLevel1(ntaxa::Int64) = joinpath(getDataDir(), "networks-level1", "n$(ntaxa).netfile")
-getOutputFilepath(truenet::HybridNetwork) = joinpath(getDataDir(), "output", "n$((truenet.numTaxa)-1)r$(truenet.numHybrids).csv")
-getOutputFilepathLevel1(truenet::HybridNetwork) = joinpath(getDataDir(), "networks-level1", "n$(truenet.numTaxa-1)-l1.csv")
-get_output_filepath(netid::String) = joinpath(getDataDir(), "output", "$(netid).csv")
-get_estimated_sim_output_filepath(truenet::HybridNetwork) = joinpath(getDataDir(), "est_data_output", "n$((truenet.numTaxa)-1)r$(truenet.numHybrids).csv")
-get_estimated_sim_output_filepath(netid::String) = joinpath(getDataDir(), "est_data_output", "$(netid).csv")
-copy_csv_template(output_path::String) = cp(joinpath(getDataDir(), "output", "fields.csv"), output_path)
-copy_est_csv_template(output_path::String) = cp(joinpath(getDataDir(), "est_data_output", "fields.csv"), output_path)
+get_data_dir() = joinpath(getBaseDir(), "data")
+
+get_network_filepath(ntaxa::Int64) = joinpath(get_data_dir(), "networks", "n$(ntaxa).netfile")
+
+get_output_filepath(truenet::HybridNetwork) = joinpath(get_data_dir(), "networks", "n$(truenet.numTaxa-1).csv")
+
+#####################
+#####################
+#####################
+
+
 
 # DATA LOADING FUNCTIONS
 """
 `netid` is just a number if Level1 is true, i.e. "100"
 """
-function loadPerfectData(netid::String, replicatenum::Int64, maxsize::Int64, dmethod::String; all_have_outgroup::Bool = false, outgroup_removed_after_reroot::Bool = false, verify_constraints::Bool = true, level1::Bool = false)
-    file_path = level1 ? getNetworkFilepathLevel1(parse(Int64, netid)) : getNetworkFilepath(netid)
+function loadPerfectData(ntaxa::Int64, replicatenum::Int64, maxsize::Int64, dmethod::String; all_have_outgroup::Bool = false, outgroup_removed_after_reroot::Bool = false, verify_constraints::Bool = true)
+    file_path = get_network_filepath(ntaxa)
     truenet = readMultiTopology(file_path)[replicatenum]
     avg_bl = get_avg_bl(truenet)
     newick = writeTopology(truenet)

@@ -1,6 +1,6 @@
 @info "Loading packages and helpers"
 using InPhyNet
-include("../helpers/helpers.jl")
+include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
 
 if length(ARGS) < 6
     throw(ErrorException("Usage: julia driver.jl <ntaxa> <replicate> <ils> <ngt> <m> <nsim>"))
@@ -13,7 +13,7 @@ ngt = parse(Int64, ARGS[4])
 m = parse(Int64, ARGS[5])
 nsim = parse(Int64, ARGS[6])
 
-out_file = "/mnt/ws/home/nkolbow/repos/inphynet-simulations/data/output/n$(ntaxa).csv"
+out_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/data/true-gt-output/n$(ntaxa).csv"
 
 ################
 # Saved values #
@@ -44,7 +44,7 @@ truenet = load_true_net_ils_adjusted_level1(ntaxa, rep, ils)
 @info "Entering simulation loop"
 start_time = time()
 display_progress(0, nsim, start_time)
-# ENV["JULIA_DEBUG"] = InPhyNet
+
 for i = 1:nsim
     # We can't actually do multi-threading here! Seeds are SHARED between threads,
     # so we cannot get reproducible results if we multithread this

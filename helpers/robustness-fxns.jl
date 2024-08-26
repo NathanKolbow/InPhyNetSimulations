@@ -48,9 +48,9 @@ function true_gt_simulation(truenet::HybridNetwork, ngt::Int64, m::Int64, seed::
             runtime = @elapsed mnet = InPhyNet.inphynet_pairwise(D, constraints, namelist, supressunsampledwarning = true)
             estimated_pairwise = true
         catch e
-            save_object("/mnt/ws/home/nkolbow/repos/inphynet-simulations/error/D.jld2", D)
-            save_object("/mnt/ws/home/nkolbow/repos/inphynet-simulations/error/constraints.jld2", constraints)
-            save_object("/mnt/ws/home/nkolbow/repos/inphynet-simulations/error/namelist.jld2", namelist)
+            save_object("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/error/D.jld2", D)
+            save_object("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/error/constraints.jld2", constraints)
+            save_object("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/error/namelist.jld2", namelist)
             rethrow(e)
         end
     end
