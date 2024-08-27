@@ -6,4 +6,4 @@ data/D_std0_l1.csv
 
 est-gts/condor/logs/
 est-gts/condor/submits/*.tab
-est-gts/simulation-data/
+est-gts/data/

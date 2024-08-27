@@ -8,8 +8,8 @@ with open("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations
                 for ngt in [100, 1000]:
                     for m in [22]:
                         for subset_idx in range(1, ngt, 1):
-                            snaq_iter_dir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/simulation-data/snaq"
-                            iter_dir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/simulation-data/subsets"
+                            snaq_iter_dir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/snaq"
+                            iter_dir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets"
                             iter_dir = f"{iter_dir}/n{ntaxa}-r{rep}-{ils}-{ngt}gt-m{m}-subset{subset_idx}"
                             
                             if not os.path.isdir(iter_dir):

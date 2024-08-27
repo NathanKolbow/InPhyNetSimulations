@@ -6,9 +6,9 @@ include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/h
 
 
 function sim_true_gts(ntaxa::Int64, rep::Int64, ils::String, ngt::Int64, m::Int64)
-    unsplit_output_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/simulation-data/true-gts/"
+    unsplit_output_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/true-gts/"
     unsplit_output_file *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m).treefile"
-    split_output_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/simulation-data/true-gts/split/"
+    split_output_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/true-gts/split/"
     split_output_file *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m).treefile"
 
     truenet = load_true_net_ils_adjusted(ntaxa, rep, ils)

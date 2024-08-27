@@ -8,8 +8,8 @@ ngt = parse(Int64, ARGS[4])
 m = parse(Int64, ARGS[5])
 
 
-iqtree_path = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/simulation-data/iqtree/"
-consolidated_path = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/simulation-data/est-gts/"
+iqtree_path = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/iqtree/"
+consolidated_path = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/est-gts/"
 consolidated_path *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m).treefile"
 
 trees = Array{HybridNetwork}(undef, ngt)
