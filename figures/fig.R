@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ggplot2)
 
-df <- read.csv("data/output/n100.csv")
+df <- read.csv("true-gts/output/n100.csv")
 
 ggplot(df, aes(x = constraint_error_sum, y = HWCD, color = ils)) +
     geom_smooth(method = "lm", formula = y ~ x, se = F) +

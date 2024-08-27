@@ -5,7 +5,7 @@ include("robustness-fxns.jl")
 # FILE PATH HELPERS #
 #####################
 
-function getBaseDir()
+function get_base_dir()
     basedir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/"
     if !isdir(basedir)
         throw(ErrorException("bad link"))
@@ -17,12 +17,7 @@ function getBaseDir()
     end
     return basedir
 end
-
-get_data_dir() = joinpath(getBaseDir(), "data")
-
-get_network_filepath(ntaxa::Int64) = joinpath(get_data_dir(), "networks", "n$(ntaxa).netfile")
-
-get_output_filepath(truenet::HybridNetwork) = joinpath(get_data_dir(), "networks", "n$(truenet.numTaxa-1).csv")
+get_network_filepath(ntaxa::Int64) = joinpath(get_base_dir(), "networks", "n$(ntaxa).netfile")
 
 #####################
 #####################

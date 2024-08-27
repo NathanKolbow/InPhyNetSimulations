@@ -8,9 +8,18 @@ start_time = time()
 @everywhere subset_idx = $(parse(Int64, ARGS[6]))
 
 
+snaq_prefix = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/snaq/"
+snaq_prefix *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)"
+
+if isfile("$(snaq_prefix).runtime")
+    throw(ErrorException("$(snaq_prefix).runtime already exists, quitting!"))
+    exit()
+end
+
+
 @info "Loading packages and helpers"
 @everywhere begin
-    using Pkg, Distributed
+    using Pkg
     Pkg.activate("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/")
 
     using PhyloNetworks
@@ -20,9 +29,6 @@ end
 pruned_gt_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)/pruned_gts.treefile"
 
 tre0_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)/tre0.treefile"
-
-snaq_prefix = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/snaq/"
-snaq_prefix *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)"
 
 
 # Find the true number of reticulations
