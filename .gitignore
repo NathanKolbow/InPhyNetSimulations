@@ -1,7 +1,8 @@
 error/
 
-true-gts/data/output/
-true-gts/data/D_std0.csv
+true-gts/condor/logs/
+true-gts/condor/submits/*.tab
+true-gts/data/
 
 est-gts/condor/logs/
 est-gts/condor/submits/*.tab
