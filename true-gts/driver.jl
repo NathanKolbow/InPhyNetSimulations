@@ -13,7 +13,7 @@ ngt = parse(Int64, ARGS[4])
 m = parse(Int64, ARGS[5])
 nsim = parse(Int64, ARGS[6])
 
-out_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/data/true-gt-output/n$(ntaxa).csv"
+out_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/data/output/n$(ntaxa).csv"
 
 ################
 # Saved values #

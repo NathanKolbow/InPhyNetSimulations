@@ -489,7 +489,7 @@ version = "0.3.24"
 deps = ["CSV", "Clustering", "Combinatorics", "DataFrames", "DataStructures", "Distributions", "GraphIO", "Graphs", "LinearAlgebra", "PhyloNetworks", "StaticArraysCore", "StatsBase", "Test"]
 git-tree-sha1 = "0b9da5e545979270530c4ad863180aba24724d72"
 repo-rev = "main"
-repo-url = "/mnt/dv/wid/projects4/SolisLemus-network-merging"
+repo-url = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet.jl/"
 uuid = "7d272db0-e1ce-47ab-9b64-d0002ca9962f"
 version = "0.2.2"
 
