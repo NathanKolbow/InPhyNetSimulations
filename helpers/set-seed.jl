@@ -1,14 +1,16 @@
 using Random
 
 
-function set_seed!(ntaxa::Int64, rep::Int64, ils::String, ngt::Int64, m::Int64, sim_idx::Int64)
-    Random.seed!(ntaxa)
-    randi_offset!(rep)
-    randi_offset!(ngt)
-    randi_offset!(m)
-    randi_offset!(Int64(ils[1]))    # low, med, high, veryhigh --> 108, 109, 104, 118 respectively
-    randi_offset!(sim_idx)
+function set_seed!(args...)
+    length(args) > 0 || error("Must supply at least 1 argument.")
+    typeof(args[1]) <: Int || error("First argument must be an integer.")
     
+    Random.seed!(args[1])
+    for (i, arg) in enumerate(args)
+        if i == 1 continue end
+        randi_offset!(arg)
+    end
+
     final_seed = abs(rand(Int64))
     Random.seed!(final_seed)
     return final_seed
@@ -16,6 +18,7 @@ end
 
 # Helper function
 randi_offset!(offset::Int64) = Random.seed!(abs(rand(Int64)) + offset)
+randi_offset!(offset::String) = for ltr in offset Random.seed!(abs(rand(Int64)) + Int64(ltr)) end
 
 
 """
