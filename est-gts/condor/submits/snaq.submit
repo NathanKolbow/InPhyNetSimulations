@@ -9,7 +9,7 @@ arguments = -p7 /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simula
 
 priority = 100
 
-request_cpus = 8
+request_cpus = 12
 request_memory = 128GB
 request_disk = 5GB
 
