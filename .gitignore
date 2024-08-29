@@ -1,7 +1,7 @@
 error/
 
 true-gts/condor/logs/
-true-gts/condor/submits/*.tab
+true-gts/condor/submit/*.tab
 true-gts/data/
 
 est-gts/condor/logs/
