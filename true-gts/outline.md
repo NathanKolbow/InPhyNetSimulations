@@ -20,7 +20,7 @@
 
 - ntaxa:        500[, 1000, 2500]   **(only running 500 right now, queue 1000 & 2500 later)**
 - ils:          low, high           (potentially `med` later)
-- replicates:   1-10                (potentially expand to more replicates later)
+- replicates:   1                   (expand to more replicates later)
 - ngt:          100, 1000           (potentially more/fewer later depending on initial results)
 - m:            10, 20              (potentially more params later)
 
