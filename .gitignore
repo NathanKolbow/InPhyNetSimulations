@@ -7,3 +7,10 @@ true-gts/data/
 est-gts/condor/logs/
 est-gts/condor/submits/*.tab
 est-gts/data/
+
+# Julia folders
+artifacts/
+clones/
+compiled/
+packages/
+registries/
