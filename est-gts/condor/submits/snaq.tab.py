@@ -34,6 +34,8 @@ with open("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations
                                     print(f"a: {f.readlines()}")
                                     continue
                             
-                            tab.write(f"{ntaxa},{rep},{ils},{ngt},{m},{subset_idx}\n")
+                            for run_number in range(10):
+                                run_number += 1
+                                tab.write(f"{ntaxa},{rep},{ils},{ngt},{m},{subset_idx},{run_number}\n")
                             
                             

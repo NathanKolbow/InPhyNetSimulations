@@ -23,11 +23,11 @@ end
 
 # Parameters from `est-gts/sim-outline.md` #
 
-for ntaxa_param in [500, 1000]
+for ntaxa_param in [500]
     for ils_param in ["low", "high"]
-        for rep_param in [2] #[1]
+        for rep_param in [1]
             for ngt_param in [100, 1000]
-                for m_param in [22]
+                for m_param in [10, 20]
 
                     sim_true_gts(ntaxa_param, rep_param, ils_param, ngt_param, m_param)
 

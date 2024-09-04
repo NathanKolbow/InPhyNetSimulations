@@ -1,16 +1,15 @@
 universe = vanilla
 
-log = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/logs/log/snaq_n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)_gtidx$(SUBSETIDX).log
-error = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/logs/error/snaq_n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)_gtidx$(SUBSETIDX).err
-output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/logs/output/snaq_n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)_gtidx$(SUBSETIDX).out
+log = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/logs/log/snaq_n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)_gtidx$(SUBSETIDX)-run$(RUNNUMBER).log
+error = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/logs/error/snaq_n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)_gtidx$(SUBSETIDX)-run$(RUNNUMBER).err
+output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/logs/output/snaq_n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)_gtidx$(SUBSETIDX)-run$(RUNNUMBER).out
 
 executable = /mnt/ws/home/nkolbow/julia-1.9.3/bin/julia
-arguments = -p7 /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/scripts/6_snaq.jl $(NTAXA) $(REP) $(ILS) $(NGT) $(M) $(SUBSETIDX)
+arguments = -t4 /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/scripts/6_snaq.jl $(NTAXA) $(REP) $(ILS) $(NGT) $(M) $(SUBSETIDX) $(RUNNUMBER)
 
-priority = 100
 
-request_cpus = 12
-request_memory = 128GB
-request_disk = 5GB
+request_cpus = 1
+request_memory = 24GB
+request_disk = 20MB
 
-queue NTAXA,REP,ILS,NGT,M,SUBSETIDX from snaq.tab
+queue NTAXA,REP,ILS,NGT,M,SUBSETIDX,RUNNUMBER from snaq.tab

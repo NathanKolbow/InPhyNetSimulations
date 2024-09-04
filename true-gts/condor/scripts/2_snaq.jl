@@ -1,22 +1,20 @@
 start_time = time()
 
-@everywhere ntaxa = $(parse(Int64, ARGS[1]))
-@everywhere rep = $(parse(Int64, ARGS[2]))
-@everywhere ils = $(ARGS[3])
-@everywhere ngt = $(parse(Int64, ARGS[4]))
-@everywhere m = $(parse(Int64, ARGS[5]))
-@everywhere subset_idx = $(parse(Int64, ARGS[6]))
-@everywhere run_number = $(parse(Int64, ARGS[7]))
+ntaxa = parse(Int64, ARGS[1])
+rep = parse(Int64, ARGS[2])
+ils = ARGS[3]
+ngt = parse(Int64, ARGS[4])
+m = parse(Int64, ARGS[5])
+subset_idx = parse(Int64, ARGS[6])
+run_number = parse(Int64, ARGS[7])
 
 
 @info "Loading packages and helpers"
-@everywhere begin
-    using Pkg
-    Pkg.activate("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/")
-    
-    using PhyloNetworks
-    include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
-end
+using Pkg
+Pkg.activate("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/")
+
+using PhyloNetworks
+include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
 
 
 astral_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/true-gts/data/astral/"
@@ -45,6 +43,9 @@ for j = 1:length(gts)
     gts[j] = pruneTruthFromDecomp(gts[j], subset)
 end
 tr0 = pruneTruthFromDecomp(tre0, subset)
+if run_number > 3
+    tre0 = gts[run_number]
+end
 n_retic = pruneTruthFromDecomp(truenet, subset).numHybrids
 
 

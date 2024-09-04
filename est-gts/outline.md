@@ -11,11 +11,11 @@
 
 ## Simulation parameters
 
-- ntaxa:        500, 1000
+- ntaxa:        500         (1000 later)
 - ils:          low, high   (potentially `med` later)
 - replicates:   1           (expand to 10 reps per ntaxa after initial results)
 - ngt:          100, 1000   (potentially more/fewer later depending on results)
-- m:            22
+- m:            10, 20      (maybe 22 or 25 later??)
 
 
 ## Example
