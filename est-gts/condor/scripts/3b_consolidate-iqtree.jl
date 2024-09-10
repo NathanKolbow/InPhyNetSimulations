@@ -19,7 +19,6 @@ function consolidate(ntaxa, rep, ils, ngt, m)
     for j = 1:ngt
         j_treefile = joinpath(iqtree_path, "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)_$(j).treefile")
         if !isfile(j_treefile)
-            @info "NOT IS FILE"
             if j == 1 return end
             printstyled("[IQTREE INCOMPLETE] ", color = :red)
             println("n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)")
@@ -63,7 +62,7 @@ elseif length(ARGS) != 0
     @error "Usage: julia 3b_consolidate-tree.jl [<ntaxa> <rep> <ils> <ngt> <m>]"
     exit()
 else
-    for ntaxa in [500]
+    for ntaxa in [500, 1000]
         for rep in 1:1
             for ils in ["low", "high"]
                 for ngt in [100, 1000]

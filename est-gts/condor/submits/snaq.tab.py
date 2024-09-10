@@ -6,7 +6,7 @@ with open("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations
         for rep in [1]:
             for ils in ["low", "high"]:
                 for ngt in [100, 1000]:
-                    for m in [22]:
+                    for m in [10, 20]:
                         for subset_idx in range(1, ngt, 1):
                             snaq_iter_dir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/snaq"
                             iter_dir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets"
@@ -21,20 +21,20 @@ with open("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations
                             if not os.path.isfile(f"{iter_dir}/tre0.treefile"):
                                 continue
                             
-                            if os.path.isfile(f"{snaq_iter_dir}/n{ntaxa}-r{rep}-{ils}-{ngt}gt-m{m}-subset{subset_idx}.runtime"):
-                                continue
-                            
-                            with open(f"{iter_dir}/pruned_gts.treefile", "r") as f:
-                                if len(f.readlines()) != ngt:
-                                    print(f"a: {f.readlines()}")
-                                    continue
-                            
-                            with open(f"{iter_dir}/tre0.treefile", "r") as f:
-                                if len(f.readlines()) != 1:
-                                    print(f"a: {f.readlines()}")
-                                    continue
-                            
                             for run_number in range(10):
+                                if os.path.isfile(f"{snaq_iter_dir}/n{ntaxa}-r{rep}-{ils}-{ngt}gt-m{m}-subset{subset_idx}-run{run_number}.runtime"):
+                                    continue
+                                
+                                with open(f"{iter_dir}/pruned_gts.treefile", "r") as f:
+                                    if len(f.readlines()) != ngt:
+                                        # print(f"a: {f.readlines()}")
+                                        continue
+                                
+                                with open(f"{iter_dir}/tre0.treefile", "r") as f:
+                                    if len(f.readlines()) != 1:
+                                        # print(f"a: {f.readlines()}")
+                                        continue
+                                
                                 run_number += 1
                                 tab.write(f"{ntaxa},{rep},{ils},{ngt},{m},{subset_idx},{run_number}\n")
                             

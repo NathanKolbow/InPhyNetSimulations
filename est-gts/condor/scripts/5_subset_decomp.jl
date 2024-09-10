@@ -33,3 +33,6 @@ for (i, subset) in enumerate(subsets)
     writeTopology(tre0, joinpath(iter_folder, "tre0.treefile"))
     writeMultiTopology(iter_gts, joinpath(iter_folder, "pruned_gts.treefile"))
 end
+
+printstyled("[COMPLETE] ", color = :green)
+println("n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m), $(length(subsets)) subsets")
