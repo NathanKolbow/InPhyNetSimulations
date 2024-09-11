@@ -7,10 +7,10 @@ include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/h
 
 const DAT_FILE = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/pruned-sims/dat.csv"
 
+ntaxas = [parse(Int64, ARGS[1])]
 
 
-
-ntaxas = [500, 1000]
+# ntaxas = [500, 1000]
 reps = collect(1:10)
 ilss = ["low", "med", "high"]
 min_ms = [5, 7]
