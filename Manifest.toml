@@ -258,8 +258,8 @@ uuid = "34004b35-14d8-5ef3-9330-4cdb6864b03a"
 version = "0.3.24"
 
 [[deps.InPhyNet]]
-deps = ["CSV", "Clustering", "Combinatorics", "DataFrames", "DataStructures", "Distributions", "GraphIO", "Graphs", "LinearAlgebra", "PhyloNetworks", "StaticArraysCore", "StatsBase", "Test"]
-git-tree-sha1 = "0b9da5e545979270530c4ad863180aba24724d72"
+deps = ["CSV", "Clustering", "Combinatorics", "DataFrames", "DataStructures", "Distributions", "GraphIO", "Graphs", "LinearAlgebra", "NamedArrays", "PhyloNetworks", "StaticArraysCore", "StatsBase", "Test"]
+git-tree-sha1 = "359413452d2ebf5792e34d9dc179505032f22073"
 repo-rev = "main"
 repo-url = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet.jl"
 uuid = "7d272db0-e1ce-47ab-9b64-d0002ca9962f"
@@ -403,6 +403,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "3d1eefa627faeabc59ab9edbf00d17f70123ad69"
 uuid = "079eb43e-fd8e-5478-9966-2cf3e3edb778"
 version = "2.8.0+0"
+
+[[deps.NamedArrays]]
+deps = ["Combinatorics", "DataStructures", "DelimitedFiles", "InvertedIndices", "LinearAlgebra", "Random", "Requires", "SparseArrays", "Statistics"]
+git-tree-sha1 = "58e317b3b956b8aaddfd33ff4c3e33199cd8efce"
+uuid = "86f7a689-2022-50b4-a561-43c23ac3c673"
+version = "0.10.3"
 
 [[deps.NearestNeighbors]]
 deps = ["Distances", "StaticArrays"]
