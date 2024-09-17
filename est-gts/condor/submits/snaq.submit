@@ -8,6 +8,8 @@ executable = /mnt/ws/home/nkolbow/julia-1.9.3/bin/julia
 arguments = -t4 /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/scripts/6_snaq.jl $(NTAXA) $(REP) $(ILS) $(NGT) $(M) $(SUBSETIDX) $(RUNNUMBER)
 
 
+priority = (10 - $(RUNNUMBER)) * 10
+
 request_cpus = 1
 request_memory = 24GB
 request_disk = 20MB

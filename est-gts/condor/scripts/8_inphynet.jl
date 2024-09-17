@@ -85,14 +85,35 @@ rootatnode!(mnet, "OUTGROUP")
 rootatnode!(truenet, "OUTGROUP")
 
 major_hwcd = hardwiredClusterDistance(majorTree(mnet), majorTree(truenet), true)
+if major_hwcd != 0
+    println("Calculating major unrooted HWCD:")
+    major_hwcd, _ = hardwiredClusterDistance_unrooted_mine(majorTree(mnet), majorTree(truenet))
+end
+
 hwcd = hardwiredClusterDistance(mnet, truenet, true)
+if hwcd != 0
+    println("Calculating unrooted HWCD:")
+    hwcd, unrooted_hwcd_roots = hardwiredClusterDistance_unrooted_mine(mnet, truenet)
+
+    rootatnode!(mnet, unrooted_hwcd_roots[1])
+    rootatnode!(truenet, unrooted_hwcd_roots[2])
+end
+
 nretic_true = truenet.numHybrids
 nretic_est = mnet.numHybrids
+
+println("Calculating min retic subset HWCD:")
+min_hwcd, min_hwcd_truenet = find_minimum_retic_subset_hwcd(truenet, mnet, verbose=true)
 
 snaq_runtime_sum = sum(runtimes)
 snaq_runtime_serial = maximum(runtimes)
 
+pruned_constraints = pruneTruthFromDecomp(truenet, [tipLabels(c) for c in constraints])
+sum_constraint_hwcd = sum(hardwiredClusterDistance(pruned_constraints[i], constraints[i], false) for i = 1:length(constraints))
+
+@show sum_constraint_hwcd
 @show hwcd
+@show min_hwcd
 @show major_hwcd
 @show nretic_true
 @show nretic_est

@@ -82,20 +82,28 @@ sequence data (typically). This fxn finds the subset of reticulations in `true_n
 that `true_net` has only as many retics as `est_net` and the HWCD is minimized between
 the two networks.
 """
-function find_minimum_retic_subset_hwcd(true_net::HybridNetwork, est_net::HybridNetwork)
+function find_minimum_retic_subset_hwcd(true_net::HybridNetwork, est_net::HybridNetwork; verbose::Bool=false)
     # Make sure the nets are properly rooted
     try_outgroup_root(true_net)
     try_outgroup_root(est_net)
 
     # If they have the same number of retics, or `est_net` somehow has more retics
     # than `true_net`, return their HWCD
-    if est_net.numHybrids >= true_net.numHybrids return hardwiredClusterDistance(true_net, est_net, true) end
+    if est_net.numHybrids >= true_net.numHybrids
+        @warn "est_net has >= retics as true_net, maybe you put the arguments in the wrong order?"
+        return hardwiredClusterDistance(true_net, est_net, true)
+    end
 
     # Find the subset!
     true_hyb_names = [h.name for h in true_net.hybrid]
     hyb_combinations = combinations(true_hyb_names, true_net.numHybrids - est_net.numHybrids)
     hwcds = Array{Float64}(undef, length(hyb_combinations))
+    min_hwcd = Inf
+    min_net = nothing
+    n_combos = length(hyb_combinations)
+
     Threads.@threads for (i, hyb_subset_names) in collect(enumerate(hyb_combinations))
+        if i == 1 && verbose print("\rBeginning.") end
         # 1. Copy the true net
         true_net_copy = readTopology(writeTopology(true_net))
         
@@ -116,8 +124,14 @@ function find_minimum_retic_subset_hwcd(true_net::HybridNetwork, est_net::Hybrid
         catch
         end
         hwcds[i] = hardwiredClusterDistance(true_net_copy, est_net, true)
+        if hwcds[i] < min_hwcd
+            min_hwcd = hwcds[i]
+            min_net = true_net_copy
+        end
+        if verbose print("\r$(i)/$(n_combos): $(hwcds[i]), min = $(min_hwcd)             ") end
     end
-    return minimum(hwcds)
+    if verbose println("") end
+    return minimum(hwcds), min_net
 end
 
 
@@ -127,6 +141,80 @@ function try_outgroup_root(net::HybridNetwork)
     catch
     end
 end
+
+function hardwiredClusterDistance_unrooted_mine(net1::HybridNetwork, net2::HybridNetwork)
+    return hardwiredClusterDistance_unrooted_mine!(deepcopy(net1), deepcopy(net2))
+end
+function hardwiredClusterDistance_unrooted_mine!(net1::HybridNetwork, net2::HybridNetwork)
+    #= fixit: inefficient function, because r1 * r2 "M" matrices of
+      hardwiredClusters() are calculated, where ri = # root positions in neti.
+      Rewrite to calculate only r1 + r2 M's.
+    =#
+    removedegree2nodes!(net1) # because re-rooting would remove them in an
+    removedegree2nodes!(net2) # unpredictable order
+    # find all permissible positions for the root
+    net1roots = [n.number for n in net1.node if !n.leaf]
+    #= disallow the root at a leaf: adding a degree-2 node adds a cluster
+       that could be artificially matched to a cluster from a degree-3 node
+       sister to a hybrid edge, when a the leaf edge is the donor. =#
+    for i in length(net1roots):-1:1 # reverse order, to delete some of them
+        try
+            rootatnode!(net1, net1roots[i])
+            # tricky: rootatnode adds a degree-2 node if i is a leaf,
+            #         and delete former root node if it's of degree 2.
+        catch e
+            isa(e, PhyloNetworks.RootMismatch) || rethrow(e)
+            deleteat!(net1roots, i)
+        end
+    end
+    net2roots = [n.number for n in net2.node if !n.leaf]
+    for i in length(net2roots):-1:1
+        try
+            rootatnode!(net2, net2roots[i])
+        catch e
+            isa(e, PhyloNetworks.RootMismatch) || rethrow(e)
+            deleteat!(net2roots, i)
+        end
+    end
+
+    bestdissimilarity = typemax(Int)
+    bestns = missing
+    n_combos = length(net1roots)*length(net2roots)
+    ac = AtomicCounter(0)
+
+    println("Iterating over $(n_combos) combinations")
+    for i = 1:length(net1roots)
+        n1 = net1roots[i]
+        rootatnode!(net1, n1)
+        vals = Array{Int64}(undef, length(net2roots))
+
+        Threads.@threads for j = 1:length(net2roots)
+            n2 = net2roots[j]
+            rootatnode!(net2, n2)
+
+            idx = (i-1)*length(net2roots) + j
+            vals[j] = hardwiredClusterDistance(net1, net2, true) # rooted = true now
+            if vals[j] == 0 return (0, (n1, n2)) end
+            if vals[j] < bestdissimilarity
+                bestdissimilarity = vals[j]
+            end
+
+            @atomic :sequentially_consistent ac.iterspassed += 1
+            if Threads.threadid() == 1 print("\r$(ac.iterspassed)/$(n_combos): $(vals[j]), best = $(bestdissimilarity)                              ") end
+        end
+
+        iter_best = minimum(vals)
+        if iter_best <= bestdissimilarity
+            bestdissimilarity = iter_best
+            bestns = (net1roots[i], net2roots[findmin(vals)[2]])
+        end
+    end
+    # @info "best root nodes: $bestns"
+    # warning: original roots (and edge directions) NOT restored
+    return bestdissimilarity, bestns
+end
+
+
 
 
 

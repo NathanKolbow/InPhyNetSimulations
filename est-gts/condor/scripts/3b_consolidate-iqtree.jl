@@ -18,7 +18,7 @@ function consolidate(ntaxa, rep, ils, ngt, m)
     trees = Array{HybridNetwork}(undef, ngt)
     for j = 1:ngt
         j_treefile = joinpath(iqtree_path, "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)_$(j).treefile")
-        if !isfile(j_treefile)
+        if !isfile(j_treefile) || length(readlines(j_treefile)) == 0
             printstyled("[IQTREE INCOMPLETE] ", color = :red)
             println("n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)")
             return

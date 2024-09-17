@@ -14,6 +14,7 @@ include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/h
 
 function run_snaq(ntaxa, rep, ils, ngt, m, subset_idx, run_number)
 
+    start_time = time()
     print_prefix = "n$(ntaxa)#$(rep), $(ils) w/ $(ngt)gt, m=$(m) subset $(subset_idx), $(run_number)/10"
 
     snaq_prefix = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/snaq/"
