@@ -193,7 +193,12 @@ function hardwiredClusterDistance_unrooted_mine!(net1::HybridNetwork, net2::Hybr
             rootatnode!(net2, n2)
 
             idx = (i-1)*length(net2roots) + j
-            vals[j] = hardwiredClusterDistance(net1, net2, true) # rooted = true now
+            try
+                vals[j] = hardwiredClusterDistance(net1, net2, true) # rooted = true now
+            catch
+                # Something `hardwiredClusterDistance` errors out...
+                vals[j] = typemax(Int)
+            end
             if vals[j] == 0 return (0, (n1, n2)) end
             if vals[j] < bestdissimilarity
                 bestdissimilarity = vals[j]
