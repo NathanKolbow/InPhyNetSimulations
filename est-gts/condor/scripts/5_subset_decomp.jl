@@ -28,9 +28,15 @@ subsets = sateIdecomp(astral_tree, m)
 
 for (i, subset) in enumerate(subsets)
     @info "$(i)/$(length(subsets))"
+    iter_folder = "$(subset_folder)-subset$(i)/"
+
+    if isdir(iter_folder) && isfile(joinpath(iter_folder, "pruned_gts.treefile")) && length(readlines(joinpath(iter_folder, "pruned_gts.treefile"))) == length(est_gts)
+        printstyled("\t] ALREADY COMPLETED\n", color=:red)
+        continue
+    end
+
     tre0 = pruneTruthFromDecomp(astral_tree, subset)
     iter_gts = [pruneTruthFromDecomp(gt, subset) for gt in est_gts]
-    iter_folder = "$(subset_folder)-subset$(i)/"
     
     if !isdir(iter_folder) mkdir(iter_folder) end
     writeTopology(tre0, joinpath(iter_folder, "tre0.treefile"))

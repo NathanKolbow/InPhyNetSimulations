@@ -9,7 +9,7 @@ function consolidate(ntaxa, rep, ils, ngt, m)
     global consolidated_path
 
     out_path = joinpath(consolidated_path, "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m).treefile")
-    if isfile(out_path)
+    if isfile(out_path) && length(readlines(out_path)) > 0
         printstyled("[ALREADY EXISTS] ", color = :green)
         println("n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)")
         return
