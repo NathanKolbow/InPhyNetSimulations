@@ -19,7 +19,6 @@ function consolidate(ntaxa, rep, ils, ngt, m)
     for j = 1:ngt
         j_treefile = joinpath(iqtree_path, "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)_$(j).treefile")
         if !isfile(j_treefile)
-            if j == 1 return end
             printstyled("[IQTREE INCOMPLETE] ", color = :red)
             println("n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)")
             return

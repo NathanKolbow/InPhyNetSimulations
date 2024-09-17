@@ -19,17 +19,20 @@ est_gt_file *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m).treefile"
 subset_folder = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/"
 subset_folder *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)"
 
+@info "Reading trees"
 astral_tree = readTopology(astral_file)
 est_gts = readMultiTopology(est_gt_file)
 
+@info "Decomposing"
 subsets = sateIdecomp(astral_tree, m)
 
 for (i, subset) in enumerate(subsets)
+    @info "$(i)/$(length(subsets))"
     tre0 = pruneTruthFromDecomp(astral_tree, subset)
     iter_gts = [pruneTruthFromDecomp(gt, subset) for gt in est_gts]
     iter_folder = "$(subset_folder)-subset$(i)/"
     
-    mkdir(iter_folder)
+    if !isdir(iter_folder) mkdir(iter_folder) end
     writeTopology(tre0, joinpath(iter_folder, "tre0.treefile"))
     writeMultiTopology(iter_gts, joinpath(iter_folder, "pruned_gts.treefile"))
 end
