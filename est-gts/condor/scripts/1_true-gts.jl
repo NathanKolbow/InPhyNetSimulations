@@ -1,5 +1,4 @@
-using Pkg
-Pkg.activate("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/")
+ENV["LD_LIBRARY_PATH"] = "/mnt/dv/wid/projects1/WID-Software/rocky8/x86_64/R-4.4.0/bin/"
 
 include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
 
@@ -23,18 +22,27 @@ end
 
 # Parameters from `est-gts/sim-outline.md` #
 
-for ntaxa_param in [500, 1000]
-    for ils_param in ["low", "high"]
-        for rep_param in [1]
-            for ngt_param in [100, 1000]
-                for m_param in [10, 20]
+ntaxa = parse(Int64, ARGS[1])
+rep = parse(Int64, ARGS[2])
+ils = ARGS[3]
+ngt = parse(Int64, ARGS[4])
+m = parse(Int64, ARGS[5])
 
-                    sim_true_gts(ntaxa_param, rep_param, ils_param, ngt_param, m_param)
+sim_true_gts(ntaxa, rep, ils, ngt, m)
 
-                end
-            end
-        end
-    end
-end
+
+# for ntaxa_param in [500, 1000]
+#     for ils_param in ["low", "high"]
+#         for rep_param in 1:5
+#             for ngt_param in [100, 1000]
+#                 for m_param in [10, 20]
+
+#                     sim_true_gts(ntaxa_param, rep_param, ils_param, ngt_param, m_param)
+
+#                 end
+#             end
+#         end
+#     end
+# end
 
 

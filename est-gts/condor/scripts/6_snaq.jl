@@ -13,22 +13,18 @@ snaq_prefix = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulat
 snaq_prefix *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)-run$(run_number)"
 
 if isfile("$(snaq_prefix).runtime")
-    throw(ErrorException("$(snaq_prefix).runtime already exists, quitting!"))
-    exit()
+    @info "$(snaq_prefix).runtime already exists, quitting!"
+    exit(0)
 end
 
 
 @info "Loading packages and helpers"
-using Pkg
-Pkg.activate("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/")
-
-using PhyloNetworks
 include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
 
 
-pruned_gt_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)/pruned_gts.treefile"
+pruned_gt_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)/pruned_gts$(subset_idx).tre"
 
-tre0_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)/tre0.treefile"
+tre0_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)/ASTRAL$(subset_idx).tre"
 
 
 # Find the true number of reticulations
@@ -38,7 +34,7 @@ truenet = load_true_net_ils_adjusted(ntaxa, rep, ils)
 est_gts = readMultiTopology(pruned_gt_file)
 
 leaf_names = [leaf.name for leaf in est_gts[1].leaf]
-n_retic = pruneTruthFromDecomp(truenet, leaf_names).numHybrids
+n_retic = simple_prune(truenet, leaf_names).numHybrids
 
 @info "Counting quartets"
 q, t = countquartetsintrees(est_gts)

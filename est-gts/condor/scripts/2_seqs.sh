@@ -7,6 +7,12 @@ ngt=$4
 m=$5
 
 seqgen="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/software/seq-gen"
+consolidated_path="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/est-gts/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}.treefile"
+
+if [ -f "${consolidated_path}" ]; then
+    echo "Consolidated IQTree files already exist for this - skipping."
+    exit 0
+fi
 
 
 for i in $(seq 1 ${ngt})

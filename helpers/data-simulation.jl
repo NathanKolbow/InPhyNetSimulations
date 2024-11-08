@@ -1,6 +1,6 @@
 # Helper functions for simulating real data
 # Uses software in directory `network-merging/software/`
-using PhyloCoalSimulations, StaticArraysCore, StaticArrays
+using PhyloNetworks, PhyloCoalSimulations, StaticArraysCore, StaticArrays
 
 function simulate_sequence_data(gts::Vector{HybridNetwork}, output_file_prefix::String, estgt_file::String="", data_dir::String="")
     seq_file_paths = ["$(output_file_prefix)_$(i)" for i=1:length(gts)]

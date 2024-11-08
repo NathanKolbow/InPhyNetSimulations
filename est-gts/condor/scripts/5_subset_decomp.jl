@@ -1,5 +1,3 @@
-using Pkg
-Pkg.activate("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/")
 include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
 
 
@@ -41,6 +39,13 @@ for (i, subset) in enumerate(subsets)
     if !isdir(iter_folder) mkdir(iter_folder) end
     writeTopology(tre0, joinpath(iter_folder, "tre0.treefile"))
     writeMultiTopology(iter_gts, joinpath(iter_folder, "pruned_gts.treefile"))
+end
+open("$(subset_folder).nsubsets", "w+") do f
+    for j = 1:length(subsets)
+        for run_idx = 1:10
+            write(f, "$(j),$(run_idx)\n")
+        end
+    end
 end
 
 printstyled("[COMPLETE] ", color = :green)

@@ -1,5 +1,8 @@
 error/
 
+empirical-study/all_okp_data/
+empirical-study/condor_logs/
+
 true-gts/condor/logs/
 true-gts/condor/submit/*.tab
 true-gts/data/

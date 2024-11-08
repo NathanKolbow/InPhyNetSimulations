@@ -1,3 +1,4 @@
+include("precompile-setup.jl")
 include("set-seed.jl")
 include("file-locking.jl")
 include("pipelines.jl")

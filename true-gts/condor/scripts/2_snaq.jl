@@ -10,10 +10,6 @@ run_number = parse(Int64, ARGS[7])
 
 
 @info "Loading packages and helpers"
-using Pkg
-Pkg.activate("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/")
-
-using PhyloNetworks
 include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
 
 

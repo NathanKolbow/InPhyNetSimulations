@@ -3,6 +3,25 @@ using PhyloNetworks, PhyloCoalSimulations
 
 
 
+function simple_prune(truenet::HybridNetwork, subsets::AbstractVector{<:AbstractVector{<:AbstractString}})
+    nets = Array{HybridNetwork}(undef, length(subsets))
+    for (i, set) in enumerate(subsets)
+        tempnet = deepcopy(truenet)
+        namelist = [leaf.name for leaf in tempnet.leaf]
+        for name in namelist
+            if !(name in set)
+                PhyloNetworks.deleteleaf!(tempnet, name)
+            end
+        end
+        nets[i] = readTopology(writeTopology(tempnet))
+    end
+    return nets
+end
+function simple_prune(truenet::HybridNetwork, subset::AbstractVector{<:AbstractString})
+    return simple_prune(truenet, Vector{Vector{String}}([subset]))[1]
+end
+
+
 function run_pruned_simulation(truenet::HybridNetwork, min_m::Int64, max_m::Int64, ngt::Int64, d_metric::Function, repititions::Int64; verbose::Bool = false)
 
     rootatnode!(truenet, "OUTGROUP")
@@ -118,18 +137,12 @@ metric_string(fxn::Function) = ifelse(fxn == calculateAGID, "D", "C")
 
 function common_root!(nets::Vector{HybridNetwork}, preferred_root::String)
 
-    try
-        rootatnode!(mnet, preferred_root)
-        rootatnode!(truenet, preferred_root)
-        rootatnode!(tre0, preferred_root)
-    catch
-    end
-
-    for t_name in tipLabels(nets[1])
+    all_labels = reduce(intersect, tipLabels(n) for n in nets)
+    for t_name in [preferred_root; all_labels]
         try
-            rootatnode!(mnet, t_name)
-            rootatnode!(truenet, t_name)
-            rootatnode!(tre0, t_name)
+            for net in nets
+                rootatnode!(net, t_name)
+            end
             return
         catch
         end

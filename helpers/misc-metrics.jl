@@ -1,3 +1,6 @@
+include("rf.jl")
+
+
 """
 Calculates the `nretics_inside`, `nretics_outside`, and `nretics_duplicated` metrics.
 """
@@ -77,6 +80,56 @@ end
 
 
 """
+Same as `find_minimum_retic_subset_hwcd` but does a greedy search instead of an exhaustive search.
+"""
+function find_minimum_retic_subset_hwcd_greedy(true_net::HybridNetwork, est_net::HybridNetwork; verbose::Bool=false, swaponerror::Bool=false, rooted::Bool=false)
+    # Make sure the nets are properly rooted
+    try_outgroup_root(true_net)
+    try_outgroup_root(est_net)
+
+    if est_net.numHybrids == true_net.numHybrids
+        return hardwiredClusterDistance(est_net, true_net, rooted), deepcopy(true_net)
+    elseif est_net.numHybrids == 0
+        return hardwiredClusterDistance(est_net, majorTree(true_net), rooted), deepcopy(true_net)
+    elseif est_net.numHybrids > true_net.numHybrids
+        if swaponerror
+            temp = est_net
+            est_net = true_net
+            true_net = temp
+        else
+            throw(ArgumentError("est_net has > retics as true_net, maybe you put the arguments in the wrong order?"))
+        end
+    end
+
+    true_copy = readTopology(writeTopology(true_net))
+    while true_copy.numHybrids > est_net.numHybrids
+        hyb_edge_numbers = [getparentedgeminor(h).number for h in true_copy.hybrid]
+        hyb_edge_hwcd = zeros(length(hyb_edge_numbers))
+        
+        # Gather HWCDs after removing each retic
+        for (j, hyb_number) in enumerate(hyb_edge_numbers)
+            iter_copy = deepcopy(true_copy)
+            PhyloNetworks.deletehybridedge!(iter_copy, iter_copy.edge[findfirst(e -> e.number == hyb_number, iter_copy.edge)])
+            try_outgroup_root(iter_copy)
+            hyb_edge_hwcd[j] = hardwiredClusterDistance(iter_copy, est_net, rooted)
+        end
+
+        # Get rid of the retic w/ worst HWCD
+        worst_edge = findmin(hyb_edge_hwcd)
+        if verbose @info "HWCDs: $(hyb_edge_hwcd)" end
+        if verbose @info "Removing $(worst_edge[2])" end
+        PhyloNetworks.deletehybridedge!(true_copy, true_copy.edge[findfirst(e -> e.number == hyb_edge_numbers[worst_edge[2]], true_copy.edge)])
+    end
+
+    try_outgroup_root(true_copy)
+    try_outgroup_root(est_net)
+    return hardwiredClusterDistance(true_copy, est_net, rooted), true_copy
+
+end
+# n1, n2 = readMultiTopology("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/networks/n500.netfile")[1:2]
+# find_minimum_retic_subset_hwcd_greedy(n2, n1, verbose=true)
+
+"""
 `true_net` is a baseline network, `est_net` is a network estimated all the way up from
 sequence data (typically). This fxn finds the subset of reticulations in `true_net` such
 that `true_net` has only as many retics as `est_net` and the HWCD is minimized between
@@ -89,9 +142,10 @@ function find_minimum_retic_subset_hwcd(true_net::HybridNetwork, est_net::Hybrid
 
     # If they have the same number of retics, or `est_net` somehow has more retics
     # than `true_net`, return their HWCD
-    if est_net.numHybrids >= true_net.numHybrids
-        @warn "est_net has >= retics as true_net, maybe you put the arguments in the wrong order?"
-        return hardwiredClusterDistance(true_net, est_net, true)
+    if est_net.numHybrids == true_net.numHybrids
+        return hardwiredClusterDistance(est_net, true_net, true)
+    elseif est_net.numHybrids > true_net.numHybrids
+        throw(ArgumentError("est_net has > retics as true_net, maybe you put the arguments in the wrong order?"))
     end
 
     # Find the subset!
@@ -101,9 +155,11 @@ function find_minimum_retic_subset_hwcd(true_net::HybridNetwork, est_net::Hybrid
     min_hwcd = Inf
     min_net = nothing
     n_combos = length(hyb_combinations)
+    ac = AtomicCounter(0)
 
     Threads.@threads for (i, hyb_subset_names) in collect(enumerate(hyb_combinations))
         if i == 1 && verbose print("\rBeginning.") end
+        @atomic :sequentially_consistent ac.iterspassed += 1
         # 1. Copy the true net
         true_net_copy = readTopology(writeTopology(true_net))
         
@@ -128,7 +184,7 @@ function find_minimum_retic_subset_hwcd(true_net::HybridNetwork, est_net::Hybrid
             min_hwcd = hwcds[i]
             min_net = true_net_copy
         end
-        if verbose print("\r$(i)/$(n_combos): $(hwcds[i]), min = $(min_hwcd)             ") end
+        if verbose && Threads.threadid() == 1 print("\r$(ac.iterspassed)/$(n_combos): $(hwcds[i]), min = $(min_hwcd)             ") end
     end
     if verbose println("") end
     return minimum(hwcds), min_net
@@ -182,21 +238,26 @@ function hardwiredClusterDistance_unrooted_mine!(net1::HybridNetwork, net2::Hybr
     n_combos = length(net1roots)*length(net2roots)
     ac = AtomicCounter(0)
 
+
     println("Iterating over $(n_combos) combinations")
-    for i = 1:length(net1roots)
+    Threads.@threads for i = 1:length(net1roots)
+        # Add this thread to the dict map if it isn't there already
+        iter_net1 = deepcopy(net1)
         n1 = net1roots[i]
-        rootatnode!(net1, n1)
+        rootatnode!(iter_net1, n1)
         vals = Array{Int64}(undef, length(net2roots))
 
-        Threads.@threads for j = 1:length(net2roots)
+        for j = 1:length(net2roots)
+            @atomic :sequentially_consistent ac.iterspassed += 1
             n2 = net2roots[j]
             rootatnode!(net2, n2)
 
             idx = (i-1)*length(net2roots) + j
             try
-                vals[j] = hardwiredClusterDistance(net1, net2, true) # rooted = true now
-            catch
+                vals[j] = RobinsonFoulds(iter_net1, net2) # rooted = true now
+            catch e
                 # Something `hardwiredClusterDistance` errors out...
+                rethrow(e)
                 vals[j] = typemax(Int)
             end
             if vals[j] == 0 return (0, (n1, n2)) end
@@ -204,8 +265,7 @@ function hardwiredClusterDistance_unrooted_mine!(net1::HybridNetwork, net2::Hybr
                 bestdissimilarity = vals[j]
             end
 
-            @atomic :sequentially_consistent ac.iterspassed += 1
-            if Threads.threadid() == 1 print("\r$(ac.iterspassed)/$(n_combos): $(vals[j]), best = $(bestdissimilarity)                              ") end
+            print("\r$(ac.iterspassed)/$(n_combos): $(vals[j]), best = $(bestdissimilarity)                              ")
         end
 
         iter_best = minimum(vals)

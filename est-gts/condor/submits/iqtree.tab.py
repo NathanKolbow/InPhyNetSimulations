@@ -3,7 +3,7 @@ import os.path
 consolidated_path = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/est-gts"
 with open("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/submits/iqtree.tab", "w") as file:
     for ntaxa in [500, 1000]:
-        for rep in [1]:
+        for rep in [1, 2, 3, 4, 5]:
             for ils in ["low", "high"]:
                 for ngt in [100, 1000]:
                     for m in [10, 20]:
