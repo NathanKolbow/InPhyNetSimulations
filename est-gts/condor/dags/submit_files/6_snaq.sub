@@ -1,0 +1,33 @@
+#######################################################
+# THE FOLLOWING VARS ARE PASSED IN FROM THE DAG FILE:
+#   - NTAXA
+#   - REP
+#   - ILS
+#   - NGT
+#   - M
+#   - BASE_ARGS (previous args put together)
+#   - JULIA_EXEC
+#   - SCRIPT_DIR
+#######################################################
+
+universe = vanilla
+
+error = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/err/6.err
+output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/out/6.out
+
+
+plusone = $(Process) + 1
+RUNNUMBER = $INT(plusone,%d)
+
+TAB_FILE = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)/snaqtab
+
+executable = $(JULIA_EXEC)
+arguments = -t4 $(SCRIPT_DIR)/6_snaq.jl $(BASE_ARGS) $(SUBSETIDX) $(RUNNUMBER)
+
+periodic_release = True
+
+request_cpus = 4
+request_memory = 42GB
+
+
+queue SUBSETIDX,RUNNUMBER from $(TAB_FILE)

@@ -1,0 +1,27 @@
+#######################################################
+# THE FOLLOWING VARS ARE PASSED IN FROM THE DAG FILE:
+#   - NTAXA
+#   - REP
+#   - ILS
+#   - NGT
+#   - M
+#   - BASE_ARGS (previous args put together)
+#   - JULIA_EXEC
+#   - SCRIPT_DIR
+#######################################################
+
+universe = vanilla
+
+error = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/err/3b.err
+output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/out/3b.out
+
+
+executable = $(JULIA_EXEC)
+arguments = $(SCRIPT_DIR)/3b_consolidate-iqtree.jl $(BASE_ARGS)
+
+periodic_release = True
+
+request_cpus = 1
+request_memory = 512MB
+request_disk = 32MB
+queue
