@@ -1,3 +1,5 @@
+include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/precompile-setup.jl")
+
 # Parse ARGS
 ntaxa = parse(Int64, ARGS[1])
 rep = parse(Int64, ARGS[2])
@@ -22,7 +24,7 @@ using PhyloNetworks, InPhyNet, DataFrames, StatsBase
 @info "Loading data and inferring NJ tree"
 est_gts = readMultiTopology(est_gt_file)
 D, namelist = calculateAGID(est_gts)
-nj_tre = nj(DataFrame(D, namelist))
+nj_tre = inphynet(D, Vector{HybridNetwork}([]), namelist)   # PhyloNetworks.nj is SUPER slow for large `n`
 rootatnode!(nj_tre, "OUTGROUP")
 cladewiseorder!(nj_tre)
 ordered_leaves = [node.name for node in nj_tre.node[nj_tre.cladewiseorder_nodeIndex] if node.leaf && node.name != "OUTGROUP"]
@@ -32,6 +34,10 @@ ordered_leaves = [node.name for node in nj_tre.node[nj_tre.cladewiseorder_nodeIn
 clade_subsets = Vector{Vector{String}}([])
 ancestral_subsets = Vector{Vector{String}}([])
 n_subsets = length(ordered_leaves) ÷ k
+
+# Quit if data already exists
+if isfile(joinpath(subset_dir, "nsubsets")) && length(readlines(joinpath(subset_dir, "nsubsets"))) >= 2*n_subsets exit() end
+
 for j = 1:n_subsets
     push!(clade_subsets, ordered_leaves[((j-1)*k+1):(j*k)])
     clade_subsets[j] = sample(clade_subsets[j], k, replace=false)

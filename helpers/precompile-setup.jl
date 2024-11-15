@@ -1,4 +1,5 @@
 using Sockets
+using Pkg
 
 empty!(DEPOT_PATH)
 host = gethostname()
@@ -14,8 +15,10 @@ end
 
 push!(DEPOT_PATH, depot_dir)
 ENV["JULIA_PKG_CACHE"] = depot_dir
+# ENV["JULIA_DEPOT_PATH"] = depot_dir
 
 using Pkg
 Pkg.activate(depot_dir)
 Pkg.instantiate()
+Pkg.update()
 Pkg.precompile()

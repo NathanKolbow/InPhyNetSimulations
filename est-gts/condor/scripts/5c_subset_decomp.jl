@@ -1,3 +1,5 @@
+include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/precompile-setup.jl")
+
 # Parse ARGS
 ntaxa = parse(Int64, ARGS[1])
 rep = parse(Int64, ARGS[2])
@@ -200,7 +202,19 @@ end
 # Compute SATe-I decomposition w/o blob taxa
 @info "Computing SATe-I decomposition w/o blob taxa"
 tre0_trimmed = pruneTruthFromDecomp(tre0, trimmed_taxa_set)
-final_subsets = sateIdecomp(tre0_trimmed, 9, m)
+final_subsets = []
+min_size = 9
+while final_subsets == []
+    global min_size, final_subsets
+    try
+        final_subsets = sateIdecomp(tre0_trimmed, min_size, m)
+    catch
+        min_size -= 1
+        if min_size < 0
+            error("Could not find valid subset decomposition")
+        end
+    end
+end
 
 # Impute blob taxa back into SATe-I decomposition
 @info "Imputing blob taxa into SATe-I decomposition"

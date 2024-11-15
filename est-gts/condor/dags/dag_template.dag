@@ -18,7 +18,9 @@ VARS ALL_NODES SCRIPT_DIR="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPh
     NGT="[[NGT]]" \
     M="[[M]]" \
     BASE_ARGS="$(NTAXA) $(REP) $(ILS) $(NGT) $(M)" \
-    R_EXEC="/mnt/dv/wid/projects1/WID-Software/rocky8/x86_64/R-4.4.0/bin/Rscript"
+    R_EXEC="/mnt/dv/wid/projects1/WID-Software/rocky8/x86_64/R-4.4.0/bin/Rscript" \
+    JULIA_WRAPPER="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/wrappers/julia_wrapper.sh" \
+    JULIA_THREADED_WRAPPER="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/wrappers/julia_wrapper_threaded.sh"
 
 
 PARENT true_gts CHILD seqs_and_iqtree

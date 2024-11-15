@@ -15,7 +15,7 @@ iqtree="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/es
 iqtree_prefix="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/iqtree/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}_${gt_idx}"
 
 # Input file path
-true_gt_file="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/true-gts/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}.treefile_${gt_idx}"
+true_gt_file="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/true-gts/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}/${gt_idx}.treefile"
 
 # Output file paths
 seqgen_output_file="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/sequences/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}.nexus_${gt_idx}"

@@ -8,6 +8,8 @@
 #   - BASE_ARGS (previous args put together)
 #   - JULIA_EXEC
 #   - SCRIPT_DIR
+#   - JULIA_WRAPPER
+#   - JULIA_THREADED_WRAPPER
 #######################################################
 
 universe = vanilla
@@ -17,8 +19,9 @@ output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/e
 
 N_SUBSET_FILE = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M).nsubsets
 
-executable = $(JULIA_EXEC)
-arguments = -t8 $(SCRIPT_DIR)/8_inphynet.jl $(BASE_ARGS)
+NTHREADS = 8
+executable = $(JULIA_THREADED_WRAPPER)
+arguments = $(JULIA_EXEC) $(SCRIPT_DIR)/8_inphynet.jl $(NTHREADS) $(BASE_ARGS)
 
 periodic_release = True
 

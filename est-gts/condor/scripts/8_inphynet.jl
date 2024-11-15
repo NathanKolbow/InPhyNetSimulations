@@ -35,34 +35,8 @@ n_subsets = Int64(length(readlines(subset_file)) / 10)
 
 
 # 2. Load data, all the while making sure everything actually exists
-@info "Loading inferred networks and nplls..."
-snaq_newicks = Array{String}(undef, n_subsets, 10)
-runtimes = Array{Float64}(undef, n_subsets, 10)
-nlls = Array{Float64}(undef, n_subsets, 10)
-
-runtimes .= 0.0
-nlls .= Inf
-
-for subset_idx = 1:n_subsets
-    for run_number = 1:10
-        snaq_prefix = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/snaq/"
-        snaq_prefix *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)-run$(run_number)"
-
-        # isfile("$(snaq_prefix).runtime") || error("File $(snaq_prefix).runtime does not exist!")
-        isfile("$(snaq_prefix).runtime") || continue
-        
-        out_info = split(readlines("$(snaq_prefix).out")[1], " -Ploglik = ")
-        snaq_newicks[subset_idx, run_number] = out_info[1]
-        nlls[subset_idx, run_number] = parse(Float64, out_info[2])
-        runtimes[subset_idx, run_number] = parse(Float64, readlines("$(snaq_prefix).runtime")[1])
-    end
-end
-
-# 3. Select constraints with lowest negative log likelihood
-@info "Selecting constraints that minimize npll..."
-constraints = Vector{HybridNetwork}([
-    readTopology(newick) for newick in snaq_newicks[findmin(nlls, dims=2)[2]]
-][:,1])
+constraints = get_constraints(ntaxa, rep, ils, ngt ,m)
+runtimes = get_runtimes(ntaxa, rep, ils, ngt, m)
 
 cs_taxa = [c.numTaxa for c in constraints]
 @info "Subset sizes: min=$(minimum(cs_taxa)), max=$(maximum(cs_taxa)), median=$(median(cs_taxa)), mean=$(mean(cs_taxa))"
@@ -182,12 +156,6 @@ perfect_infer_unrooted_hwcd = hardwiredClusterDistance(truenet, perfect_infer_mn
 end_time = time()
 
 println("Took $(round(end_time - start_time, digits=2)) seconds to calculate metrics.")
-
-
-if any(nlls .== Inf)
-    error("Some entries not finished, quitting before data is saved.")
-    exit()
-end
 
 
 CSV.write("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/out.csv", 

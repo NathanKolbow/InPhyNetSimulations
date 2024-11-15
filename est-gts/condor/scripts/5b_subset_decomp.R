@@ -11,13 +11,20 @@ which_subset <- args[6]         # string: "clade" or "ancestral"
 index <- as.integer(args[7])
 ncores <- as.integer(args[8])   # 5 or 6 seems to be where efficiency stops improving, so call it an even 4
 
+subset_dir <- "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/"
+subset_dir <- paste0(subset_dir, "n", ntaxa, "-r", rep, "-", ils, "-", ngt, "gt-m", m, "/")
+
+# Quit if data exists
+if(file.exists(paste0(subset_dir, which_subset, index, ".tob"))) {
+    cat("Already exists -- quitting.\n")
+    quit()
+}
+
 # Load packages
 library(ape)
 library(MSCquartets)
 
 # Read respective gene trees
-subset_dir <- "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/"
-subset_dir <- paste0(subset_dir, "n", ntaxa, "-r", rep, "-", ils, "-", ngt, "gt-m", m, "/")
 gts <- read.tree(file=paste0(subset_dir, which_subset, index, ".tre"))
 qtab <- quartetTableParallel(gts, numCores=ncores)
 

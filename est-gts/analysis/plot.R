@@ -11,7 +11,8 @@ df <- read.csv("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simula
         ntaxa_label = factor(
             paste0(ntaxa, " taxa"),
             levels = paste0(sort(unique(ntaxa)), " taxa")
-        )
+        ),
+        error_diff = unrooted_hwcd - input_error
     )
 nrow(df)
 
@@ -29,6 +30,18 @@ df %>%
                 linetype = "dashed", alpha = 0.5) +
     labs(x = "Input Error", y = "Output Error") +
     scale_color_manual("ILS", values = c('#1b9e77', '#d95f02', '#7570b3'))
+
+
+df %>%
+    ggplot(aes(y = error_diff, fill = ntaxa_label, x = ntaxa_label)) +
+    geom_abline(slope = 0, intercept = 0, linetype="dashed", alpha = 0.5) +
+    geom_boxplot() +
+    facet_grid(ils_label ~ ngt_label) +
+    labs(
+        x = "", y = "Output Error - Input Error"
+    )
+
+
 
 
 

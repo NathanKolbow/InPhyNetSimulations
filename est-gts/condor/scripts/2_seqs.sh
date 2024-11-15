@@ -18,7 +18,7 @@ fi
 for i in $(seq 1 ${ngt})
 do
     echo -ne "\r${i}/${ngt}"
-    true_gt_file="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/true-gts/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}.treefile_${i}"
+    true_gt_file="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/true-gts/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}/${i}.treefile"
 
     seq_file="/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/sequences/n${ntaxa}-r${rep}-${ils}-${ngt}gt-m${m}.nexus_${i}"
 

@@ -8,6 +8,8 @@
 #   - BASE_ARGS (previous args put together)
 #   - JULIA_EXEC
 #   - SCRIPT_DIR
+#   - JULIA_WRAPPER
+#   - JULIA_THREADED_WRAPPER
 #######################################################
 
 universe = vanilla
@@ -21,8 +23,10 @@ RUNNUMBER = $INT(plusone,%d)
 
 TAB_FILE = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/n$(NTAXA)-r$(REP)-$(ILS)-$(NGT)gt-m$(M)/snaqtab
 
-executable = $(JULIA_EXEC)
-arguments = -t4 $(SCRIPT_DIR)/6_snaq.jl $(BASE_ARGS) $(SUBSETIDX) $(RUNNUMBER)
+
+NTHREADS = 4
+executable = $(JULIA_THREADED_WRAPPER)
+arguments = $(JULIA_EXEC) $(SCRIPT_DIR)/6_snaq.jl $(NTHREADS) $(BASE_ARGS) $(SUBSETIDX) $(RUNNUMBER)
 
 periodic_release = True
 

@@ -10,7 +10,11 @@ run_number = parse(Int64, ARGS[7])
 
 
 snaq_prefix = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/snaq/"
-snaq_prefix *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)-subset$(subset_idx)-run$(run_number)"
+snaq_prefix *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)/"
+if !isdir(snaq_prefix) mkdir(snaq_prefix) end
+snaq_prefix *= "subset$(subset_idx)/"
+if !isdir(snaq_prefix) mkdir(snaq_prefix) end
+snaq_prefix *= "run$(run_number)"
 
 if isfile("$(snaq_prefix).runtime")
     @info "$(snaq_prefix).runtime already exists, quitting!"

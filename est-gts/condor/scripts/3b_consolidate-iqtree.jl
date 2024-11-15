@@ -1,3 +1,4 @@
+include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/precompile-setup.jl")
 using PhyloNetworks
 
 

@@ -17,3 +17,4 @@ clones/
 compiled/
 packages/
 registries/
+.Rproj.user

@@ -8,6 +8,8 @@
 #   - BASE_ARGS (previous args put together)
 #   - JULIA_EXEC
 #   - SCRIPT_DIR
+#   - JULIA_WRAPPER
+#   - JULIA_THREADED_WRAPPER
 #######################################################
 
 universe = vanilla
@@ -15,8 +17,9 @@ universe = vanilla
 error = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/err/5a.err
 output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/out/5a.out
 
-executable = $(JULIA_EXEC)
-arguments = $(SCRIPT_DIR)/5a_subset_decomp.jl $(BASE_ARGS)
+
+executable = $(JULIA_WRAPPER)
+arguments = $(JULIA_EXEC) $(SCRIPT_DIR)/5a_subset_decomp.jl $(BASE_ARGS)
 
 periodic_release = True
 
