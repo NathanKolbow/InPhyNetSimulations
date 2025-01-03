@@ -13,7 +13,7 @@ library(reshape2)
 library(scales)
 theme_set(theme_bw())
 
-base_dir <- "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/"
+base_dir <- "../"
 estgt_dir <- paste0(base_dir, "est-gts/")
 df <- read.csv(paste0(estgt_dir, "analysis/approx_normalized_errors.csv")) %>%
 #df <- read.csv(paste0(estgt_dir, "data/out.csv")) %>%
