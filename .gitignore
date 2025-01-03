@@ -1,8 +1,10 @@
 *.jar
+*.RData
 Manifest.toml
 
 error/
 
+empirical-study/all_okp_data/
 empirical-study/all_okp_data/
 empirical-study/condor_logs/
 
