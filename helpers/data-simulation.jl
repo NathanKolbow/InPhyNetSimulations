@@ -187,7 +187,9 @@ end
 # tree estimation error is in a reasonable range
 #
 # Returns: path to sequence file
-function find_seqgen_s(gts::Vector{HybridNetwork}; data_dir::AbstractString="/mnt/dv/wid/projects4/SolisLemus-network-merging/simulation-study/simulation-scripts/data/temp_data/")
+function find_seqgen_s(gts::Vector{HybridNetwork}; data_dir::AbstractString="")
+    error("DEPRECATED")
+
     min_s = 0.00001
     max_s = 0.1
     curr_s = 0.003
@@ -241,7 +243,8 @@ end
 
 
 function run_seqgen(seqgen_s::AbstractFloat, temp_gtfile::AbstractString, temp_seqfile::AbstractString; seq_length::Int64=1000)
-    software_path = "/mnt/dv/wid/projects4/SolisLemus-network-merging/software/"
+    error("DEPRECATED")
+    #software_path = "/m nt/dv/wid/pro jects4/SolisLemus-network- merging/software/"
     if Sys.isapple()
         run(pipeline(`$software_path/seq-gen-macos -s$seqgen_s -n1 -f0.3,0.2,0.2,0.3 -mHKY -op -l$(seq_length) $temp_gtfile`, stdout=temp_seqfile, stderr=devnull))
     elseif Sys.islinux()
@@ -253,8 +256,8 @@ end
 
 
 # `truegt_file` contains several topologies, and we need to run seq-gen for each of them
-function run_seqgen_multi(seqgen_s::AbstractFloat, gts::Vector{HybridNetwork}, output_file_prefix::AbstractString; seq_length::Int64=1000, data_dir::AbstractString="/mnt/dv/wid/projects4/SolisLemus-network-merging/simulation-study/simulation-scripts/data/temp_data/")
-
+function run_seqgen_multi(seqgen_s::AbstractFloat, gts::Vector{HybridNetwork}, output_file_prefix::AbstractString; seq_length::Int64=1000, data_dir::AbstractString="")
+    error("DEPRECATED")
     ntrees = length(gts)
     seq_file_paths = Array{String}(undef, ntrees)
     Threads.@threads for i=1:ntrees
@@ -274,7 +277,8 @@ end
 
 
 function run_iqtree(temp_seqfile::AbstractString)
-    software_path = "/mnt/dv/wid/projects4/SolisLemus-network-merging/software/"
+    error("DEPRECATED")
+    software_path = ""
     if Sys.isapple()
         try
             run(pipeline(`$software_path/iqtree-1.6.12-macos -quiet -s $temp_seqfile`, stdout=devnull, stderr=devnull))
@@ -298,7 +302,7 @@ end
 
 
 function calc_gtee(true_newick::AbstractString, est_newick::AbstractString)
-    scriptpath = "/mnt/dv/wid/projects4/SolisLemus-network-merging/software/compare_two_trees.py"
+    scriptpath = joinpath(@__DIR__, "..", "software", "compare_two_trees.py")
     gtee_nrf = Pipe()
     run(pipeline(`python3 $scriptpath -t1 $true_newick -t2 $est_newick`, stdout=gtee_nrf))
     close(gtee_nrf.in)

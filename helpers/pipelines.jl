@@ -6,16 +6,7 @@ include("robustness-fxns.jl")
 #####################
 
 function get_base_dir()
-    basedir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/"
-    if !isdir(basedir)
-        throw(ErrorException("bad link"))
-        basedir = "C:\\Users\\Nathan\\repos\\network-merging\\simulation-study\\"
-    end
-    if !isdir(basedir)
-        throw(ErrorException("bad link"))
-        basedir = "/Users/nkolbow/repos/network-merging/simulation-study/"
-    end
-    return basedir
+    return joinpath(@__DIR__, "..")
 end
 get_network_filepath(ntaxa::Int64) = joinpath(get_base_dir(), "networks", "n$(ntaxa).netfile")
 

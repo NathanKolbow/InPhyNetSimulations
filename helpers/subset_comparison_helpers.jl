@@ -1,6 +1,6 @@
 using PhyloNetworks, InPhyNet, DataStructures, RCall
 
-truegt_folder = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/true-gts"
+truegt_folder = joinpath(@__DIR__, "..", "est-gts/data/true-gts")
 """
 To accomodate different styles of subset decomp, `subset_fxn` must
 take the following arguments, in order:

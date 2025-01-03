@@ -48,9 +48,9 @@ function true_gt_simulation(truenet::HybridNetwork, ngt::Int64, m::Int64, seed::
             runtime = @elapsed mnet = InPhyNet.inphynet_pairwise(D, constraints, namelist, supressunsampledwarning = true)
             estimated_pairwise = true
         catch e
-            save_object("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/error/D.jld2", D)
-            save_object("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/error/constraints.jld2", constraints)
-            save_object("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/error/namelist.jld2", namelist)
+            save_object(joinpath(@__DIR__, "..", "error/D.jld2"), D)
+            save_object(joinpath(@__DIR__, "..", "error/constraints.jld2"), constraints)
+            save_object(joinpath(@__DIR__, "..", "error/namelist.jld2"), namelist)
             rethrow(e)
         end
     end
@@ -492,7 +492,7 @@ function runRobustSim(truenet::HybridNetwork, constraints::Vector{HybridNetwork}
     catch e
         trace = catch_backtrace()
         if !(typeof(e) <: InPhyNet.SolutionDNEError) && !(typeof(e) <: InPhyNet.ConstraintError)
-            error_folder = "/mnt/dv/wid/projects4/SolisLemus-network-merging/error_logs/"
+            error_folder = joinpath(@__DIR__, "..", "error_logs")
 
             # Only write the error if the error_logs folder has less than 10 records (10 .csv's + 10 .log's = 20)
             if length(readdir(error_folder)) < 20
