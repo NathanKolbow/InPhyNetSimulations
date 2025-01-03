@@ -216,6 +216,10 @@ while final_subsets == []
     end
 end
 
+if ntaxa == 30 && m > 30
+    final_subsets = [tipLabels(tre0)]
+end
+
 # Impute blob taxa back into SATe-I decomposition
 @info "Imputing blob taxa into SATe-I decomposition"
 for s in blob_subsets

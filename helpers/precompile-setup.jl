@@ -19,6 +19,6 @@ ENV["JULIA_PKG_CACHE"] = depot_dir
 
 using Pkg
 Pkg.activate(depot_dir)
-Pkg.instantiate()
-Pkg.update()
-Pkg.precompile()
+#Pkg.instantiate()
+#Pkg.update("InPhyNet")
+#Pkg.precompile()

@@ -14,7 +14,7 @@ n_complete = 0
 n_total = 0
 for ntaxa in [50, 100, 200]#, 500, 1000]
     a_df = filter(r -> r.ntaxa == ntaxa, df)
-    for rep in 1:10
+    for rep in 1:25
         b_df = filter(r -> r.rep == rep, a_df)
         for ils in ["low", "high"]
             c_df = filter(r -> r.ils == ils, b_df)
@@ -37,19 +37,19 @@ for ntaxa in [50, 100, 200]#, 500, 1000]
                     if pct_snaq == 1.0
                         printstyled("$(ntaxa) $(rep) $(ils) $(ngt) $(m) [X]\n", color = :green)
                         n_complete += 1
-                        all_string = "$(all_string)julia 8_inphynet.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m);"
-                        all_dag_string = "$(all_dag_string)julia create_submit_dag.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m) true;"
+                        all_string = "$(all_string)j 8_inphynet.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m);"
+                        all_dag_string = "$(all_dag_string)j create_submit_dag.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m) true;"
                         continue
                     end
 
                     # Partially complete
                     if pct_snaq > 0
-                        some_string = "$(some_string)julia create_submit_dag.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m) true;"
+                        some_string = "$(some_string)j create_submit_dag.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m) true;"
                         printstyled("$(ntaxa) $(rep) $(ils) $(ngt) $(m) ($(round(100*pct_snaq, digits=2))%)\n", color = :cyan)
                         continue
                     end
 
-                    none_string = "$(none_string)julia create_submit_dag.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m) true;"
+                    none_string = "$(none_string)j create_submit_dag.jl $(ntaxa) $(rep) $(ils) $(ngt) $(m) true;"
                     printstyled("$(ntaxa) $(rep) $(ils) $(ngt) $(m) (0%)\n", color = :red)
                 end
             end

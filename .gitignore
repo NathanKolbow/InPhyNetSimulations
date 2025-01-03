@@ -1,3 +1,5 @@
+*.jar
+
 error/
 
 empirical-study/all_okp_data/

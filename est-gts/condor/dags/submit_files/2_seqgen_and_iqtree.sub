@@ -12,8 +12,8 @@
 
 universe = vanilla
 
-error = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/err/2_$(Process).err
-output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/out/2_$(Process).out
+error = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/err/2.err
+output = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/condor/dags/n$(NTAXA)/$(ILS)-$(NGT)gt-$(M)m/rep$(REP)/out/2.out
 
 
 plusone = $(Process) + 1

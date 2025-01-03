@@ -1,4 +1,17 @@
 include("rf.jl")
+include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/perfect-sims/mu-representation/mu-representation.jl")
+
+
+
+function calc_avg_gtee(ts_true::Vector{HybridNetwork}, ts_est::Vector{HybridNetwork})
+    return mean(
+        gtee(true_gt, est_gt) for (true_gt, est_gt) in zip(ts_true, ts_est)
+    )
+end
+
+function gtee(t_true::HybridNetwork, t_est::HybridNetwork)
+    return (edge_μ_dist(t_true, t_est) / 2) / (2 * t_true.numTaxa - 6)
+end
 
 
 """
@@ -80,17 +93,60 @@ end
 
 
 """
+Calculated hardwiredClusterDistance without multiplicity.
+"""
+function hwcd_no_multiplicity(truenet::HybridNetwork, mnet::HybridNetwork)
+    try_outgroup_root(truenet)
+    try_outgroup_root(mnet)
+
+    true_clusters = [r[2:(truenet.numTaxa+1)] for r in eachrow(hardwiredClusters(truenet, tipLabels(truenet)))]
+    m_clusters = [r[2:(truenet.numTaxa+1)] for r in eachrow(hardwiredClusters(mnet, tipLabels(truenet)))]
+
+    return 2 * length(symdiff(
+        true_clusters,
+        m_clusters
+    ))
+end
+
+
+"""
+Counts the number of minor reticulate edges in `net` that have the same
+hardwired clusters. Returns the total number of retics minus this number.
+"""
+function count_redundant_retics(net::HybridNetwork)
+    retic_clusters = [hardwiredCluster(getparentedgeminor(H), tipLabels(net)) for H in net.hybrid]
+    return net.numHybrids - length(unique(retic_clusters))
+end
+
+
+"""
+Given that `truenet` and `mnet` have the same major tree and the same number
+of reticulations, returns how many reticulations are misplaced in `mnet`.
+"""
+function n_retics_off(truenet::HybridNetwork, mnet::HybridNetwork)
+    true_retic_edges = [hardwiredCluster(E, tipLabels(truenet)) for E in truenet.edge if getchild(E).hybrid]
+    m_retic_edges = [hardwiredCluster(E, tipLabels(truenet)) for E in mnet.edge if getchild(E).hybrid]
+
+    return length(symdiff(
+        true_retic_edges,
+        m_retic_edges
+    ))
+end
+
+
+"""
 Same as `find_minimum_retic_subset_hwcd` but does a greedy search instead of an exhaustive search.
 """
-function find_minimum_retic_subset_hwcd_greedy(true_net::HybridNetwork, est_net::HybridNetwork; verbose::Bool=false, swaponerror::Bool=false, rooted::Bool=false)
+function find_minimum_retic_subset_hwcd_greedy(true_net::HybridNetwork, est_net::HybridNetwork; verbose::Bool=false, swaponerror::Bool=false)
+    
     # Make sure the nets are properly rooted
     try_outgroup_root(true_net)
     try_outgroup_root(est_net)
 
     if est_net.numHybrids == true_net.numHybrids
-        return hardwiredClusterDistance(est_net, true_net, rooted), deepcopy(true_net)
+        return hwcd_no_multiplicity(est_net, true_net), deepcopy(true_net)
     elseif est_net.numHybrids == 0
-        return hardwiredClusterDistance(est_net, majorTree(true_net), rooted), deepcopy(true_net)
+        return hwcd_no_multiplicity(est_net, majorTree(true_net)), deepcopy(true_net)
     elseif est_net.numHybrids > true_net.numHybrids
         if swaponerror
             temp = est_net
@@ -111,7 +167,7 @@ function find_minimum_retic_subset_hwcd_greedy(true_net::HybridNetwork, est_net:
             iter_copy = deepcopy(true_copy)
             PhyloNetworks.deletehybridedge!(iter_copy, iter_copy.edge[findfirst(e -> e.number == hyb_number, iter_copy.edge)])
             try_outgroup_root(iter_copy)
-            hyb_edge_hwcd[j] = hardwiredClusterDistance(iter_copy, est_net, rooted)
+            hyb_edge_hwcd[j] = hwcd_no_multiplicity(iter_copy, est_net)
         end
 
         # Get rid of the retic w/ worst HWCD
@@ -123,7 +179,7 @@ function find_minimum_retic_subset_hwcd_greedy(true_net::HybridNetwork, est_net:
 
     try_outgroup_root(true_copy)
     try_outgroup_root(est_net)
-    return hardwiredClusterDistance(true_copy, est_net, rooted), true_copy
+    return hwcd_no_multiplicity(est_net, true_copy), true_copy
 
 end
 # n1, n2 = readMultiTopology("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/networks/n500.netfile")[1:2]

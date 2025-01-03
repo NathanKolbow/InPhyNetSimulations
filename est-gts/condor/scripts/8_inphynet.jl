@@ -6,7 +6,6 @@ ils = ARGS[3]
 ngt = parse(Int64, ARGS[4])
 m = parse(Int64, ARGS[5])
 
-
 # 0. Check if the DF already has an entry for these params
 include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/precompile-setup.jl")
 using CSV, DataFrames
@@ -19,6 +18,7 @@ if nrow(filter(r -> r.ntaxa == ntaxa .&& r.rep == rep .&& r.ils == ils .&& r.ngt
 end
 
 
+@info (ntaxa, rep, ils, ngt, m)
 @info "Loading helpers..."
 include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
 
@@ -68,6 +68,9 @@ inphynet_runtime = @elapsed mnet = inphynet(D, constraints, namelist)
 # 6. Check and save results
 common_root!([mnet, truenet], "OUTGROUP")
 
+@info tipLabels(majorTree(mnet))
+@info tipLabels(majorTree(truenet))
+
 major_hwcd = hardwiredClusterDistance(majorTree(mnet), majorTree(truenet), true)
 unrooted_major_hwcd = major_hwcd
 if major_hwcd != 0
@@ -79,7 +82,6 @@ if major_hwcd != 0
         @error "SKIPPING UNROOTED CALCS FOR NOW"
     end
 end
-
 
 
 rooted_hwcd = hardwiredClusterDistance(mnet, truenet, true)
@@ -99,23 +101,23 @@ end
 @info "Retics: true=$(truenet.numHybrids), est=$(mnet.numHybrids), sum_constraints=$(sum([c.numHybrids for c in constraints]))"
 @info "Calculating rooted min retic subset HWCD:"
 
-rooted_min_greedy_hwcd, min_rooted_truenet = find_minimum_retic_subset_hwcd_greedy(truenet, mnet, verbose=true, swaponerror=true, rooted=true)
+rooted_min_greedy_hwcd, min_rooted_truenet = find_minimum_retic_subset_hwcd_greedy(truenet, mnet, verbose=true, swaponerror=true)
 unrooted_min_greedy_hwcd = rooted_min_greedy_hwcd
 
 if rooted_min_greedy_hwcd != 0
     global unrooted_min_greedy_hwcd
     @info "Calculating unrooted min retic subset HWCD:"
     if ntaxa <= 200
-        unrooted_min_greedy_hwcd, _ = find_minimum_retic_subset_hwcd_greedy(truenet, mnet, verbose=true, swaponerror=true, rooted=false)
+        unrooted_min_greedy_hwcd, _ = find_minimum_retic_subset_hwcd_greedy(truenet, mnet, verbose=true, swaponerror=true)
     else
         @error "SKIPPING UNROOTED CALCS FOR NOW"
     end
 end
 
 @info "Calculating minimum displayed tree NJ difference"
-nj_tre = nj(DataFrame(D, namelist))
-min_unrooted_nj_hwcd = Inf
-for disp_tre in displayedTrees(truenet, 0.0)
+nj_tre = inphynet(D, Vector{HybridNetwork}([]), namelist)
+min_unrooted_nj_hwcd = unrooted_major_hwcd
+for disp_tre in displayedTrees(truenet, (ntaxa > 200 ? 0.48 : 0.0))
     global min_unrooted_nj_hwcd
     disp_hwcd = hardwiredClusterDistance(disp_tre, nj_tre, false)
     if disp_hwcd < min_unrooted_nj_hwcd
@@ -123,6 +125,7 @@ for disp_tre in displayedTrees(truenet, 0.0)
         if min_unrooted_nj_hwcd == 0 break end
     end
 end
+@info "Done w/ displayed trees"
 
 
 
@@ -132,20 +135,28 @@ nretic_est = mnet.numHybrids
 snaq_runtime_sum = sum(runtimes)
 snaq_runtime_serial = maximum(runtimes)
 
+@info "Pruning constraints"
 pruned_cs = simple_prune(truenet, [tipLabels(c) for c in constraints])
+@info "Calculating constraint HWCDs"
 sum_constraint_hwcd = sum([hardwiredClusterDistance(pruned_cs[i], constraints[i], false) for i = 1:length(constraints)])
 sum_constraint_retics = sum(c.numHybrids for c in constraints)
 
-perfect_infer_mnet = inphynet(D, pruned_cs, namelist)
-perfect_infer_unrooted_hwcd = hardwiredClusterDistance(truenet, perfect_infer_mnet, false)
+perfect_infer_unrooted_hwcd = -100
+try
+    global perfect_infer_unrooted_hwcd
+    if ntaxa <= 200
+        perfect_infer_mnet = inphynet(D, pruned_cs, namelist)
+        perfect_infer_unrooted_hwcd = hardwiredClusterDistance(truenet, perfect_infer_mnet, false)
+    end
+catch e
+end
+
 
 @show sum_constraint_hwcd
 @show min_unrooted_nj_hwcd
 @show min_unrooted_nj_hwcd + sum_constraint_hwcd
 
-@show rooted_hwcd
 @show unrooted_hwcd
-@show rooted_min_greedy_hwcd
 @show unrooted_min_greedy_hwcd
 
 @show nretic_true
@@ -175,7 +186,8 @@ CSV.write("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations
         sum_constraint_hwcd=sum_constraint_hwcd,
         sum_constraint_retics=sum_constraint_retics,
         perfect_constraint_hwcd=perfect_infer_unrooted_hwcd,
-        min_unrooted_nj_hwcd=min_unrooted_nj_hwcd
+        min_unrooted_nj_hwcd=min_unrooted_nj_hwcd,
+        n_constraints=length(constraints)
     ), append=true
 )
 

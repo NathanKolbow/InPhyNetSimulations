@@ -6,7 +6,7 @@ rep = parse(Int64, ARGS[2])
 ils = ARGS[3]
 ngt = parse(Int64, ARGS[4])
 m = parse(Int64, ARGS[5])
-k = 50
+k = min(ntaxa, 50)
 if length(ARGS) > 5 k = parse(Int64, ARGS[6]) end
 
 # File paths
@@ -33,13 +33,15 @@ ordered_leaves = [node.name for node in nj_tre.node[nj_tre.cladewiseorder_nodeIn
 @info "Performing broad decomp"
 clade_subsets = Vector{Vector{String}}([])
 ancestral_subsets = Vector{Vector{String}}([])
-n_subsets = length(ordered_leaves) ÷ k
+n_subsets = max(1, length(ordered_leaves) ÷ k)
 
 # Quit if data already exists
 if isfile(joinpath(subset_dir, "nsubsets")) && length(readlines(joinpath(subset_dir, "nsubsets"))) >= 2*n_subsets exit() end
 
 for j = 1:n_subsets
-    push!(clade_subsets, ordered_leaves[((j-1)*k+1):(j*k)])
+    start_idx = (j-1)*k+1
+    end_idx = j*k
+    push!(clade_subsets, ordered_leaves[start_idx:end_idx])
     clade_subsets[j] = sample(clade_subsets[j], k, replace=false)
 end
 
