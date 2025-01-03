@@ -1,10 +1,10 @@
-include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/helpers.jl")
-include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/perfect-sims/mu-representation/mu-representation.jl")
+include(joinpath(@__DIR__, "..", "..", "helpers/helpers.jl"))
+include(joinpath(@__DIR__, "..", "..", "perfect-sims/mu-representation/mu-representation.jl"))
 
 
-complete_df = CSV.read("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/analysis/approx_normalized_errors.csv", DataFrame)
+complete_df = CSV.read(joinpath(@__DIR__, "..", "est-gts/analysis/approx_normalized_errors.csv"), DataFrame)
 
-df = CSV.read("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/out.csv", DataFrame)
+df = CSV.read(joinpath(@__DIR__, "..", "est-gts/data/out.csv"), DataFrame)
 errors = zeros(nrow(df)) .- 1
 min_errors = zeros(nrow(df)) .- 1
 input_errors = zeros(nrow(df)) .- 1
