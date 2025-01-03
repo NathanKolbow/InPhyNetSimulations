@@ -2,9 +2,9 @@ include(joinpath(@__DIR__, "..", "..", "helpers/helpers.jl"))
 include(joinpath(@__DIR__, "..", "..", "perfect-sims/mu-representation/mu-representation.jl"))
 
 
-complete_df = CSV.read(joinpath(@__DIR__, "..", "est-gts/analysis/approx_normalized_errors.csv"), DataFrame)
+complete_df = CSV.read(joinpath(@__DIR__, "approx_normalized_errors.csv"), DataFrame)
 
-df = CSV.read(joinpath(@__DIR__, "..", "est-gts/data/out.csv"), DataFrame)
+df = CSV.read(joinpath(@__DIR__, "..", "data", "out.csv"), DataFrame)
 errors = zeros(nrow(df)) .- 1
 min_errors = zeros(nrow(df)) .- 1
 input_errors = zeros(nrow(df)) .- 1
