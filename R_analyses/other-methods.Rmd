@@ -36,27 +36,33 @@ nrow(split_df)
 
 ```{r}
 p <- split_df %>%
-  ggplot(aes(x = method, y = normalized_hwcd, fill = ils)) +
+  mutate(
+    method = factor(method,
+                    levels = c("neighbor", "consensus", "mnet10", "mnet20"),
+                    labels = c("Consensus Network", "NeighborNet", "InPhyNet m=10", "InPhyNet m=20"))
+  ) %>%
+  ggplot(aes(x = ils, y = normalized_hwcd, fill = factor(method))) +
   geom_boxplot() +
   scale_x_discrete(
     "",
-    limits = c("neighbor", "consensus", "mnet10", "mnet20"),
-    labels = str_wrap(c("NeighborNet", "Consensus Network", "InPhyNet m=10", "InPhyNet m=20"), 10)
+    limits = c("low", "high"),
+    labels = c("Low ILS", "High ILS")
   ) +
   scale_y_continuous(
     "Normalized HWCD",
     limits = c(0, 1)
   ) +
-  scale_fill_manual("ILS", labels = c("High", "Low"), values = c('#d95f02', '#1b9e77', '#7570b3', "#e7298a", "#66a61e", "#e6ab02"))
+  scale_fill_manual(
+    "Method",
+    values = c('#d95f02', '#1b9e77', '#7570b3', "#e7298a", "#66a61e", "#e6ab02")
+  )
 p
-```
 
-
-```{r}
 pdf("fig/other-methods.pdf", width = 8, height = 4)
 p
 dev.off()
 ```
+
 
 
 
