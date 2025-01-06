@@ -4,6 +4,8 @@ Manifest.toml
 
 error/
 
+depot_paths/
+
 empirical-study/subset_data/
 empirical-study/all_okp_data/
 empirical-study/all_okp_data/
