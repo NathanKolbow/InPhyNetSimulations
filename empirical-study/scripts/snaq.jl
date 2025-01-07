@@ -46,4 +46,4 @@ if !isfile("$(snaq_prefix).log") touch("$(snaq_prefix).log") end
 if !isfile("$(snaq_prefix).err") touch("$(snaq_prefix).err") end
 
 
-snaq!(tre0, df, hmax = h, filename = snaq_prefix, propQuartets = 0.8, runs = 1, probST = 0.5, seed = run_number)
+snaq!(tre0, df, hmax = h, filename = snaq_prefix, runs = 1, probST = 0.5, seed = run_number)
