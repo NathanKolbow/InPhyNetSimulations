@@ -22,3 +22,6 @@ PhyloNetworks = "0.16.4"
 
 [options]
 precompile = false
+
+[sources]
+InPhyNet = {url = "https://github.com/NathanKolbow/InPhyNet.jl"}
