@@ -32,7 +32,9 @@ for (j, row) in enumerate(eachrow(df))
     
     input_error_num = row["min_unrooted_nj_hwcd"] + row["sum_constraint_hwcd"]
     input_error_div = (2 * truenet.numTaxa - 6)
-    for c in get_constraints(ntaxa, rep, String(ils), ngt, m)
+    cs = get_constraints(ntaxa, rep, String(ils), ngt, m)
+    if cs === nothing @info (ntaxa, rep, String(ils), ngt, m); continue; end
+    for c in cs
         input_error_div += 2 * (c.numEdges - c.numTaxa)
     end
     input_errors[j] = input_error_num / input_error_div
