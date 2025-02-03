@@ -246,6 +246,28 @@ df %>%
 dev.off()
 ```
 
+```{r}
+p <- df %>%
+  filter(m == 20 & ntaxa <= 200) %>%
+  group_by(ntaxa_label, m_label, ngt_label, ils_label, nretic_true) %>%
+  summarise(
+    avg_hwcd = mean(min_greedy_approx_norm_hwcd),
+    low_hwcd = quantile(min_greedy_approx_norm_hwcd, 0.05),
+    high_hwcd = quantile(min_greedy_approx_norm_hwcd, 0.95)
+  ) %>%
+  ggplot(aes(x = nretic_true, y = avg_hwcd, color = ngt_label)) +
+  geom_point(alpha = 0.25) +
+  geom_line() +
+  facet_grid(ils_label ~ ntaxa_label, scales = "free") +
+  scale_color_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  labs(x = "Number of Reticulations", y = "Average Normalized Output Error")
+p
+
+pdf("fig/hwcd-vs-nretic.pdf", width = 8, height = 4)
+p
+dev.off()
+```
+
 # Out vs. in w/ retics
 
 ```{r}
@@ -291,98 +313,6 @@ rbind(before_df, after_df) %>%
   geom_line() +
   facet_grid(ils_label ~ ntaxa_label)
 ```
-
-
-## Runtimes
-
-```{r}
-rt_df <- read.csv("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/analysis/runtime.csv") %>%
-  mutate(
-    runtime = runtime / 60 / 60,
-    m_label = paste0("m = ", m),
-    ngt_label = paste0(ngt, " gt"),
-    ils_label = factor(
-      paste0(str_to_title(ils), " ILS"),
-      levels = c("Low ILS", "Med ILS", "High ILS", "Very High ILS")
-    ),
-    ntaxa_label = factor(
-        paste0(ntaxa, " taxa"),
-        levels = paste0(sort(unique(ntaxa)), " taxa")
-    ),
-  )
-nrow(rt_df)
-
-rt_df %>%
-  group_by(ntaxa_label, m_label, ncores, ils_label) %>%
-  filter(ncores <= 16) %>%
-  summarise(
-    rt_mean = mean(runtime),
-    rt_sd = sd(runtime),
-    rt_lower = quantile(runtime, 0.025),
-    rt_upper = quantile(runtime, 0.975),
-    #rt_lower = rt_mean - z*rt_sd,
-    #rt_upper = rt_mean + z*rt_sd
-  ) %>%
-  ggplot(aes(x = ncores, y = rt_mean, color = factor(m_label), fill = factor(m_label))) +
-  geom_line() +
-  geom_ribbon(aes(ymin=rt_lower, ymax=rt_upper), alpha = 0.15, linewidth = 0) +
-  facet_grid(ils_label ~ ntaxa_label, scales = "free") +
-  labs(
-    x = "CPU Cores", y = "Average Runtime (hours)"
-  ) +
-  scale_fill_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
-  scale_color_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a"))
-
-pdf("fig/runtime-vs-cores.pdf", width=8, height=4)
-rt_df %>%
-  group_by(ntaxa_label, m_label, ncores, ils_label) %>%
-  filter(ncores <= 16) %>%
-  summarise(
-    rt_mean = mean(runtime),
-    rt_sd = sd(runtime),
-    rt_lower = quantile(runtime, 0.025),
-    rt_upper = quantile(runtime, 0.975),
-    #rt_lower = rt_mean - z*rt_sd,
-    #rt_upper = rt_mean + z*rt_sd
-  ) %>%
-  ggplot(aes(x = ncores, y = rt_mean, color = factor(m_label), fill = factor(m_label))) +
-  geom_line() +
-  geom_ribbon(aes(ymin=rt_lower, ymax=rt_upper), alpha = 0.1, linewidth = 0) +
-  facet_grid(ils_label ~ ntaxa_label, scales = "free") +
-  labs(
-    x = "CPU Cores", y = "Average Runtime (hours)"
-  ) +
-  scale_fill_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
-  scale_color_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a"))
-dev.off()
-```
-
-
-
-```{r}
-
-mean_df <- rt_df %>%
-  filter(ncores %in% c(2, 4, 8)) %>%
-  group_by(m_label, ils_label, ntaxa, ncores) %>%
-  summarise(rt_mean = median(runtime)) %>%
-  mutate(ntaxa = if_else(ntaxa == 50, 1, if_else(ntaxa == 100, 2, 3))) %>%
-  mutate(ntaxa = ntaxa + if_else(ncores == 2, -0.2, if_else(ncores == 4, 0.0, 0.2)))
-
-p <- rt_df %>%
-  filter(ncores %in% c(2, 4, 8)) %>%
-  ggplot(aes(x = factor(ntaxa), y = runtime, color = factor(ncores))) +
-  geom_boxplot(alpha = 0.00) +
-  geom_line(data = mean_df, aes(x = ntaxa, y = rt_mean, color = factor(ncores)), alpha = 1) +
-  facet_grid(m_label ~ ils_label, scales = "free") +
-  scale_color_manual("CPU Cores", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
-  labs(x = "Number of Taxa", y = "Runtime (hours)")
-p
-
-pdf("fig/linear-runtime.pdf", width=6, height=4)
-p
-dev.off()
-```
-
 
 
 # Number of Reticulations
@@ -433,8 +363,289 @@ gtee_df %>%
 
 
 
+# Big combined HWCD figure
+
+```{r}
+dummy_guide <- function(
+    labels = NULL,  
+    ..., 
+    title = NULL, 
+    key   = draw_key_point,
+    guide_args = list()
+) {
+  # Capture arguments
+  aesthetics <- list(...)
+  n <- max(lengths(aesthetics), 0)
+  labels <- labels %||%  seq_len(n)
+  
+  # Overrule the alpha = 0 that we use to hide the points
+  aesthetics$alpha <- aesthetics$alpha %||% rep(1, n)
+  
+  # Construct guide
+  guide_args$override.aes <- guide_args$override.aes %||% aesthetics
+  guide <- do.call(guide_legend, guide_args)
+  
+  # Allow dummy aesthetic
+  update_geom_defaults("point", list(dummy = "x"))
+  
+  dummy_geom <- geom_point(
+    data = data.frame(x = rep(Inf, n), y = rep(Inf, n), 
+                      dummy = factor(labels)),
+    aes(x, y, dummy = dummy), alpha = 0, key_glyph = key
+  )
+  dummy_scale <- discrete_scale(
+    "dummy", "dummy_scale", palette = scales::identity_pal(), name = title,
+    guide = guide
+  )
+  list(dummy_geom, dummy_scale)
+}
 
 
+medians <- df %>%
+  filter(ntaxa > 30 & ntaxa < 1000) %>%
+  group_by(nretic_true, ngt_label, ngt, ntaxa_label, ils_label) %>%
+  summarise(
+    med = median(approx_norm_hwcd)
+  ) %>%
+  ungroup()
+
+
+p1 <- df %>%
+  filter(ntaxa <= 200) %>%
+  ggplot(aes(y = min_greedy_approx_norm_hwcd, x = m_label, fill = factor(ngt))) +
+#  ggplot(aes(y = min_greedy_approx_norm_hwcd, x = m_label, fill = ils_label)) +
+  geom_boxplot(outlier.shape = NA) +
+  facet_grid(ils_label ~ ntaxa_label, scales = "free") +
+#  facet_grid(ngt_label ~ ntaxa_label, scales = "free") +
+  labs(
+    x = "", y = "Normalized HWCD"
+  ) +
+  scale_fill_manual("Gene trees", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  ggtitle("A")
+p1
+
+p2 <- df %>%
+  filter(ntaxa <= 200) %>%
+  mutate(
+    x = approx_norm_input_hwcd,
+    y = approx_norm_hwcd
+  ) %>%
+  rowwise() %>%
+  mutate(x = max(0.01, x), y = max(0.01, y)) %>%
+  filter(m == 20) %>%
+#  ggplot(aes(x = x, y = y, color = ils_label)) +
+#  facet_grid(ngt_label ~ ntaxa_label) +
+  ggplot(aes(x = x, y = y, color = ngt_label)) +
+  facet_grid(ils_label ~ ntaxa_label) +
+  geom_jitter(size=1, alpha=0.7) +
+  geom_abline(slope = 1, intercept = 0, color = "black", 
+    linetype = "dashed", alpha = 0.5) +
+  labs(x = "Normalized Input Error", y = "") +
+  scale_color_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  scale_x_continuous(
+    trans = "log",
+    breaks = c(0.01, 0.03, 0.1, 0.3, 1.0),
+    labels = c(0, 0.03, 0.1, 0.3, 1.0)
+  ) +
+  scale_y_continuous(
+    trans = "log",
+    breaks = c(0.01, 0.03, 0.1, 0.3, 1.0),
+    labels = c(0, 0.03, 0.1, 0.3, 1.0)
+  ) +
+  ggtitle("B") +
+  guides(fill = "none")
+p2
+
+p_top <- (p1 + p2) + plot_layout(guides = "collect", axes = "collect")
+p_top
+
+p1
+p2
+
+p_left <- (p1 / p2)
+p_left
+```
+
+
+```{r}
+
+df1 <- split_df %>%
+  mutate(approx_norm_hwcd = normalized_hwcd) %>%
+  select(c(method, approx_norm_hwcd, ils, ntaxa, rep))
+
+df2 <- snaq_df %>%
+  mutate(
+    method = if_else(m == 10, "mnet10", if_else(m == 20, "mnet20", "snaq")),
+    ils = "low"
+  ) %>%
+  select(c(method, approx_norm_hwcd, ils, ntaxa, rep))
+
+combined_other_method_df <- rbind(df1, df2) %>%
+  mutate(ils = paste0(str_to_title(ils), " ILS")) %>%
+  mutate(
+    method = factor(
+      method,
+      levels = c("consensus", "neighbor", "mnet10", "mnet20", "snaq")
+    )
+  )
+
+p3 <- combined_other_method_df %>%
+  filter(ntaxa != 30) %>%
+  #ggplot(aes(x = ils, y = approx_norm_hwcd, fill = method)) +
+  ggplot(aes(x = method, fill = ils, y = approx_norm_hwcd)) +
+  geom_boxplot() +
+  scale_y_continuous(
+    "Normalized HWCD",
+    limits = c(0, 1)
+  ) +
+  scale_x_discrete(
+    "Method",
+    labels = c(
+      "consensus" = "Consensus Network",
+      "neighbor" = "NeighborNet",
+      "mnet10" = "InPhyNet m=10",
+      "mnet20" = "InPhyNet m=20",
+      "snaq" = "SNaQ"
+    )
+  ) +
+  labs(x = "") +
+  ggtitle("C")
+
+p4 <- combined_other_method_df %>%
+  filter(ntaxa == 30) %>%
+  #ggplot(aes(x = ils, fill = method, y = approx_norm_hwcd)) +
+  ggplot(aes(x = method, y = approx_norm_hwcd, fill = ils)) +
+  geom_boxplot() +
+  scale_y_continuous(
+    "",
+    limits = c(0, 0.3)
+  ) +
+  labs(x = "") +
+  scale_x_discrete(
+    "Method",
+    labels = c(
+      "consensus" = "Consensus Network",
+      "neighbor" = "NeighborNet",
+      "mnet10" = "InPhyNet m=10",
+      "mnet20" = "InPhyNet m=20",
+      "snaq" = "SNaQ"
+    )
+  ) +
+  ggtitle("D") &
+  guides(fill = "none")
+p4
+
+p_bottom <- (p3 + p4) + plot_layout(guides = "collect") &
+#  scale_fill_manual(
+#    "Method",
+#    values = c(
+#      "mnet10" = '#7570b3',
+#      "mnet20" = "#e7298a",
+#      "snaq" = "#66a61e",
+#      "consensus" ='#d95f02',
+#      "neighbor" = '#1b9e77'
+#    ),
+#    labels = c(
+#      "consensus" = "Consensus Network",
+#      "neighbor" = "NeighborNet",
+#      "mnet10" = "InPhyNet m=10",
+#      "mnet20" = "InPhyNet m=20",
+#      "snaq" = "SNaQ"
+#    ),
+#    breaks = c(
+#      "consensus",
+#      "neighbor",
+#      "mnet10",
+#      "mnet20",
+#      "snaq"
+#    )
+#  )
+  scale_fill_manual(
+    "ILS",
+    values = c("Low ILS" = '#7570b3', "High ILS" = "#e7298a")
+  )
+p_bottom
+
+p_right <- (p3 / p4) + plot_layout(guides = "collect") &
+  scale_fill_manual(
+    "Method",
+    values = c(
+      "mnet10" = '#7570b3',
+      "mnet20" = "#e7298a",
+      "snaq" = "#66a61e",
+      "consensus" ='#d95f02',
+      "neighbor" = '#1b9e77'
+    ),
+    labels = c(
+      "consensus" = "Consensus Network",
+      "neighbor" = "NeighborNet",
+      "mnet10" = "InPhyNet m=10",
+      "mnet20" = "InPhyNet m=20",
+      "snaq" = "SNaQ"
+    ),
+    breaks = c(
+      "consensus",
+      "neighbor",
+      "mnet10",
+      "mnet20",
+      "snaq"
+    )
+  )
+
+
+key_fig <- combined_other_method_df %>%
+  ggplot(aes(x = ils, fill = method, y = approx_norm_hwcd)) +
+  geom_boxplot() &
+  scale_fill_manual(
+    "Method",
+    values = c(
+      "mnet10" = '#7570b3',
+      "mnet20" = "#e7298a",
+      "snaq" = "#66a61e",
+      "consensus" ='#d95f02',
+      "neighbor" = '#1b9e77'
+    ),
+    labels = c(
+      "consensus" = "Consensus Network",
+      "neighbor" = "NeighborNet",
+      "mnet10" = "InPhyNet m=10",
+      "mnet20" = "InPhyNet m=20",
+      "snaq" = "SNaQ"
+    ),
+    breaks = c(
+      "consensus",
+      "neighbor",
+      "mnet10",
+      "mnet20",
+      "snaq"
+    )
+  )
+
+(p_top / p_bottom) + plot_layout(
+  axes = "collect",
+  widths = c(2.2, 1, 1),
+  heights = c(1.8, 1, 1)
+) +
+  plot_layout(tag_level = 'new') &
+  theme(plot.tag = element_text(size = 8))
+```
+
+
+```{r}
+pdf("fig/hwcd_combined.pdf", width=12, height=9)
+(p_top / p_bottom) + plot_layout(
+  heights = c(4, 4, 1.5, 1.5),
+  widths = c(4, 4, 2, 2)
+) +
+  plot_layout(tag_level = 'new') &
+  theme(plot.tag = element_text(size = 8)) &
+  guides(color = "none")
+dev.off()
+
+#pdf("fig/hwcd_combined_key.pdf", width=12, height=10)
+#(key_fig + key_fig) / (key_fig + key_fig) + plot_layout(axes = "collect", guides = "collect")
+#dev.off()
+```
 
 
 

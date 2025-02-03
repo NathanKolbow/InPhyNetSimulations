@@ -9,7 +9,7 @@ library(tidyverse)
 library(reshape2)
 theme_set(theme_bw())
 
-split_df <- read.csv("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/other-methods/comparison.csv") %>%
+split_df <- read.csv("../other-methods/comparison.csv") %>%
   melt(id = c("ntaxa", "rep", "ils", "ngt")) %>%
   mutate(
     ils_label = paste0(str_to_title(ils), " ILS"),
@@ -35,7 +35,7 @@ nrow(split_df)
 
 
 ```{r}
-p <- split_df %>%
+p1 <- split_df %>%
   mutate(
     method = factor(method,
                     levels = c("neighbor", "consensus", "mnet10", "mnet20"),
@@ -56,15 +56,23 @@ p <- split_df %>%
     "Method",
     values = c('#d95f02', '#1b9e77', '#7570b3', "#e7298a", "#66a61e", "#e6ab02")
   )
-p
+p1
 
 pdf("fig/other-methods.pdf", width = 8, height = 4)
-p
+p1
 dev.off()
 ```
 
 
-
+```{r}
+# This df is from snaq.Rmd
+p2 <- df %>%
+  mutate(ils = "Low ILS") %>%
+  ggplot(aes(x = factor(m), fill = factor(m), y = approx_norm_hwcd)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.25, height = 0)
+p2
+```
 
 
 
