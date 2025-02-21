@@ -46,10 +46,8 @@ nrow(snaq_df)
 
 ```{r}
 snaq_df %>%
-  filter(ils == "high") %>%
-  ggplot(aes(x = factor(m), y = unrooted_hwcd)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.35, height = 0)
+  ggplot(aes(x = factor(m), y = unrooted_hwcd, fill = ils)) +
+  geom_boxplot()
 ```
 
 
