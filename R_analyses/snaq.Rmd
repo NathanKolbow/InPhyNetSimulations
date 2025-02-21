@@ -1,0 +1,90 @@
+---
+title: "SNaQ Methods"
+author: "Nathan Kolbow"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(tidyverse)
+library(patchwork)
+library(cowplot)
+library(tidymodels)  # coord_obs_pred()
+library(reshape2)
+library(scales)
+theme_set(theme_bw())
+
+base_dir <- "../"
+estgt_dir <- paste0(base_dir, "est-gts/")
+snaq_df <- read.csv(paste0(estgt_dir, "analysis/approx_normalized_errors.csv")) %>%
+  filter(ntaxa == 30) %>%
+  mutate(
+    retic_diff = as.factor(nretic_true - nretic_est),
+    input_error = min_unrooted_nj_hwcd + sum_constraint_hwcd,
+    ngt_label = paste0(ngt, " gene trees"),
+    ils_label = factor(
+      paste0(str_to_title(ils), " ILS"),
+      levels = c("Low ILS", "Med ILS", "High ILS", "Very High ILS")
+    ),
+    m_label = paste0("m = ", m),
+    ils_m_label = paste0("m = ", m, " ", ils_label),
+    ntaxa_label = factor(
+        paste0(ntaxa, " taxa"),
+        levels = paste0(sort(unique(ntaxa)), " taxa")
+    ),
+    error_diff = unrooted_hwcd - input_error,
+    min_greedy_error_diff = unrooted_min_greedy_hwcd - input_error,
+    scaled_hwcd = unrooted_hwcd / ntaxa,
+    scaled_input_error = input_error / ntaxa,
+    scaled_error_diff = scaled_hwcd - scaled_input_error,
+    min_greedy_approx_norm_hwcd = if_else(min_greedy_approx_norm_hwcd < unrooted_hwcd,
+                                          min_greedy_approx_norm_hwcd, unrooted_hwcd)
+  )
+nrow(snaq_df)
+```
+
+
+```{r}
+snaq_df %>%
+  filter(ils == "high") %>%
+  ggplot(aes(x = factor(m), y = unrooted_hwcd)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.35, height = 0)
+```
+
+
+
+```{r}
+snaq_df %>%
+  select(ntaxa, rep, ils, ngt, snaq_runtime_sum, snaq_runtime_serial, m) %>%
+  melt(id = c("ntaxa", "rep", "ils", "ngt", "m")) %>%
+  mutate(
+    value = as.numeric(value) / 60 / 60 /24,
+    variable = factor(variable, levels = c("snaq_runtime_serial", "snaq_runtime_sum"))
+  ) %>%
+  ggplot(aes(x = factor(m), y = value, fill = variable)) +
+  geom_boxplot() +
+  labs(y = "Runtime (days)")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

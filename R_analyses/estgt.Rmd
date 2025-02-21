@@ -228,7 +228,7 @@ dev.off()
 ```{r}
 pdf("fig/hwcd-vs-nretic.pdf", width = 8, height = 4)
 df %>%
-  filter(m == 20) %>%
+  filter(m == 20 & ntaxa < 1000) %>%
   #group_by(ntaxa_label, m_label, ngt_label, ils_label, nretic_true) %>%
   #mutate(
   #  avg_hwcd = mean(min_greedy_approx_norm_hwcd),
@@ -279,6 +279,7 @@ medians <- df %>%
   ungroup()
 
 p <- df %>%
+  filter(ntaxa < 1000) %>%
   ggplot(aes(x = nretic_true, y = approx_norm_hwcd, color = factor(ngt))) +
   geom_jitter(width = 0.4, height = 0.0, alpha = 0.15) +
   geom_smooth(data = medians, aes(x = nretic_true, y = med, color = factor(ngt)), method = "lm", formula = y ~ x, se = F, linewidth = 1) +
@@ -475,8 +476,7 @@ df1 <- split_df %>%
 
 df2 <- snaq_df %>%
   mutate(
-    method = if_else(m == 10, "mnet10", if_else(m == 20, "mnet20", "snaq")),
-    ils = "low"
+    method = if_else(m == 10, "mnet10", if_else(m == 20, "mnet20", "snaq"))
   ) %>%
   select(c(method, approx_norm_hwcd, ils, ntaxa, rep))
 
@@ -632,6 +632,14 @@ key_fig <- combined_other_method_df %>%
 
 
 ```{r}
+(p_top / p_bottom) + plot_layout(
+  heights = c(4, 4, 1.5, 1.5),
+  widths = c(4, 4, 2, 2)
+) +
+  plot_layout(tag_level = 'new') &
+  theme(plot.tag = element_text(size = 8)) &
+  guides(color = "none")
+
 pdf("fig/hwcd_combined.pdf", width=12, height=9)
 (p_top / p_bottom) + plot_layout(
   heights = c(4, 4, 1.5, 1.5),
@@ -652,7 +660,161 @@ dev.off()
 
 
 
+# PNAS figures
+
+```{r}
+p3 <- combined_other_method_df %>%
+  filter(ntaxa != 30) %>%
+  #ggplot(aes(x = ils, y = approx_norm_hwcd, fill = method)) +
+  ggplot(aes(x = method, fill = ils, y = approx_norm_hwcd)) +
+  geom_boxplot() +
+  scale_y_continuous(
+    "Normalized HWCD",
+    limits = c(0, 1)
+  ) +
+  scale_x_discrete(
+    "Method",
+    labels = c(
+      "consensus" = "Consensus Network",
+      "neighbor" = "NeighborNet",
+      "mnet10" = "InPhyNet m=10",
+      "mnet20" = "InPhyNet m=20",
+      "snaq" = "SNaQ"
+    )
+  ) +
+  labs(x = "") +
+  ggtitle("A")
+
+p4 <- combined_other_method_df %>%
+  filter(ntaxa == 30) %>%
+  filter(ils == "Low ILS") %>%
+  #ggplot(aes(x = ils, fill = method, y = approx_norm_hwcd)) +
+  ggplot(aes(x = method, y = approx_norm_hwcd, fill = ils)) +
+  geom_boxplot() +
+  scale_y_continuous(
+    "",
+    limits = c(0, 0.3)
+  ) +
+  labs(x = "") +
+  scale_x_discrete(
+    "Method",
+    labels = c(
+      "consensus" = "Consensus Network",
+      "neighbor" = "NeighborNet",
+      "mnet10" = "InPhyNet m=10",
+      "mnet20" = "InPhyNet m=20",
+      "snaq" = "SNaQ"
+    )
+  ) +
+  ggtitle("B") &
+  guides(fill = "none")
+p4
+p <- (p3 + p4) + plot_layout(guides = "collect") &
+  scale_fill_manual(
+    "ILS",
+    values = c("Low ILS" = '#7570b3', "High ILS" = "#e7298a")
+  )
+p
+
+pdf("pnas_fig/hwcd-other-methods.pdf", width = 11.4, height = 11.4/3)
+p
+dev.off()
+```
 
 
+
+```{r}
+
+p1 <- df %>%
+  filter(ntaxa <= 200) %>%
+  ggplot(aes(y = min_greedy_approx_norm_hwcd, x = m_label, fill = factor(ngt))) +
+#  ggplot(aes(y = min_greedy_approx_norm_hwcd, x = m_label, fill = ils_label)) +
+  geom_boxplot(outlier.shape = NA) +
+  facet_grid(ils_label ~ ntaxa_label, scales = "free") +
+#  facet_grid(ngt_label ~ ntaxa_label, scales = "free") +
+  labs(
+    x = "", y = "Normalized HWCD"
+  ) +
+  scale_fill_manual("Gene trees", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  ggtitle("A")
+p1
+
+p2 <- df %>%
+  filter(ntaxa <= 200) %>%
+  mutate(
+    x = approx_norm_input_hwcd,
+    y = approx_norm_hwcd
+  ) %>%
+  rowwise() %>%
+  mutate(x = max(0.01, x), y = max(0.01, y)) %>%
+  filter(m == 20) %>%
+#  ggplot(aes(x = x, y = y, color = ils_label)) +
+#  facet_grid(ngt_label ~ ntaxa_label) +
+  ggplot(aes(x = x, y = y, color = ngt_label)) +
+  facet_grid(ils_label ~ ntaxa_label) +
+  geom_jitter(size=1, alpha=0.7) +
+  geom_abline(slope = 1, intercept = 0, color = "black", 
+    linetype = "dashed", alpha = 0.5) +
+  labs(x = "Normalized Input Error", y = "") +
+  scale_color_manual("Maximum Constraint Size", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  scale_x_continuous(
+    trans = "log",
+    breaks = c(0.01, 0.03, 0.1, 0.3, 1.0),
+    labels = c(0, 0.03, 0.1, 0.3, 1.0)
+  ) +
+  scale_y_continuous(
+    trans = "log",
+    breaks = c(0.01, 0.03, 0.1, 0.3, 1.0),
+    labels = c(0, 0.03, 0.1, 0.3, 1.0)
+  ) +
+  ggtitle("B") +
+  guides(color = "none")
+p2
+
+p_top <- (p1 + p2) + plot_layout(guides = "collect", axes = "collect")
+p_top
+
+pdf("pnas_fig/hwcd-inphynet-isolation.pdf", width = 11.4, height = 11.4/3)
+p_top
+dev.off()
+```
+
+
+
+
+```{r}
+p <- rt_df %>%
+  filter(ntaxa != 1000) %>%
+  filter(m_label != "m = 100") %>%
+  filter(ncores %in% c(1, 2, 4)) %>%
+  ggplot(aes(x = factor(ntaxa), y = runtime, color = factor(ncores))) +
+  geom_boxplot(alpha = 0.00, outliers = FALSE) +
+  #geom_line(data = mean_df, aes(x = ntaxa, y = rt_mean, color = factor(ncores)), alpha = 1) +
+  facet_grid(m_label ~ ils_label, scales = "free") +
+  scale_color_manual("CPU Cores", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  labs(x = "Number of Taxa", y = "Runtime (hours)") +
+  ggtitle("A")
+p
+
+p2 <- rt_df %>%
+  filter(ntaxa == 30) %>%
+  filter(ncores %in% c(1, 2, 4)) %>%
+  mutate(
+    method = if_else(m == 10, "InPhyNet m=10", if_else(m == 20, "InPhyNet m=20", "SNaQ"))
+  ) %>%
+  ggplot(aes(x = method, y = runtime, color = factor(ncores))) +
+  geom_boxplot() +
+  labs(x = "Method") +
+  scale_color_manual("CPU Cores", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  labs(y = "Runtime (hours)") +
+  ggtitle("B")
+p2
+
+(p & guides(color = "none")) + p2 + plot_layout(widths = c(2, 2), guides = "collect", axes = "collect")
+
+pdf("pnas_fig/runtimes.pdf", width=11.5, height=11.5/3)
+(p & guides(color = "none")) + p2 + plot_layout(widths = c(2, 2), guides = "collect", axes = "collect")
+dev.off()
+```
 
 

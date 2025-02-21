@@ -1,0 +1,185 @@
+---
+title: "Runtimes"
+author: "Nathan Kolbow"
+output: pdf_document
+---
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(patchwork)
+library(cowplot)
+library(tidymodels)  # coord_obs_pred()
+library(reshape2)
+library(scales)
+theme_set(theme_bw())
+
+
+rt_df <- read.csv("../est-gts/analysis/runtime.csv") %>%
+  mutate(
+    runtime = runtime / 60 / 60,
+    m_label = paste0("m = ", m),
+    ngt_label = paste0(ngt, " gt"),
+    ils_label = factor(
+      paste0(str_to_title(ils), " ILS"),
+      levels = c("Low ILS", "Med ILS", "High ILS", "Very High ILS")
+    ),
+    ntaxa_label = factor(
+        paste0(ntaxa, " taxa"),
+        levels = paste0(sort(unique(ntaxa)), " taxa")
+    ),
+  )
+
+snaq_df <- read.csv(paste0(estgt_dir, "analysis/approx_normalized_errors.csv")) %>%
+  filter(ntaxa == 30) %>%
+  mutate(
+    retic_diff = as.factor(nretic_true - nretic_est),
+    input_error = min_unrooted_nj_hwcd + sum_constraint_hwcd,
+    ngt_label = paste0(ngt, " gene trees"),
+    ils_label = factor(
+      paste0(str_to_title(ils), " ILS"),
+      levels = c("Low ILS", "Med ILS", "High ILS", "Very High ILS")
+    ),
+    m_label = paste0("m = ", m),
+    ils_m_label = paste0("m = ", m, " ", ils_label),
+    ntaxa_label = factor(
+        paste0(ntaxa, " taxa"),
+        levels = paste0(sort(unique(ntaxa)), " taxa")
+    ),
+    error_diff = unrooted_hwcd - input_error,
+    min_greedy_error_diff = unrooted_min_greedy_hwcd - input_error,
+    scaled_hwcd = unrooted_hwcd / ntaxa,
+    scaled_input_error = input_error / ntaxa,
+    scaled_error_diff = scaled_hwcd - scaled_input_error,
+    min_greedy_approx_norm_hwcd = if_else(min_greedy_approx_norm_hwcd < unrooted_hwcd,
+                                          min_greedy_approx_norm_hwcd, unrooted_hwcd)
+  )
+nrow(rt_df)
+```
+
+
+
+```{r}
+rt_df %>%
+  group_by(ntaxa_label, m_label, ncores, ils_label) %>%
+  filter(ncores <= 16 & ntaxa > 30 & ntaxa < 1000) %>%
+  summarise(
+    rt_mean = mean(runtime),
+    rt_sd = sd(runtime),
+    rt_lower = quantile(runtime, 0.025),
+    rt_upper = quantile(runtime, 0.975),
+    #rt_lower = rt_mean - z*rt_sd,
+    #rt_upper = rt_mean + z*rt_sd
+  ) %>%
+  ggplot(aes(x = ncores, y = rt_mean, color = factor(m_label), fill = factor(m_label))) +
+  geom_line() +
+  geom_ribbon(aes(ymin=rt_lower, ymax=rt_upper), alpha = 0.15, linewidth = 0) +
+  facet_grid(ils_label ~ ntaxa_label, scales = "free") +
+  labs(
+    x = "CPU Cores", y = "Average Runtime (hours)"
+  ) +
+  scale_fill_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  scale_color_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a"))
+
+pdf("fig/runtime-vs-cores.pdf", width=8, height=4)
+rt_df %>%
+  group_by(ntaxa_label, m_label, ncores, ils_label) %>%
+  filter(ncores <= 16) %>%
+  summarise(
+    rt_mean = mean(runtime),
+    rt_sd = sd(runtime),
+    rt_lower = quantile(runtime, 0.025),
+    rt_upper = quantile(runtime, 0.975),
+    #rt_lower = rt_mean - z*rt_sd,
+    #rt_upper = rt_mean + z*rt_sd
+  ) %>%
+  ggplot(aes(x = ncores, y = rt_mean, color = factor(m_label), fill = factor(m_label))) +
+  geom_line() +
+  geom_ribbon(aes(ymin=rt_lower, ymax=rt_upper), alpha = 0.1, linewidth = 0) +
+  facet_grid(ils_label ~ ntaxa_label, scales = "free") +
+  labs(
+    x = "CPU Cores", y = "Average Runtime (hours)"
+  ) +
+  scale_fill_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  scale_color_manual("", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a"))
+dev.off()
+```
+
+
+
+
+
+
+```{r}
+mean_df <- rt_df %>%
+  filter(ntaxa != 1000) %>%
+  filter(m_label != "m = 100") %>%
+  filter(ncores %in% c(1, 2, 4)) %>%
+  group_by(m_label, ils_label, ntaxa, ncores) %>%
+  summarise(rt_mean = median(runtime)) %>%
+  mutate(ntaxa = if_else(ntaxa == 30, 1, if_else(ntaxa == 50, 2, if_else(ntaxa == 100, 3, 4)))) %>%
+  mutate(ntaxa = ntaxa - if_else(ils_label == "Low ILS", 0, 1)) %>%
+  mutate(ntaxa = ntaxa + if_else(ncores == 2, -0.2, if_else(ncores == 4, 0.0, 0.2)))
+
+p <- rt_df %>%
+  filter(ntaxa != 1000) %>%
+  filter(m_label != "m = 100") %>%
+  filter(ncores %in% c(1, 2, 4)) %>%
+  ggplot(aes(x = factor(ntaxa), y = runtime, color = factor(ncores))) +
+  geom_boxplot(alpha = 0.00, outliers = FALSE) +
+  #geom_line(data = mean_df, aes(x = ntaxa, y = rt_mean, color = factor(ncores)), alpha = 1) +
+  facet_grid(m_label ~ ils_label, scales = "free") +
+  scale_color_manual("CPU Cores", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  labs(x = "Number of Taxa", y = "Runtime (hours)") +
+  ggtitle("A")
+p
+
+pdf("fig/linear-runtime.pdf", width=6, height=4)
+p
+dev.off()
+```
+
+
+
+
+
+```{r}
+p2 <- rt_df %>%
+  filter(ntaxa == 30) %>%
+  filter(ncores %in% c(1, 2, 4)) %>%
+  mutate(
+    method = if_else(m == 10, "InPhyNet m=10", if_else(m == 20, "InPhyNet m=20", "SNaQ"))
+  ) %>%
+  ggplot(aes(x = method, y = runtime, color = factor(ncores))) +
+  geom_boxplot() +
+  labs(x = "Method") +
+  scale_color_manual("CPU Cores", values = c('#1b9e77', '#d95f02', '#7570b3', "#e7298a")) +
+  labs(y = "Runtime (hours)") +
+  ggtitle("B")
+p2
+```
+
+
+
+
+```{r}
+pdf("fig/runtime_combined.pdf", width=12, height=4.5)
+(p & guides(color = "none")) + p2 + plot_layout(widths = c(2, 2), guides = "collect", axes = "collect")
+dev.off()
+
+
+
+#pdf("fig/runtime_combined.pdf", height=10, width=8)
+#(p / p2) + plot_layout(heights = c(2, 1))
+#dev.off()
+```
+
+
+
+
+
+
+
+
+
+
