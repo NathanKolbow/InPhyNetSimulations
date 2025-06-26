@@ -1,0 +1,10 @@
+# Julia files
+Manifest.toml
+python-venv/
+pyvenv.cfg
+
+# Test file
+test.fasta
+
+# Scratch directories
+*/scratch_dir/
