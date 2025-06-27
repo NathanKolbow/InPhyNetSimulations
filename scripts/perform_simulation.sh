@@ -118,6 +118,7 @@ fi
 if (( start_step <= 5 )); then
   # 5. Construct full network with InPhyNet
   echo "> Constructing full network with InPhyNet."
+  julia "${scriptdir}/combine_inphynet.jl" "${basedir}/constraints.net" "${basedir}/estgts.tre" "${basedir}/inphynet.net"
 fi
 
 
