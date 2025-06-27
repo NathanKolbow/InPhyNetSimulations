@@ -26,6 +26,9 @@ seqgen="${scriptdir}/../software/seq-gen"
 iqtree="${scriptdir}/../software/iqtree3"
 count=0
 while IFS= read -r line; do
+    if [ "$line" == "" ]; then
+        break
+    fi
     ((count++))
 
     # 1. Simulate MSAs
@@ -39,4 +42,4 @@ while IFS= read -r line; do
 
     ((seed++))
 done < "${basedir}/truegts.tre"
-mv estgts-incomplete.tre estgts.tre
+mv "${basedir}/estgts-incomplete.tre" "${basedir}/estgts.tre"
