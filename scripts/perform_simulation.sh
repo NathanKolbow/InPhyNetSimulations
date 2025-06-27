@@ -104,12 +104,14 @@ fi
 if (( start_step <= 3 )); then
   # 3. Subset decomposition
   echo "> Performing subset decomposition."
+  "${scriptdir}/subset_decomposition.sh" $n $ngt $ils $nbp $m $r $imethod $seed
 fi
 
 
 if (( start_step <= 4 )); then
   # 4. Infer constraint networks
   echo "> Inferring constraint networks."
+  "${scriptdir}/infer_constraints.sh" $n $ngt $ils $nbp $m $r $imethod $seed
 fi
 
 

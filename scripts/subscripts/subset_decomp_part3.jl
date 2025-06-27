@@ -1,19 +1,18 @@
-include("/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/helpers/precompile-setup.jl")
+using Pkg
+Pkg.activate(joinpath(@__DIR__, "..", ".."))
 
 # Parse ARGS
-ntaxa = parse(Int64, ARGS[1])
-rep = parse(Int64, ARGS[2])
-ils = ARGS[3]
-ngt = parse(Int64, ARGS[4])
-m = parse(Int64, ARGS[5])
+est_gt_file = ARGS[1]
+subset_dir = ARGS[2]
+astral_file = ARGS[3]
+output = ARGS[4]
+m = parse(Int, ARGS[5])
 
-# File paths
-est_gt_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/est-gts/"
-est_gt_file *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m).treefile"
-subset_dir = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/subsets/"
-subset_dir *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m)/"
-astral_file = "/mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/est-gts/data/astral/"
-astral_file *= "n$(ntaxa)-r$(rep)-$(ils)-$(ngt)gt-m$(m).treefile"
+# ntaxa = parse(Int64, ARGS[1])
+# rep = parse(Int64, ARGS[2])
+# ils = ARGS[3]
+# ngt = parse(Int64, ARGS[4])
+# m = parse(Int64, ARGS[5])
 
 # Load packages
 @info "Loading packages"
@@ -23,15 +22,15 @@ Random.seed!(42)
 # Helper function
 function smart_prune(net::HybridNetwork, subsets::AbstractVector{<:AbstractVector{<:AbstractString}})
     if length(subsets) == 1
-        return [pruneTruthFromDecomp(net, subsets[1])]
+        return [prune_network(net, subsets[1])]
     elseif length(subsets) <= 4
-        return pruneTruthFromDecomp(net, subsets)
+        return prune_network(net, subsets)
     else
         i = length(subsets) ÷ 2
         split1 = subsets[1:i]
         split2 = subsets[(i+1):length(subsets)]
-        n1 = pruneTruthFromDecomp(net, reduce(vcat, split1))
-        n2 = pruneTruthFromDecomp(net, reduce(vcat, split2))
+        n1 = prune_network(net, reduce(vcat, split1))
+        n2 = prune_network(net, reduce(vcat, split2))
         return [smart_prune(n1, split1); smart_prune(n2, split2)]
     end
 end
@@ -201,23 +200,18 @@ end
 
 # Compute SATe-I decomposition w/o blob taxa
 @info "Computing SATe-I decomposition w/o blob taxa"
-tre0_trimmed = pruneTruthFromDecomp(tre0, trimmed_taxa_set)
+tre0_trimmed = prune_network(tre0, trimmed_taxa_set)
 final_subsets = []
-min_size = 9
 while final_subsets == []
     global min_size, final_subsets
     try
-        final_subsets = sateIdecomp(tre0_trimmed, min_size, m)
+        final_subsets = sateIdecomp(tre0_trimmed, m)
     catch
         min_size -= 1
         if min_size < 0
             error("Could not find valid subset decomposition")
         end
     end
-end
-
-if ntaxa == 30 && m > 30
-    final_subsets = [tipLabels(tre0)]
 end
 
 # Impute blob taxa back into SATe-I decomposition
@@ -277,32 +271,17 @@ end
 L = [length(s) for s in final_subsets];
 @info "Subset decomposition: min=$(minimum(L)), max=$(maximum(L)), median=$(median(L)), mean=$(mean(L))"
 
-# Prune ASTRAL tree
-@info "Pruning ASTRAL tree"
-tre0_trimmed = smart_prune(tre0, final_subsets)
-
-# Prune estimated gene trees
-@info "Pruning estimated gene trees"
-est_gts = readMultiTopology(est_gt_file)
-pruned_gts = Array{HybridNetwork}(undef, length(est_gts), length(final_subsets))
-
-Threads.@threads for j = 1:length(est_gts)
-    pruned_gts[j, :] .= smart_prune(est_gts[j], final_subsets)
-end
-
-# Save pruned ASTRAL trees and estimated gene trees
-@info "Saving ASTRAL trees and estimated gene trees"
-for i = 1:length(final_subsets)
-    writeMultiTopology(pruned_gts[:,i], joinpath(subset_dir, "pruned_gts$(i).tre"))
-    writeTopology(tre0_trimmed[i], joinpath(subset_dir, "ASTRAL$(i).tre"))
-end
-
-# Write the `snaqtab` file
-@info "Writing snaqtab file"
-open(joinpath(subset_dir, "snaqtab"), "w+") do f
-    for j = 1:length(final_subsets)
-        for run_idx = 1:10
-            write(f, "$(j),$(run_idx)\n")
+open(output, "w+") do f
+    for (si, s) in enumerate(final_subsets)
+        for (iitem, item) in enumerate(s)
+            if iitem == length(s)
+                write(f, "$(item)")
+            else
+                write(f, "$(item),")
+            end
+        end
+        if si != length(final_subsets)
+            write(f, "\n")
         end
     end
 end
