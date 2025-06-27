@@ -27,7 +27,7 @@ n="$1"; ngt="$2"; ils="$3"; nbp="$4"; m="$5"; r="$6"; imethod="$7"
 scriptdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 basedir="${scriptdir}/../data/${n}/${ngt}/${ils}/${nbp}/${m}/${r}/${imethod}/"
 mkdir -p "${basedir}"
-mkdir "${basedir}/temp-data/"
+mkdir -p "${basedir}/temp-data/"
 
 step1_outputs=("${basedir}/true.net")
 step2_outputs=("${basedir}/estgts.tre")
@@ -80,6 +80,7 @@ generate_seed() {
   local hex=${hash:0:8}
   # 4. convert hex to decimal
   local seed=$((16#$hex))
+  seed=$(( seed % 2147483647 ))
   echo "${seed}"
 }
 seed=`generate_seed $n $ngt $ils $nbp $m $r $imethod`
@@ -89,13 +90,14 @@ echo "> Unique seed: ${seed}"
 if (( start_step <= 1 )); then
   # 1. Generate ground truth network
   echo "> Generating ground truth network."
-  ${scriptdir}/generate_true_network.sh $n $ils $seed "${basedir}/true.net"
+  Rscript "${scriptdir}/generate_true_network.R" $n $ils $seed "${basedir}/true.net"
 fi
 
 
 if (( start_step <= 2 )); then
   # 2. Generate empirical data
   echo "> Generating empirical data."
+  "${scriptdir}/simulate_empirical_data.sh" $n $ngt $ils $nbp $m $r $imethod $seed
 fi
 
 

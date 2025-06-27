@@ -32,8 +32,8 @@ e.g.: data/50/100/low/100/10/1/snaq/
     - Output: ground truth species networks are placed in `basedir/true.net`
 2. Empirical data simulation (true gene tree --> MSA --> estimated gene tree)
     - Script: `scripts/simulate_empirical_data.sh`
-    - Input: `number of taxa`, `replicate number`, `number of gene trees`, `ILS level`, `sequence length`
-    - Output: estimated gene trees are placed in `basedir/estgts.tre`
+    - Input: `number of taxa`, `replicate number`, `number of gene trees`, `ILS level`, `sequence length`, `inference method`
+    - Output: for every method except Squirrel, estimated gene trees are placed in `basedir/estgts.tre` - for all methods the MSAs are placed in `basedir/msa.fasta` and the true gene trees are placed in `basedir/truegts.tre`
     - Previously generated data used: ground truth network
   > TODO: verify that gtee's are reasonable.
 3. Subset decomposition

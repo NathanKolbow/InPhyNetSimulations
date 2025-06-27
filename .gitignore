@@ -1,5 +1,14 @@
 # Julia files
 Manifest.toml
+scratchspaces/
+registries/
+logs/
+clones/
+artifacts/
+compiled/
+packages/
+
+# Python files
 python-venv/
 pyvenv.cfg
 

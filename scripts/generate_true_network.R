@@ -35,7 +35,7 @@ net <- sim.bdh.taxa.ssa(
     n = n, numbsim = 1, lambda = 1, mu = 0, nu = nu,
     hybprops = c(0.5, 0.25, 0.25), hyb.inher.fxn = make.beta.draw(10, 10)
 )[[1]]
-while(getNetworkLevel(net) > 1 || minCycleSize(net) <= 3) {
+while(getNetworkLevel(net) > 1 || minCycleSize(net) <= 3 || length(net$reticulation) == 0) {
     seed <- seed + 1
     set.seed(seed)
     net <- sim.bdh.taxa.ssa(
