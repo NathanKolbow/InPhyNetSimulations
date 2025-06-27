@@ -17,3 +17,6 @@ test.fasta
 
 # Scratch directories
 */scratch_dir/
+
+# Simulation intermediary data
+data/*/*/*/*/*/*/*/temp-data/
