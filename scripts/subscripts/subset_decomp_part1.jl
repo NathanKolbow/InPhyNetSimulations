@@ -1,36 +1,35 @@
 using Pkg
-Pkg.activate(joinpath(@__DIR__), "..", "..")
+Pkg.activate(joinpath(@__DIR__, "..", ".."))
 
 # Parse ARGS
 est_gt_file = ARGS[1]
 output = ARGS[2]
 tempdir = ARGS[3]
 
-
-ntaxa = parse(Int64, ARGS[1])
-rep = parse(Int64, ARGS[2])
-ils = ARGS[3]
-ngt = parse(Int64, ARGS[4])
-m = parse(Int64, ARGS[5])
-k = min(ntaxa, 50)
-if length(ARGS) > 5 k = parse(Int64, ARGS[6]) end
+k = 50
+# ntaxa = parse(Int64, ARGS[1])
+# rep = parse(Int64, ARGS[2])
+# ils = ARGS[3]
+# ngt = parse(Int64, ARGS[4])
+# m = parse(Int64, ARGS[5])
+# k = min(ntaxa, 50)
+# if length(ARGS) > 5 k = parse(Int64, ARGS[6]) end
 
 # File paths
 subset_dir = joinpath(tempdir, "subsets")
 if !isdir(subset_dir) mkdir(subset_dir) end
 
 # Load packages
-@info "Loading packages"
 using PhyloNetworks, InPhyNet, DataFrames, StatsBase
+import InPhyNet: prune_network
 
 # Get NJ tree
 @info "Loading data and inferring NJ tree"
 est_gts = readMultiTopology(est_gt_file)
 D, namelist = calculateAGID(est_gts)
 nj_tre = inphynet(D, Vector{HybridNetwork}([]), namelist)   # PhyloNetworks.nj is SUPER slow for large `n`
-rootatnode!(nj_tre, "OUTGROUP")
 cladewiseorder!(nj_tre)
-ordered_leaves = [node.name for node in nj_tre.node[nj_tre.cladewiseorder_nodeIndex] if node.leaf && node.name != "OUTGROUP"]
+ordered_leaves = [node.name for node in nj_tre.node[nj_tre.vec_int1] if node.leaf && node.name != "OUTGROUP"]
 
 # Perform "broad" subset decomp w/ NJ tree
 @info "Performing broad decomp"
@@ -58,15 +57,15 @@ end
 # Write the pruned gene trees to files
 function smart_prune(net::HybridNetwork, subsets::AbstractVector{<:AbstractVector{<:AbstractString}})
     if length(subsets) == 1
-        return [pruneTruthFromDecomp(net, subsets[1])]
+        return [prune_network(net, subsets[1])]
     elseif length(subsets) <= 4
-        return pruneTruthFromDecomp(net, subsets)
+        return prune_network(net, subsets)
     else
         i = length(subsets) ÷ 2
         split1 = subsets[1:i]
         split2 = subsets[(i+1):length(subsets)]
-        n1 = pruneTruthFromDecomp(net, reduce(vcat, split1))
-        n2 = pruneTruthFromDecomp(net, reduce(vcat, split2))
+        n1 = prune_network(net, reduce(vcat, split1))
+        n2 = prune_network(net, reduce(vcat, split2))
         return [smart_prune(n1, split1); smart_prune(n2, split2)]
     end
 end
