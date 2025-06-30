@@ -5,6 +5,8 @@ rt_output = ARGS[4]
 
 using Pkg
 Pkg.activate(joinpath(@__DIR__, ".."))
+Pkg.instantiate()
+Pkg.update()
 
 using PhyloNetworks, InPhyNet
 estgts = readmultinewick(estgtfile)
