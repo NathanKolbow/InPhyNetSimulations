@@ -19,5 +19,5 @@ test.fasta
 */scratch_dir/
 
 # Simulation intermediary data
-data/*/*/*/*/*/*/*/temp-data/
+data/*/*/*/*/*/*/temp-data/*
 *estgts-incomplete.tre*
