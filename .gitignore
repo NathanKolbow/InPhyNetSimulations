@@ -20,3 +20,4 @@ test.fasta
 
 # Simulation intermediary data
 data/*/*/*/*/*/*/*/temp-data/
+*estgts-incomplete.tre*

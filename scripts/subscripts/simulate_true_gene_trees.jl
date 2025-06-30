@@ -1,12 +1,13 @@
 using Pkg
 Pkg.activate(joinpath(@__DIR__, "..", ".."))
-using PhyloNetworks, PhyloCoalSimulations, StatsBase
+using PhyloNetworks, PhyloCoalSimulations, StatsBase, Random
 
 netfile = ARGS[1]
 ngt = parse(Int, ARGS[2])
 ils = ARGS[3]
 seed = parse(Int, ARGS[4])
 output = ARGS[5]
+
 
 # Adjust edges so that the average length matches
 # the desired level of ILS
@@ -21,5 +22,6 @@ end
 
 
 # Simulate gene trees
+Random.seed!(seed)
 gts = simulatecoalescent(truenet, ngt, 1);
 writemultinewick(gts, output)

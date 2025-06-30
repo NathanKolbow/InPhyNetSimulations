@@ -25,15 +25,16 @@ n="$1"; ngt="$2"; ils="$3"; nbp="$4"; m="$5"; r="$6"; imethod="$7"
 # 2. Checkpoint files for each step
 #------------------------------------------------------------------------------
 scriptdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-basedir="${scriptdir}/../data/${n}/${ngt}/${ils}/${nbp}/${m}/${r}/${imethod}/"
+basedir="${scriptdir}/../data/${n}/${ngt}/${ils}/${nbp}/${m}/${r}/"
 mkdir -p "${basedir}"
 mkdir -p "${basedir}/temp-data/"
 
 step1_outputs=("${basedir}/true.net")
 step2_outputs=("${basedir}/estgts.tre")
 step3_outputs=("${basedir}/subsets")
-step4_outputs=("${basedir}/constraints.net" "${basedir}/constraints.runtime")
-step5_outputs=("${basedir}/inphynet.net" "${basedir}/inphynet.runtime")
+  step4_outputs=("${basedir}/${imethod}.net" "${basedir}/${imethod}.runtime")
+  step5_outputs=("${basedir}/inphynet-${imethod}.net" "${basedir}/inphynet-${imethod}.runtime")
+
 
 #------------------------------------------------------------------------------
 # 3. Find the first step that's incomplete
@@ -118,7 +119,7 @@ fi
 if (( start_step <= 5 )); then
   # 5. Construct full network with InPhyNet
   echo "> Constructing full network with InPhyNet."
-  julia "${scriptdir}/combine_inphynet.jl" "${basedir}/constraints.net" "${basedir}/estgts.tre" "${basedir}/inphynet.net"
+  julia "${scriptdir}/combine_inphynet.jl" "${basedir}/${imethod}.net" "${basedir}/estgts.tre" "${basedir}/inphynet-${imethod}.net" "${basedir}/inphynet-${imethod}.runtime"
 fi
 
 
