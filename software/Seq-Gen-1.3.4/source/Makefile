@@ -1,11 +1,11 @@
-CLINKER = cc 
+CLINKER = gcc
 CLIBS = -lm
 
 RM = /bin/rm
 
 LIBS = $(CLIBS)
 
-CFLAGS = -O3
+CFLAGS = -O3 -std=gnu89
 
 OBJ = seq-gen.o global.o evolve.o model.o nucmodels.o aamodels.o eigen.o treefile.o progress.o gamma.o twister.o
 
