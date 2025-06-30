@@ -8,6 +8,9 @@ for ils in low high; do
 for nbp in 100 1000; do
 for m in 10 20; do
 for r in $(seq 1 10); do
+    printf "\033[0;31m---------------------------------------------------------------------------------------\n"
+    printf "\033[0;31m>> ${scriptdir}/perform_simulation.sh $n $ngt $ils $nbp $m $r squirrel <<\n"
+    printf "\033[0;31m---------------------------------------------------------------------------------------\n\n\033[0m"
     ${scriptdir}/perform_simulation.sh $n $ngt $ils $nbp $m $r squirrel
 done
 done
