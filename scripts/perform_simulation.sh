@@ -119,6 +119,7 @@ fi
 if (( start_step <= 5 )); then
   # 5. Construct full network with InPhyNet
   echo "> Constructing full network with InPhyNet."
+  export JULIA_DEPOT_PATH="${scriptdir}/../"
   julia "${scriptdir}/combine_inphynet.jl" "${basedir}/${imethod}.net" "${basedir}/estgts.tre" "${basedir}/inphynet-${imethod}.net" "${basedir}/inphynet-${imethod}.runtime"
 fi
 
