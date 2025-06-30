@@ -33,7 +33,7 @@ while IFS= read -r line; do
 
     # 1. Simulate MSAs
     echo "$line" > "${basedir}/temp-data/temp.tre"
-    ${seqgen} -n1 -of -f0.3,0.2,0.2,0.3 -mHKY -l${nbp} -q -z${seed} "${basedir}/temp-data/temp.tre" > "${basedir}/temp-data/msa${count}.fasta"
+    ${seqgen} -n1 -of -f0.3,0.2,0.2,0.3 -mHKY -s0.05 -l${nbp} -q -z${seed} "${basedir}/temp-data/temp.tre" > "${basedir}/temp-data/msa${count}.fasta"
     cat "${basedir}/temp-data/msa${count}.fasta" >> "${basedir}/msa.fasta"
 
     # 2. Infer gene tree
