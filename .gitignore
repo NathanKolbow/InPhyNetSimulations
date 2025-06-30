@@ -21,3 +21,8 @@ test.fasta
 # Simulation intermediary data
 data/*/*/*/*/*/*/temp-data/*
 *estgts-incomplete.tre*
+*.bionj
+*.ckp.gz
+*.iqtree
+*.log
+*.mldist
