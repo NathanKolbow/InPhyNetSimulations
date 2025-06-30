@@ -10,6 +10,7 @@ packages/
 
 # Python files
 python-venv/
+__pycache__/
 pyvenv.cfg
 
 # Test file
