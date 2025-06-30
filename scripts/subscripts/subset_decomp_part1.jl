@@ -1,5 +1,7 @@
 using Pkg
 Pkg.activate(joinpath(@__DIR__, "..", ".."))
+Pkg.instantiate()
+Pkg.update()
 
 # Parse ARGS
 est_gt_file = ARGS[1]
