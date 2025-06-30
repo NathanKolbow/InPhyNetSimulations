@@ -44,8 +44,8 @@ while(getNetworkLevel(net) > 1 || minCycleSize(net) <= 3 || length(net$reticulat
         n = n, numbsim = 1, lambda = 1, mu = 0, nu = nu,
         hybprops = c(0.5, 0.25, 0.25), hyb.inher.fxn = make.beta.draw(10, 10)
     )[[1]]
-    if(seed > iseed + 10000) {
-        cat("ERROR: Looped 10,000 times without finding suitable network.\n")
+    if(seed > iseed + 100000) {
+        cat("ERROR: Looped 100,000 times without finding suitable network.\n")
         break
     }
 }

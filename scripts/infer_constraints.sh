@@ -21,7 +21,12 @@ fi
 # PhyloNet
 #--------------------
 # Tutorial: https://phylogenomics.rice.edu/html/commands/InferNetwork_MPL.html
-
+if [[ "${imethod}" == "phylonet" ]]; then
+    if [[ -f "${basedir}/constraints-${imethod}.net" ]]; then
+        rm "${basedir}/constraints-${imethod}.net"
+    fi
+    ${scriptdir}/subscripts/infer_phylonet.sh "${basedir}/estgts.tre" "${basedir}/temp-data" "${basedir}/phylonet.net" "${basedir}/phylonet.runtime"
+fi
 
 #--------------------
 # Squirrel
