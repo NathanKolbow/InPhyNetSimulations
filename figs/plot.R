@@ -1,7 +1,11 @@
 library(ggplot2)
 library(tidyverse)
+library(patchwork)
+library(ggdist)
+library(gghalves)
 
 df <- read.csv("data/all.csv")
+nrow(df)
 
 ggplot(df, aes(x = input_error, y = hwcd, color = imethod, shape = as.factor(ngt), size = as.factor(nbp))) +
     facet_grid(m~ntaxa) +
@@ -12,5 +16,58 @@ ggplot(df, aes(x = input_error, y = hwcd, color = imethod, shape = as.factor(ngt
 
 
 ggplot(df, aes(x = as.factor(ngt), y = hwcd, color = as.factor(nbp))) +
-    facet_grid(ntaxa~imethod) +
+    facet_grid(ntaxa~m) +
     geom_boxplot()
+
+ggplot(df, aes(x = as.factor(ngt), y = hwcd, color = as.factor(nbp))) +
+    facet_grid(ntaxa~imethod+m) +
+    geom_boxplot()
+
+
+
+
+
+
+
+
+
+
+
+
+
+##################
+df_clean <- df %>% 
+  mutate(
+    ngt   = factor(ngt,  levels = sort(unique(ngt)),
+                         labels  = paste0("ngt = ", sort(unique(ngt)))),
+    nbp   = factor(nbp,  levels = sort(unique(nbp)),
+                         labels  = paste0("nbp = ", sort(unique(nbp)))),
+    m     = factor(m,    levels = sort(unique(m)),
+                         labels  = paste0("m = ", sort(unique(m)))),
+    ntaxa = factor(ntaxa,levels = sort(unique(ntaxa)),
+                         labels  = paste0("ntaxa = ", sort(unique(ntaxa)))),
+    imethod = factor(imethod,
+                     levels = c("snaq","squirrel"),
+                     labels = c("SNaQ","SQUIRREL"))
+  )
+p_hwcd <- ggplot(df_clean,
+        aes(x = ngt, y = hwcd, fill = nbp)) +
+
+  geom_boxplot(width = .55, outlier.shape = NA, linewidth = .25) +
+
+  facet_grid(ntaxa ~ imethod + m, labeller = label_value, scales="free") +
+
+  scale_fill_brewer(palette = "Dark2", name = "Number of base pairs (nbp)") +
+
+  labs(x = "Number of gene trees (ngt)",
+       y = "HWCD") +
+
+  theme_classic(base_size = 9) +
+  theme(
+    panel.border       = element_rect(colour = "black", fill = NA, linewidth = .4),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey90", linewidth = .25),
+    strip.text         = element_text(face = "bold", size = 8),
+    legend.position    = "top"
+  )
+p_hwcd
