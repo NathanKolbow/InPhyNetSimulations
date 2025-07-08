@@ -4,7 +4,7 @@ Pkg.instantiate();
 Pkg.update();
 
 
-using PhyloNetworks, DataFrames, CSV, InPhyNet
+using PhyloNetworks, DataFrames, CSV, InPhyNet, Base.Threads
 include(joinpath(@__DIR__, "subscripts", "gtee.jl"))
 
 global df = DataFrame(
@@ -14,23 +14,29 @@ global df = DataFrame(
 )
 output_path = joinpath(@__DIR__, "..", "data", "all.csv")
 
-global j = 0
-for ntaxa in [50, 100]
-for ngt in [100, 1000]
-for ils in ["low", "high"]
+rows = Array{Any}(undef, 2*2*2*2*2*10*2)
+is_valid = falses(2*2*2*2*2*10*2)
+
+global j = Atomic{Int}(0)
+Threads.@threads for ntaxa in [50, 100]
+Threads.@threads for ngt in [100, 1000]
+Threads.@threads for ils in ["low", "high"]
 for nbp in [100, 1000]
 for m in [10, 20]
 for r = 1:10
 for imethod in ["snaq", "squirrel"]
     global j
-    j += 1
-    print("\r$(j) / 640")
+    atomic_add!(j, 1)
+    if Threads.threadid() == 1
+        print("\r$(j[]) / 640 (total $(sum(is_valid)))")
+    end
 
     basedir = joinpath(@__DIR__, "..", "data", string(ntaxa), string(ngt), ils, string(nbp), string(m), string(r))
     if !isdir(basedir) continue end
     if !isfile(joinpath(basedir, "inphynet-$(imethod).net")) || !isfile(joinpath(basedir, "inphynet-$(imethod).runtime"))
         continue
     end
+    is_valid[j[]] = true
 
     tnet = readnewick(joinpath(basedir, "true.net"))
     enet = readnewick(joinpath(basedir, "inphynet-$(imethod).net"))
@@ -53,14 +59,11 @@ for imethod in ["snaq", "squirrel"]
         if D_error == 0 break end
     end
 
-    push!(df,
-        [
-            ntaxa, ngt, ils, nbp, m, r, imethod,
-            gtee_val, hardwiredclusterdistance(tnet, enet, false), input_cerror + D_error,
-            enet_runtime + maximum(constraint_runtimes), enet_runtime + sum(constraint_runtimes)
-        ]
-    )
-    CSV.write(output_path, df)
+    rows[j[]] = [
+        ntaxa, ngt, ils, nbp, m, r, imethod,
+        gtee_val, hardwiredclusterdistance(tnet, enet, false), input_cerror + D_error,
+        enet_runtime + maximum(constraint_runtimes), enet_runtime + sum(constraint_runtimes)
+    ]
 end
 end
 end
@@ -69,4 +72,8 @@ end
 end
 end
 
+println("$(sum(is_valid)) / $(length(is_valid))")
+for idx in findall(is_valid)
+    push!(df, rows[idx])
+end
 CSV.write(output_path, df)
