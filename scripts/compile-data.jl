@@ -1,3 +1,7 @@
+const FORCE_RESAMPLE_ALL = false
+
+
+
 using Pkg
 Pkg.activate(joinpath(@__DIR__, ".."))
 Pkg.instantiate();
@@ -14,13 +18,23 @@ global df = DataFrame(
 )
 output_path = joinpath(@__DIR__, "..", "data", "all.csv")
 
-rows = Array{Any}(undef, 2*2*2*2*2*10*2)
-is_valid = falses(2*2*2*2*2*10*2)
+
+if !FORCE_RESAMPLE_ALL && isfile(output_path)
+    @warn "NOT resampling data."
+    df = CSV.read(output_path, DataFrame)
+    @info "$(nrow(df)) lines in df already."
+else
+    @warn "Resampling all data - this will take a while."
+end
+
+
+rows = Array{Any}(undef, 4*2*2*2*2*10*2)
+is_valid = falses(4*2*2*2*2*10*2)
 
 global j = Atomic{Int}(0)
-Threads.@threads for ntaxa in [50, 100]
-Threads.@threads for ngt in [100, 1000]
-Threads.@threads for ils in ["low", "high"]
+for ntaxa in [30, 50, 100, 200]
+for ngt in [100, 1000]
+for ils in ["low", "high"]
 for nbp in [100, 1000]
 for m in [10, 20]
 for r = 1:10
@@ -28,8 +42,10 @@ for imethod in ["snaq", "squirrel"]
     global j
     atomic_add!(j, 1)
     if Threads.threadid() == 1
-        print("\r$(j[]) / 640 (total $(sum(is_valid)))")
+        print("\r$(j[]) / $(length(rows)) (total $(sum(is_valid) + nrow(df)))")
     end
+
+    if nrow(filter(row -> row.ntaxa == ntaxa && row.ngt == ngt && row.ils == ils && row.nbp == nbp && row.m == m && row.r == r && row.imethod == imethod, df)) > 0 continue end
 
     basedir = joinpath(@__DIR__, "..", "data", string(ntaxa), string(ngt), ils, string(nbp), string(m), string(r))
     if !isdir(basedir) continue end
@@ -72,7 +88,7 @@ end
 end
 end
 
-println("$(sum(is_valid)) / $(length(is_valid))")
+println("\n$(sum(is_valid)) / $(length(is_valid))")
 for idx in findall(is_valid)
     push!(df, rows[idx])
 end

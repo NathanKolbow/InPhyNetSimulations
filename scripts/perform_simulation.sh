@@ -13,7 +13,7 @@ Usage: $0 n ngt ils nbp m r imethod
   nbp     : 100 or 1000
   m       : 10 or 20
   r       : 1-10
-  imethod : "snaq" or "phylonet"
+  imethod : "snaq" or "squirrel"
 EOF
   exit 1
 }

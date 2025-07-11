@@ -19,7 +19,9 @@ minCycleSize <- function(network) {
 }
 
 nu <- 100.0
-if(n == 50) {
+if(n == 30) {
+    nu <- 0.05
+} else if(n == 50) {
     nu <- 0.025
 } else if(n == 100) {
     nu <- 0.0035
@@ -28,7 +30,7 @@ if(n == 50) {
 } else if(n == 500) {
     nu <- 0.00015
 } else {
-    cat("ERROR: n =", n, "not a valid parameter.")
+    cat("ERROR: n =", n, "not a valid parameter.\n")
 }
 
 iseed <- seed
