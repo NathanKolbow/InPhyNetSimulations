@@ -9,25 +9,15 @@ nrow(df)
 
 ggplot(df, aes(x = input_error, y = hwcd, color = imethod, shape = as.factor(ngt), size = as.factor(nbp))) +
     facet_grid(m~ntaxa) +
-    geom_jitter(width = 0.15, height = 0) +
+    geom_jitter(width = 0.05, height = 0.05) +
     geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
     scale_size_manual(values = c("100" = 1, "1000" = 3)) +
     scale_shape_manual(values = c("100" = 3, "1000" = 1))
 
 
-ggplot(df, aes(x = as.factor(ngt), y = hwcd, color = as.factor(nbp))) +
-    facet_grid(ntaxa~m) +
-    geom_boxplot()
-
-ggplot(df, aes(x = as.factor(ngt), y = hwcd, color = as.factor(nbp))) +
-    facet_grid(ntaxa~imethod+m) +
-    geom_boxplot()
-
-
-
-
-
-
+ggplot(df, aes(x = as.factor(ntaxa), y = runtime_serial, fill = as.factor(ngt))) +
+  facet_grid(imethod ~ nbp, scale="free") +
+  geom_boxplot()
 
 
 
@@ -50,6 +40,7 @@ df_clean <- df %>%
                      levels = c("snaq","squirrel"),
                      labels = c("SNaQ","SQUIRREL"))
   )
+df_clean$hwcd <- df_clean$runtime_serial
 p_hwcd <- ggplot(df_clean,
         aes(x = ngt, y = hwcd, fill = nbp)) +
 
