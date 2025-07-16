@@ -41,6 +41,7 @@ for (isubset, subset) in enumerate(subsets)
     gts = prune_networks(full_gts, subset)
     df = readtrees2CF(gts, writeSummary=false)
     snaq_net = snaq!(gts[1], df; hmax=subset_truenet.numhybrids, runs=10, filename="$(temp_dir)/snaq$(isubset)", seed=seed+isubset)
+    rt = time() - rt
 
     open(temp_net_output, "a+") do f
         write(f, "$(writenewick(snaq_net))\n")
