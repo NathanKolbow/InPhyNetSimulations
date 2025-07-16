@@ -14,7 +14,7 @@ include(joinpath(@__DIR__, "subscripts", "gtee.jl"))
 global df = DataFrame(
     ntaxa=Int[], ngt=Int[], ils=String[], nbp=Int[], m=Int[], r=Int[], imethod=String[],
     gtee=Float64[], hwcd=Int[], input_error=Float64[],
-    runtime_serial=Float64[], runtime_parallel=Float64[]
+    runtime_parallel=Float64[], runtime_serial=Float64[]
 )
 output_path = joinpath(@__DIR__, "..", "data", "all.csv")
 
