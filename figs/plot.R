@@ -15,10 +15,39 @@ ggplot(df, aes(x = input_error, y = hwcd, color = imethod, shape = as.factor(ngt
     scale_shape_manual(values = c("100" = 3, "1000" = 1))
 
 
-ggplot(df, aes(x = as.factor(ntaxa), y = runtime_serial, fill = as.factor(ngt))) +
-  facet_grid(imethod ~ nbp, scale="free") +
-  geom_boxplot()
 
+df_plot <- filter(df, imethod == "snaq") %>% 
+  mutate(
+    ntaxa_num = as.integer(as.character(ntaxa)),
+    m = as.factor(m),
+    nbp = paste0("nbp = ", nbp),
+    ngt = paste0("ngt = ", ngt)
+  )
+
+ggplot(df_plot, aes(x = ntaxa_num, y = hwcd, color = m)) +
+  facet_grid(ngt ~ nbp) +
+  geom_boxplot(
+    aes(group    = interaction(ntaxa_num, m)),
+    position     = position_dodge(width = 5),
+    width        = 5,
+    outlier.size = 0.7
+  ) +
+  stat_smooth(
+    aes(group = m),
+    method  = "lm",
+    formula = y ~ x,
+    se      = FALSE,
+    size    = 0.9,
+    linetype = "dashed"
+  ) +
+  scale_x_continuous(
+    breaks = sort(unique(df_plot$ntaxa_num)),
+    labels = sort(unique(df_plot$ntaxa))
+  ) +
+  xlab("ntaxa") +
+  scale_colour_brewer(palette = "Dark2", name = "Maximum Constraint Size") +
+  theme_bw() +
+  theme(legend.position = "bottom")
 
 
 
@@ -40,7 +69,6 @@ df_clean <- df %>%
                      levels = c("snaq","squirrel"),
                      labels = c("SNaQ","SQUIRREL"))
   )
-df_clean$hwcd <- df_clean$runtime_serial
 p_hwcd <- ggplot(df_clean,
         aes(x = ngt, y = hwcd, fill = nbp)) +
 
