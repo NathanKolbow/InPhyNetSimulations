@@ -20,6 +20,7 @@ import InPhyNet: prune_network
 est_gts = readMultiTopology(est_gt_file)
 D, namelist = calculateAGID(est_gts)
 nj_tre = inphynet(D, Vector{HybridNetwork}([]), namelist)   # PhyloNetworks.nj is SUPER slow for large `n`
+k = min(k, length(namelist))
 cladewiseorder!(nj_tre)
 ordered_leaves = [node.name for node in nj_tre.node[nj_tre.vec_int1] if node.leaf && node.name != "OUTGROUP"]
 

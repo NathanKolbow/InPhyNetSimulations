@@ -9,26 +9,45 @@ nrow(df)
 
 ggplot(df, aes(x = input_error, y = hwcd, color = imethod, shape = as.factor(ngt), size = as.factor(nbp))) +
     facet_grid(m~ntaxa) +
-    geom_jitter(width = 0.15, height = 0) +
+    geom_jitter(width = 0.05, height = 0.05) +
     geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
     scale_size_manual(values = c("100" = 1, "1000" = 3)) +
     scale_shape_manual(values = c("100" = 3, "1000" = 1))
 
 
-ggplot(df, aes(x = as.factor(ngt), y = hwcd, color = as.factor(nbp))) +
-    facet_grid(ntaxa~m) +
-    geom_boxplot()
 
-ggplot(df, aes(x = as.factor(ngt), y = hwcd, color = as.factor(nbp))) +
-    facet_grid(ntaxa~imethod+m) +
-    geom_boxplot()
+df_plot <- filter(df, imethod == "snaq") %>% 
+  mutate(
+    ntaxa_num = as.integer(as.character(ntaxa)),
+    m = as.factor(m),
+    nbp = paste0("nbp = ", nbp),
+    ngt = paste0("ngt = ", ngt)
+  )
 
-
-
-
-
-
-
+ggplot(df_plot, aes(x = ntaxa_num, y = hwcd, color = m)) +
+  facet_grid(ngt ~ nbp) +
+  geom_boxplot(
+    aes(group    = interaction(ntaxa_num, m)),
+    position     = position_dodge(width = 5),
+    width        = 5,
+    outlier.size = 0.7
+  ) +
+  stat_smooth(
+    aes(group = m),
+    method  = "lm",
+    formula = y ~ x,
+    se      = FALSE,
+    size    = 0.9,
+    linetype = "dashed"
+  ) +
+  scale_x_continuous(
+    breaks = sort(unique(df_plot$ntaxa_num)),
+    labels = sort(unique(df_plot$ntaxa))
+  ) +
+  xlab("ntaxa") +
+  scale_colour_brewer(palette = "Dark2", name = "Maximum Constraint Size") +
+  theme_bw() +
+  theme(legend.position = "bottom")
 
 
 
