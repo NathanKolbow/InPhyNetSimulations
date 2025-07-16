@@ -3,6 +3,8 @@ Pkg.activate(joinpath(@__DIR__, ".."))
 Pkg.instantiate();
 Pkg.update();
 
+ENV["JULIA_DEPOT_PATH"] = joinpath(pwd(), "..")
+
 
 using PhyloNetworks, DataFrames, CSV, InPhyNet, Base.Threads
 include(joinpath(@__DIR__, "subscripts", "gtee.jl"))
