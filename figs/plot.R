@@ -7,49 +7,106 @@ library(gghalves)
 df <- read.csv("data/all.csv")
 nrow(df)
 
-ggplot(df, aes(x = input_error, y = hwcd, color = imethod, shape = as.factor(ngt), size = as.factor(nbp))) +
-    facet_grid(m~ntaxa) +
-    geom_jitter(width = 0.05, height = 0.05) +
-    geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
-    scale_size_manual(values = c("100" = 1, "1000" = 3)) +
-    scale_shape_manual(values = c("100" = 3, "1000" = 1))
+theme_set(theme_minimal())
 
 
 
-df_plot <- filter(df, imethod == "snaq") %>% 
+df_plot <- df %>% 
   mutate(
     ntaxa_num = as.integer(as.character(ntaxa)),
-    m = as.factor(m),
+    m = paste0("m = ", as.factor(m)),
+    ntaxa_char = paste0(ntaxa, " tips"),
+    imethod = if_else(imethod == "snaq", "SNaQ", "Squirrel")
+  )
+levels(df_plot$ntaxa_char) = c("30 tips", "50 tips", "100 tips", "200 tips")
+
+# INPUT VS OUTPUT
+p_inout <- ggplot(df_plot, aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
+    geom_jitter(width = 0.0, height = 0.05, stroke=0.6, alpha=0.6) +
+    geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
+    scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1)) +
+    scale_color_manual(
+      breaks = levels(df_plot$ntaxa_char),
+      values = c("#1b9e77", "#d95f02", "#7570b3", "#e7298a")
+    ) +
+    labs(
+      x = "Input Error (HWCD)",
+      y = "Output Error (HWCD)",
+      color = "Number of Tips",
+      shape = "Method",
+      size = ""
+    ) +
+    theme_bw() +
+    scale_x_sqrt(limits = c(-0.001, 450)) +
+    scale_y_sqrt(limits = c(-0.001, 450)) +
+    theme(
+      panel.grid.minor  = element_blank(),
+      legend.position   = "bottom",
+      legend.box        = "vertical",
+      legend.spacing.y  = unit(-0.5, "lines")
+    ) +
+    guides(
+      color = guide_legend(order = 2),
+      shape = guide_legend(order = 1)
+    )
+p_inout
+
+pdf("figs/accuracy/input-vs-output.pdf", width=5, height=5.5)
+p_inout
+dev.off()
+
+
+df_plot <- df_plot %>%
+  mutate(
+    nbp_str = paste0(nbp, " base pairs"),
+    ngt_str = paste0(ngt, " gene trees"),
     nbp = paste0("nbp = ", nbp),
     ngt = paste0("ngt = ", ngt)
   )
 
-ggplot(df_plot, aes(x = ntaxa_num, y = hwcd, color = m)) +
-  facet_grid(ngt ~ nbp) +
-  geom_boxplot(
+
+
+p_rt <- filter(df_plot, runtime_serial < 1e8 & imethod == "SNaQ") %>%
+  mutate(runtime_parallel = (runtime_parallel / 60) / 60) %>%
+  ggplot(aes(x = ntaxa_num, y = runtime_parallel)) +
+  facet_grid(m ~ ., scales="free") +
+  geom_violin(
     aes(group    = interaction(ntaxa_num, m)),
-    position     = position_dodge(width = 5),
-    width        = 5,
-    outlier.size = 0.7
+    position     = position_dodge(width = 15),
+    width        = 15,
+    color        = "black"
   ) +
   stat_smooth(
     aes(group = m),
-    method  = "lm",
-    formula = y ~ x,
-    se      = FALSE,
-    size    = 0.9,
-    linetype = "dashed"
+    method   = "lm",
+    formula  = y ~ x,
+    se       = FALSE,
+    size     = 0.5,
+    linetype = "dashed",
+    alpha    = 0.5,
+    color    = "black"
   ) +
   scale_x_continuous(
     breaks = sort(unique(df_plot$ntaxa_num)),
     labels = sort(unique(df_plot$ntaxa))
   ) +
-  xlab("ntaxa") +
-  scale_colour_brewer(palette = "Dark2", name = "Maximum Constraint Size") +
-  theme_bw() +
-  theme(legend.position = "bottom")
+  labs(
+    x = "Number of Tips",
+    y = "Runtime (hours)"
+  ) +
+  theme_classic() +
+  theme(
+    panel.border       = element_rect(colour = "black", fill = NA, linewidth = .4),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey90", linewidth = .25),
+    strip.text         = element_text(face = "bold", size = 8),
+    legend.position    = "bottom"
+  )
+p_rt
 
-
+pdf("figs/runtime/linear-runtime.pdf", width=5, height=5)
+p_rt
+dev.off()
 
 
 
@@ -58,35 +115,41 @@ ggplot(df_plot, aes(x = ntaxa_num, y = hwcd, color = m)) +
 df_clean <- df %>% 
   mutate(
     ngt   = factor(ngt,  levels = sort(unique(ngt)),
-                         labels  = paste0("ngt = ", sort(unique(ngt)))),
+                         labels  = paste0(sort(unique(ngt)))),
     nbp   = factor(nbp,  levels = sort(unique(nbp)),
-                         labels  = paste0("nbp = ", sort(unique(nbp)))),
+                         labels  = paste0(sort(unique(nbp)))),
     m     = factor(m,    levels = sort(unique(m)),
                          labels  = paste0("m = ", sort(unique(m)))),
     ntaxa = factor(ntaxa,levels = sort(unique(ntaxa)),
-                         labels  = paste0("ntaxa = ", sort(unique(ntaxa)))),
+                         labels  = paste0(sort(unique(ntaxa)), " tips")),
     imethod = factor(imethod,
                      levels = c("snaq","squirrel"),
                      labels = c("SNaQ","SQUIRREL"))
   )
+
 p_hwcd <- ggplot(df_clean,
         aes(x = ngt, y = hwcd, fill = nbp)) +
-
   geom_boxplot(width = .55, outlier.shape = NA, linewidth = .25) +
-
   facet_grid(ntaxa ~ imethod + m, labeller = label_value, scales="free") +
-
-  scale_fill_brewer(palette = "Dark2", name = "Number of base pairs (nbp)") +
-
-  labs(x = "Number of gene trees (ngt)",
-       y = "HWCD") +
-
+  scale_fill_manual(
+    values = c("100" = "#1b9e77", "1000" = "#d95f02"),
+    name = "Number of Base Pairs (nbp)"
+  ) +
+  labs(x = "Number of Gene Trees (ngt)",
+       y = "Output Error (HWCD)") +
   theme_classic(base_size = 9) +
   theme(
     panel.border       = element_rect(colour = "black", fill = NA, linewidth = .4),
     panel.grid.major.x = element_blank(),
     panel.grid.major.y = element_line(colour = "grey90", linewidth = .25),
     strip.text         = element_text(face = "bold", size = 8),
-    legend.position    = "top"
-  )
+    legend.position    = "bottom"
+  ) +
+  expand_limits(x = 0, y = 0)
 p_hwcd
+
+
+pdf("figs/accuracy/hwcd.pdf", width=5, height=5)
+p_hwcd
+dev.off()
+
