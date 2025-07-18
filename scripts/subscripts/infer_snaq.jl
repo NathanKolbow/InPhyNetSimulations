@@ -3,6 +3,10 @@ Pkg.activate(joinpath(@__DIR__, "..", ".."))
 Pkg.instantiate()
 Pkg.update()
 
+@everywhere using Pkg
+@everywhere Pkg.activate(joinpath(@__DIR__, "..", ".."))
+@everywhere using PhyloNetworks, SNaQ
+
 using PhyloNetworks, SNaQ, InPhyNet
 subset_file = ARGS[1]
 gt_file = ARGS[2]
