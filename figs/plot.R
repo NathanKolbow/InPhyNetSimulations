@@ -7,7 +7,7 @@ library(gghalves)
 df <- read.csv("data/all.csv")
 nrow(df)
 
-theme_set(theme_minimal())
+theme_set(theme_bw())
 
 
 
@@ -16,7 +16,7 @@ df_plot <- df %>%
     ntaxa_num = as.integer(as.character(ntaxa)),
     m = paste0("m = ", as.factor(m)),
     ntaxa_char = paste0(ntaxa, " tips"),
-    imethod = if_else(imethod == "snaq", "SNaQ", "Squirrel")
+    imethod = if_else(imethod == "snaq", "SNaQ", if_else(imethod == "squirrel", "Squirrel", "PhyloNet"))
   )
 levels(df_plot$ntaxa_char) = c("30 tips", "50 tips", "100 tips", "200 tips")
 
@@ -24,7 +24,7 @@ levels(df_plot$ntaxa_char) = c("30 tips", "50 tips", "100 tips", "200 tips")
 p_inout <- ggplot(df_plot, aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
     geom_jitter(width = 0.0, height = 0.05, stroke=0.6, alpha=0.6) +
     geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
-    scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1)) +
+    scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1, "PhyloNet" = 8)) +
     scale_color_manual(
       breaks = levels(df_plot$ntaxa_char),
       values = c("#1b9e77", "#d95f02", "#7570b3", "#e7298a")
@@ -66,9 +66,10 @@ df_plot <- df_plot %>%
 
 
 
+# <1e8 to fix some bugged outputs
 p_rt <- filter(df_plot, runtime_serial < 1e8 & imethod == "SNaQ") %>%
-  mutate(runtime_parallel = (runtime_parallel / 60) / 60) %>%
-  ggplot(aes(x = ntaxa_num, y = runtime_parallel)) +
+  mutate(runtime_serial = runtime_serial / 360) %>%
+  ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
   facet_grid(m ~ ., scales="free") +
   geom_violin(
     aes(group    = interaction(ntaxa_num, m)),
@@ -123,8 +124,8 @@ df_clean <- df %>%
     ntaxa = factor(ntaxa,levels = sort(unique(ntaxa)),
                          labels  = paste0(sort(unique(ntaxa)), " tips")),
     imethod = factor(imethod,
-                     levels = c("snaq","squirrel"),
-                     labels = c("SNaQ","SQUIRREL"))
+                     levels = c("snaq","squirrel", "phylonet"),
+                     labels = c("SNaQ","SQUIRREL", "PhyloNet"))
   )
 
 p_hwcd <- ggplot(df_clean,
