@@ -7,7 +7,7 @@ Pkg.activate(joinpath(@__DIR__, ".."))
 Pkg.instantiate();
 Pkg.update();
 
-ENV["JULIA_DEPOT_PATH"] = joinpath(pwd(), "..")
+ENV["JULIA_DEPOT_PATH"] = joinpath(@__DIR__, "..")
 
 
 using PhyloNetworks, DataFrames, CSV, InPhyNet, Base.Threads
@@ -30,17 +30,17 @@ else
 end
 
 
-rows = Array{Any}(undef, 4*2*2*2*2*10*2)
-is_valid = falses(4*2*2*2*2*10*2)
+rows = Array{Any}(undef, 5*2*2*2*2*10*4)
+is_valid = falses(5*2*2*2*2*10*4)
 
 global j = Atomic{Int}(0)
-for ntaxa in [30, 50, 100, 200]
+for ntaxa in [25, 30, 50, 100, 200]
 for ngt in [100, 1000]
 for ils in ["low", "high"]
 for nbp in [100, 1000]
 for m in [10, 20]
 for r = 1:10
-for imethod in ["snaq", "squirrel"]
+for imethod in ["phylonet", "snaq", "squirrel", "phylonet-ml"]
     global j
     atomic_add!(j, 1)
     if Threads.threadid() == 1
@@ -64,7 +64,11 @@ for imethod in ["snaq", "squirrel"]
 
     egts = readmultinewick(joinpath(basedir, "estgts.tre"))
     tgts = readmultinewick(joinpath(basedir, "truegts.tre"))
-    gtee_val = gtee(egts, tgts)
+    gtee_val = -1.0
+    try
+        gtee_val = gtee(egts, tgts)
+    catch
+    end
 
     # Input error calculation
     constraints = readmultinewick(joinpath(basedir, "$(imethod).net"))

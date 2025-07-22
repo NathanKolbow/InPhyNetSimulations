@@ -19,7 +19,7 @@ minCycleSize <- function(network) {
 }
 
 nu <- 100.0
-if(n == 30) {
+if(n == 30 || n == 25) {
     nu <- 0.05
 } else if(n == 50) {
     nu <- 0.025
