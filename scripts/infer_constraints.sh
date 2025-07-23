@@ -13,7 +13,7 @@ if [[ "${imethod}" == "snaq" ]]; then
         rm "${basedir}/constraints-${imethod}.net"
     fi
     export JULIA_DEPOT_PATH="${scriptdir}/.."
-    julia -p4 -t4 "${scriptdir}/subscripts/infer_snaq.jl" "${basedir}/subsets" "${basedir}/estgts.tre" "${basedir}/snaq.net" "${basedir}/snaq.runtime" "${basedir}/true.net" "${basedir}/temp-data/" "${seed}"
+    julia -t8 -p8 "${scriptdir}/subscripts/infer_snaq.jl" "${basedir}/subsets" "${basedir}/estgts.tre" "${basedir}/snaq.net" "${basedir}/snaq.runtime" "${basedir}/true.net" "${basedir}/temp-data/" "${seed}"
 fi
 
 
