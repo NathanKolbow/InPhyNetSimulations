@@ -21,6 +21,7 @@ test.fasta
 
 # Simulation intermediary data
 data/
+data.zip
 *estgts-incomplete.tre*
 *.bionj
 *.ckp.gz

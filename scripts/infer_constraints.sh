@@ -18,14 +18,24 @@ fi
 
 
 #--------------------
-# PhyloNet
+# PhyloNet-ML
+#--------------------
+if [[ "${imethod}" == "phylonet-ml" ]]; then
+    if [[ -f "${basedir}/constraints-${imethod}.net" ]]; then
+        rm "${basedir}/constraints-${imethod}.net"
+    fi
+    ${scriptdir}/subscripts/infer_phylonet-ml.sh $n $ngt $ils $nbp $m $r $imethod $seed
+fi
+
+#--------------------
+# PhyloNet(-MPL)
 #--------------------
 # Tutorial: https://phylogenomics.rice.edu/html/commands/InferNetwork_MPL.html
 if [[ "${imethod}" == "phylonet" ]]; then
     if [[ -f "${basedir}/constraints-${imethod}.net" ]]; then
         rm "${basedir}/constraints-${imethod}.net"
     fi
-    ${scriptdir}/subscripts/infer_phylonet.sh "${basedir}/estgts.tre" "${basedir}/temp-data" "${basedir}/phylonet.net" "${basedir}/phylonet.runtime"
+    ${scriptdir}/subscripts/infer_phylonet.sh $n $ngt $ils $nbp $m $r $imethod $seed
 fi
 
 #--------------------

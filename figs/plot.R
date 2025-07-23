@@ -7,7 +7,7 @@ library(gghalves)
 df <- read.csv("data/all.csv")
 nrow(df)
 
-theme_set(theme_minimal())
+theme_set(theme_bw())
 
 
 
@@ -16,15 +16,18 @@ df_plot <- df %>%
     ntaxa_num = as.integer(as.character(ntaxa)),
     m = paste0("m = ", as.factor(m)),
     ntaxa_char = paste0(ntaxa, " tips"),
-    imethod = if_else(imethod == "snaq", "SNaQ", "Squirrel")
+    imethod = if_else(imethod == "snaq", "SNaQ",
+              if_else(imethod == "squirrel", "Squirrel",
+              if_else(imethod == "phylonet", "PhyloNet-MPL",
+              if_else(imethod == "phylonet-ml", "PhyloNet-ML", "NA"))))
   )
 levels(df_plot$ntaxa_char) = c("30 tips", "50 tips", "100 tips", "200 tips")
 
 # INPUT VS OUTPUT
 p_inout <- ggplot(df_plot, aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
-    geom_jitter(width = 0.0, height = 0.05, stroke=0.6, alpha=0.6) +
+    geom_jitter(width = 0.05, height = 0.1, stroke=0.5, size=0.85, alpha=0.6) +
     geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
-    scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1)) +
+    scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1, "PhyloNet-MPL" = 8, "PhyloNet-ML" = 6)) +
     scale_color_manual(
       breaks = levels(df_plot$ntaxa_char),
       values = c("#1b9e77", "#d95f02", "#7570b3", "#e7298a")
@@ -37,8 +40,8 @@ p_inout <- ggplot(df_plot, aes(x = input_error, y = hwcd, color = ntaxa_char, sh
       size = ""
     ) +
     theme_bw() +
-    scale_x_sqrt(limits = c(-0.001, 450)) +
-    scale_y_sqrt(limits = c(-0.001, 450)) +
+    scale_x_sqrt(limits = c(-0.05, 450)) +
+    scale_y_sqrt(limits = c(-0.05, 450)) +
     theme(
       panel.grid.minor  = element_blank(),
       legend.position   = "bottom",
@@ -66,10 +69,11 @@ df_plot <- df_plot %>%
 
 
 
-p_rt <- filter(df_plot, runtime_serial < 1e8 & imethod == "SNaQ") %>%
-  mutate(runtime_parallel = (runtime_parallel / 60) / 60) %>%
-  ggplot(aes(x = ntaxa_num, y = runtime_parallel)) +
-  facet_grid(m ~ ., scales="free") +
+# <1e8 to fix some bugged outputs
+p_rt <- filter(df_plot, runtime_serial < 1e8 & imethod == "SNaQ") %>% #filter(df_plot, runtime_serial < 1e8 & (imethod == "SNaQ" | imethod == "PhyloNet-ML" | imethod == "PhyloNet-MPL")) %>%
+  mutate(runtime_serial = runtime_serial / 360) %>%
+  ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
+  facet_grid(m ~ imethod, scales="free") +
   geom_violin(
     aes(group    = interaction(ntaxa_num, m)),
     position     = position_dodge(width = 15),
@@ -123,19 +127,21 @@ df_clean <- df %>%
     ntaxa = factor(ntaxa,levels = sort(unique(ntaxa)),
                          labels  = paste0(sort(unique(ntaxa)), " tips")),
     imethod = factor(imethod,
-                     levels = c("snaq","squirrel"),
-                     labels = c("SNaQ","SQUIRREL"))
+                     levels = c("snaq","squirrel", "phylonet", "phylonet-ml"),
+                     labels = c("SNaQ","SQUIRREL", "PhyloNet-MPL", "PhyloNet-ML")),
+    ils = factor(ils, levels = c("high", "low"), labels = c("High ILS", "Low ILS"))
   )
 
 p_hwcd <- ggplot(df_clean,
-        aes(x = ngt, y = hwcd, fill = nbp)) +
+        aes(x = ils, y = hwcd, fill = nbp)) +
   geom_boxplot(width = .55, outlier.shape = NA, linewidth = .25) +
-  facet_grid(ntaxa ~ imethod + m, labeller = label_value, scales="free") +
+  #facet_grid(ntaxa ~ ngt + imethod + m, labeller = label_value, scales="free") +
+  facet_nested(ntaxa ~ imethod + m, labeller = label_value, scales="free") +
   scale_fill_manual(
     values = c("100" = "#1b9e77", "1000" = "#d95f02"),
-    name = "Number of Base Pairs (nbp)"
+    name = "Number of Base Pairs"
   ) +
-  labs(x = "Number of Gene Trees (ngt)",
+  labs(x = "",
        y = "Output Error (HWCD)") +
   theme_classic(base_size = 9) +
   theme(
