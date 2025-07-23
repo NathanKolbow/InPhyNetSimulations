@@ -3,6 +3,7 @@ library(tidyverse)
 library(patchwork)
 library(ggdist)
 library(gghalves)
+library(ggh4x)
 
 df <- read.csv("data/all.csv")
 nrow(df)
@@ -129,7 +130,7 @@ df_clean <- df %>%
     imethod = factor(imethod,
                      levels = c("snaq","squirrel", "phylonet", "phylonet-ml"),
                      labels = c("SNaQ","SQUIRREL", "PhyloNet-MPL", "PhyloNet-ML")),
-    ils = factor(ils, levels = c("high", "low"), labels = c("High ILS", "Low ILS"))
+    ils = factor(ils, levels = c("high", "low"), labels = c("High", "Low"))
   )
 
 p_hwcd <- ggplot(df_clean,
@@ -141,7 +142,7 @@ p_hwcd <- ggplot(df_clean,
     values = c("100" = "#1b9e77", "1000" = "#d95f02"),
     name = "Number of Base Pairs"
   ) +
-  labs(x = "",
+  labs(x = "Level of ILS",
        y = "Output Error (HWCD)") +
   theme_classic(base_size = 9) +
   theme(
