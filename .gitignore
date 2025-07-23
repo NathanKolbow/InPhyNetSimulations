@@ -20,7 +20,7 @@ test.fasta
 */scratch_dir/
 
 # Simulation intermediary data
-data/
+data/*/
 data.zip
 *estgts-incomplete.tre*
 *.bionj
