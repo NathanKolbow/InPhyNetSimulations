@@ -5,7 +5,8 @@ library(ggdist)
 library(gghalves)
 library(ggh4x)
 
-df <- read.csv("data/all.csv")
+df <- read.csv("data/all.csv") %>%
+  filter(ntaxa != 30)
 nrow(df)
 
 theme_set(theme_bw())
@@ -22,7 +23,7 @@ df_plot <- df %>%
               if_else(imethod == "phylonet", "PhyloNet-MPL",
               if_else(imethod == "phylonet-ml", "PhyloNet-ML", "NA"))))
   )
-levels(df_plot$ntaxa_char) = c("30 tips", "50 tips", "100 tips", "200 tips")
+levels(df_plot$ntaxa_char) = c("25 tips", "50 tips", "100 tips", "200 tips")
 
 # INPUT VS OUTPUT
 p_inout <- ggplot(df_plot, aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
