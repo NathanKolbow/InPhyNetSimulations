@@ -10,5 +10,5 @@ SNaQ = "c2bf7a07-44d2-4d11-b5e2-76dc5aa199d6"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [sources]
-SNaQ = {rev = "snaq2", url = "https://github.com/JuliaPhylo/SNaQ.jl/"}
 InPhyNet = {url = "https://github.com/NathanKolbow/InPhyNet.jl"}
+SNaQ = {rev = "snaq2", url = "https://github.com/JuliaPhylo/SNaQ.jl/"}
