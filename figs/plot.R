@@ -5,8 +5,7 @@ library(ggdist)
 library(gghalves)
 library(ggh4x)
 
-df <- read.csv("data/all.csv") %>%
-  filter(ntaxa != 30)
+df <- read.csv("data/all.csv")
 nrow(df)
 
 theme_set(theme_bw())
@@ -66,24 +65,26 @@ df_plot <- df_plot %>%
     nbp_str = paste0(nbp, " base pairs"),
     ngt_str = paste0(ngt, " gene trees"),
     nbp = paste0("nbp = ", nbp),
-    ngt = paste0("ngt = ", ngt)
+    ngt = paste0("ngt = ", ngt),
+    runtime_serial = runtime_serial / 360,
+    ils = factor(ils, levels = c("low", "high"), labels = c("Low ILS", "High ILS"))
   )
 
 
 
 # <1e8 to fix some bugged outputs
-p_rt <- filter(df_plot, runtime_serial < 1e8 & imethod == "SNaQ") %>% #filter(df_plot, runtime_serial < 1e8 & (imethod == "SNaQ" | imethod == "PhyloNet-ML" | imethod == "PhyloNet-MPL")) %>%
-  mutate(runtime_serial = runtime_serial / 360) %>%
-  ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
-  facet_grid(m ~ imethod, scales="free") +
-  geom_violin(
-    aes(group    = interaction(ntaxa_num, m)),
-    position     = position_dodge(width = 15),
-    width        = 15,
+#p_rt <- filter(df_plot, runtime_serial < 1e8 & imethod == "SNaQ") %>%
+p_rt <- df_plot %>%#filter(df_plot, runtime_serial < 1e8 & m == "m = 10" & imethod == "SNaQ") %>%
+  ggplot(aes(x = ntaxa_num, y = runtime_serial, fill = as.factor(ils))) +
+  facet_grid(imethod ~ m, scales="free") +
+  geom_boxplot(
+    aes(group    = interaction(ntaxa_num, m, ils)),
+    position     = position_dodge(width = 5),
+    width        = 5,
     color        = "black"
   ) +
   stat_smooth(
-    aes(group = m),
+    aes(group = interaction(ntaxa_num, m, ils)),
     method   = "lm",
     formula  = y ~ x,
     se       = FALSE,
@@ -111,6 +112,119 @@ p_rt <- filter(df_plot, runtime_serial < 1e8 & imethod == "SNaQ") %>% #filter(df
 p_rt
 
 pdf("figs/runtime/linear-runtime.pdf", width=5, height=5)
+p_rt
+dev.off()
+
+
+
+
+# rt_plot <- function(dat, method) {
+#   dat <- dat %>%
+#     filter(imethod == method & ils == "Low ILS")
+#   summary_df <- dat %>%
+#     group_by(m, ils, ntaxa_num) %>%
+#     summarise(
+#       mean_rt = median(runtime_serial),
+#       ymin = quantile(runtime_serial, 0.1),
+#       ymax = quantile(runtime_serial, 0.9)
+#     )
+#   dat %>%
+#     ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
+#     facet_grid(m ~ ils, scales = "free") +
+#     geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red", linetype = "dashed") +
+#     geom_point(data=summary_df, aes(x = ntaxa_num, y = mean_rt)) +
+#     geom_errorbar(data=summary_df, aes(ymin = ymin, ymax = ymax, y = mean_rt)) +
+#     labs(
+#       x = "Number of Tips",
+#       y = "Runtime (hours)"
+#     ) +
+#     theme_classic() +
+#     theme(
+#       panel.border       = element_rect(colour = "black", fill = NA, linewidth = .4),
+#       panel.grid.major.x = element_blank(),
+#       panel.grid.major.y = element_line(colour = "grey90", linewidth = .25),
+#       strip.text         = element_text(face = "bold", size = 8),
+#       legend.position    = "bottom"
+#     ) +
+#     scale_x_continuous(
+#       breaks = unique(df$ntaxa),
+#       labels = unique(df$ntaxa)
+#     ) +
+#     ggtitle(method)
+# }
+# rt_plot(df_plot, "PhyloNet-MPL") + rt_plot(df_plot, "SNaQ") + rt_plot(df_plot, "Squirrel")
+
+
+summary_df <- df_plot %>%
+  filter(ils == "Low ILS" & imethod != "Squirrel") %>%
+  group_by(m, ils, ntaxa_num, imethod) %>%
+  summarise(
+    mean_rt = mean(runtime_serial),
+    ymin = quantile(runtime_serial, 0.025),
+    ymax = quantile(runtime_serial, 0.975)
+  )
+nosquirrel <- df_plot %>%
+  filter(ils == "Low ILS" & imethod != "Squirrel") %>%
+  ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
+  facet_grid(m ~ imethod, scales = "free") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red", linetype = "dashed") +
+  geom_point(data=summary_df, aes(x = ntaxa_num, y = mean_rt)) +
+  geom_errorbar(data=summary_df, aes(ymin = ymin, ymax = ymax, y = mean_rt)) +
+  labs(
+    x = "Number of Tips",
+    y = "Runtime (hours)"
+  ) +
+  theme_classic() +
+  theme(
+    panel.border       = element_rect(colour = "black", fill = NA, linewidth = .4),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey90", linewidth = .25),
+    strip.text         = element_text(face = "bold", size = 8),
+    legend.position    = "bottom"
+  ) +
+  scale_x_continuous(
+    breaks = unique(df$ntaxa),
+    labels = unique(df$ntaxa)
+  )
+summary_df <- df_plot %>%
+  filter(ils == "Low ILS" & imethod == "Squirrel") %>%
+  group_by(m, ils, ntaxa_num, imethod) %>%
+  summarise(
+    mean_rt = mean(runtime_serial),
+    ymin = quantile(runtime_serial, 0.025),
+    ymax = quantile(runtime_serial, 0.975)
+  )
+squirrel <- df_plot %>%
+  filter(ils == "Low ILS" & imethod == "Squirrel") %>%
+  ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
+  facet_grid(m ~ imethod, scales = "free") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red", linetype = "dashed") +
+  geom_point(data=summary_df, aes(x = ntaxa_num, y = mean_rt)) +
+  geom_errorbar(data=summary_df, aes(ymin = ymin, ymax = ymax, y = mean_rt)) +
+  labs(
+    x = "Number of Tips",
+    y = ""
+  ) +
+  theme_classic() +
+  theme(
+    panel.border       = element_rect(colour = "black", fill = NA, linewidth = .4),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey90", linewidth = .25),
+    strip.text         = element_text(face = "bold", size = 8),
+    legend.position    = "bottom"
+  ) +
+  scale_x_continuous(
+    breaks = unique(df$ntaxa),
+    labels = unique(df$ntaxa)
+  ) +
+  ylim(0, NA)
+
+p_rt <- nosquirrel + squirrel +
+  plot_layout(widths = c(2, 1), axis_titles = "collect")
+p_rt
+
+
+pdf("figs/runtime/linear-methods-separated.pdf", width=11, height=5)
 p_rt
 dev.off()
 
