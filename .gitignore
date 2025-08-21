@@ -1,4 +1,5 @@
 # Julia files
+depot_paths/
 Manifest.toml
 scratchspaces/
 registries/
@@ -28,3 +29,11 @@ data.zip
 *.iqtree
 *.log
 *.mldist
+
+# Condor and other
+conda/
+.vscode/
+condor/err/
+condor/log/
+condor/out/
+error/
