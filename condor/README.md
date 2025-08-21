@@ -1,0 +1,1 @@
+Files in this directory are set up so that scripts in the `scripts/` directory can be run on an HT Condor distributed computing cluster. For more details, please visit [HTCondor's website](https://htcondor.org/).
