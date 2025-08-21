@@ -2,17 +2,19 @@
 
 ## How to replicate simulations
 
-Below are the set of parameter combinations that are enumerated in the original simulation experiment. To replicate the results of a given parameter combination, run the script `scripts/perform_simulation.sh <ntaxa> <ngt> <ILS> <nbp> <m> <rep number>`. If data already exists from intermediate steps (e.g. estimated gene trees are already present), previous steps will be skipped. To clean the repo of all such intermediary data, run `scripts/remove_intermediary_data.sh`.
+Below are the set of parameter combinations that are enumerated in the original simulation experiment. To replicate the results of a given parameter combination, run the script `scripts/perform_simulation.sh <ntaxa> <ngt> <ILS> <nbp> <m> <rep number> <inference method>`. If data already exists from intermediate steps (e.g. estimated gene trees are already present), previous steps will be skipped. To clean the repo of all such intermediary data, run `scripts/remove_intermediary_data.sh`.
+
+Original simulations were performed with SNaQ and PhyloNet simulations being performed on an HT Condor cluster, whereas all Squirrel simulations were performed on a single machine. This is because the Squirrel simulations are exceptionally quick to run, whereas the SNaQ and PhyloNet simulations are exceptionally time consuming.
 
 ## Simulation parameters
 
-- [`n`] Number of taxa in the true network (50, 100, 200)
+- [`n`] Number of taxa in the true network (25, 50, 100, 200)
 - [`ngt`] Number of gene trees (100, 1000)
 - [`ils`] ILS level (low, high)
 - [`nbp`] MSA number of base pairs (100, 1000)
-- [`m`] Maximum subset size (10, 20)
+- [`m`] Maximum subset size (10)
 - [`r`] Replicate number (1-10)
-- [`imethod`] Constraint network inference software (snaq, at least one other)
+- [`imethod`] Constraint network inference software (snaq, phylonet, squirrel)
 > NEED TO PICK ANOTHER SOFTWARE TO COMPARE AGAINST OTHER THAN SNAQ
 
 Each unique combation of parameters is used to generate a unique seed that is used as input to each algorithm where applicable. When software requires multiple seeds (e.g. we need to generate `ngt` MSAs--using the same seed for each would not yield productive results) we use this value `+i-1`, where `i` is the `i`th iteration of the software requiring a seed (e.g. the first MSA is generated with `seed`, then with `seed+1`, then `seed+2`, and so on). The function used to generate these random seeds is `generate_seed`, located in `scripts/perform_simualtion.sh`.
@@ -35,7 +37,6 @@ e.g.: data/50/100/low/100/10/1/snaq/
     - Input: `number of taxa`, `replicate number`, `number of gene trees`, `ILS level`, `sequence length`, `inference method`
     - Output: for every method except Squirrel, estimated gene trees are placed in `basedir/estgts.tre` - for all methods the MSAs are placed in `basedir/msa.fasta` and the true gene trees are placed in `basedir/truegts.tre`
     - Previously generated data used: ground truth network
-  > TODO: verify that gtee's are reasonable.
 3. Subset decomposition
     - Script: `scripts/subset_decomposition.sh`
     - Input: `number of taxa`, `replicate number`, `number of gene trees`, `ILS level`, `sequence length`
