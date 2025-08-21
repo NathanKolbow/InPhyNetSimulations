@@ -37,3 +37,6 @@ condor/err/
 condor/log/
 condor/out/
 error/
+condor/tester
+.bash_history
+condor/submit.table
