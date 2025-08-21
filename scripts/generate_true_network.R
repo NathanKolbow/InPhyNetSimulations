@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
 
+.libPaths(c("/mnt/home/nkolbow/R/x86_64-pc-linux-gnu-library/4.4", .libPaths()))
 args <- commandArgs(trailingOnly = TRUE)
 
 library(SiPhyNetwork)
@@ -29,6 +30,8 @@ if(n == 30 || n == 25) {
     nu <- 0.001
 } else if(n == 500) {
     nu <- 0.00015
+} else if(n == 1000) {
+    nu <- 0.0001
 } else {
     cat("ERROR: n =", n, "not a valid parameter.\n")
 }

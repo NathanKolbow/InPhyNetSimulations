@@ -8,7 +8,7 @@ for ngt in 100 1000; do
 for ils in low high; do
 for nbp in 100 1000; do
 for n in 25; do
-for imethod in snaq squirrel phylonet phylonet-ml; do
+for imethod in snaq; do
     printf "\033[0;31m-----------------------------------------------------------------------------------\n"
     printf "\033[0;31m>> ${scriptdir}/perform_simulation.sh $n $ngt $ils $nbp $m $r $imethod <<\n"
     printf "\033[0;31m-----------------------------------------------------------------------------------\n\n\033[0m"

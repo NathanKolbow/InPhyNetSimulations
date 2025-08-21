@@ -3,6 +3,8 @@ estgtfile = ARGS[2]
 output = ARGS[3]
 rt_output = ARGS[4]
 
+isfile(constraintfile) || exit()
+
 using Pkg
 Pkg.activate(joinpath(@__DIR__, ".."))
 Pkg.instantiate()

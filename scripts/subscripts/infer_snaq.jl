@@ -3,11 +3,11 @@ Pkg.activate(joinpath(@__DIR__, "..", ".."))
 Pkg.instantiate()
 Pkg.update()
 
+using Distributed
 @everywhere using Pkg
 @everywhere Pkg.activate(joinpath(@__DIR__, "..", ".."))
-@everywhere using PhyloNetworks, SNaQ
 
-using PhyloNetworks, SNaQ, InPhyNet
+@everywhere using PhyloNetworks, SNaQ, InPhyNet
 subset_file = ARGS[1]
 gt_file = ARGS[2]
 net_output = ARGS[3]
@@ -44,7 +44,7 @@ for (isubset, subset) in enumerate(subsets)
     subset_truenet = prune_network(truenet, subset)
     gts = prune_networks(full_gts, subset)
     df = readtrees2CF(gts, writeSummary=false)
-    snaq_net = snaq!(gts[1], df; hmax=subset_truenet.numhybrids, runs=10, filename="$(temp_dir)/snaq$(isubset)", seed=seed+isubset)
+    snaq_net = snaq!(gts[1], df; hmax=subset_truenet.numhybrids, runs=20, filename="$(temp_dir)/snaq$(isubset)", seed=seed+isubset)
     rt = time() - rt
 
     open(temp_net_output, "a+") do f

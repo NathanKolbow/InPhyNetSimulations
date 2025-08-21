@@ -7,13 +7,13 @@ set -euo pipefail
 usage() {
   cat <<EOF
 Usage: $0 n ngt ils nbp m r imethod
-  n       : 50, 100, or 200
+  n       : 25, 50, 100, or 200
   ngt     : 100 or 1000
   ils     : "low" or "high"
   nbp     : 100 or 1000
   m       : 10 or 20
   r       : 1-10
-  imethod : "snaq" or "squirrel"
+  imethod : "snaq" or "squirrel" or "phylonet"
 EOF
   exit 1
 }
@@ -66,23 +66,27 @@ fi
 
 generate_seed() {
   local n="$1" ngt="$2" ils="$3" nbp="$4" m="$5" r="$6" imethod="$7"
-  # 1. build a string key out of all seven args
-  local key="${n}_${ngt}_${ils}_${nbp}_${m}_${r}_${imethod}"
-  # 2. hash it (md5)
-  local hash
-  if command -v md5sum >/dev/null 2>&1; then
-    hash=$(printf "%s" "$key" | md5sum | cut -d' ' -f1)
-  elif command -v md5 >/dev/null 2>&1; then
-    hash=$(printf "%s" "$key" | md5 -q)
+  if [ $n -eq 1000 ]; then
+    echo "$r"
   else
-    echo "ERROR: no md5sum or md5 available" >&2
-    exit 1
+    # 1. build a string key out of all seven args
+    local key="${n}_${ngt}_${ils}_${nbp}_${m}_${r}_${imethod}"
+    # 2. hash it (md5)
+    local hash
+    if command -v md5sum >/dev/null 2>&1; then
+      hash=$(printf "%s" "$key" | md5sum | cut -d' ' -f1)
+    elif command -v md5 >/dev/null 2>&1; then
+      hash=$(printf "%s" "$key" | md5 -q)
+    else
+      echo "ERROR: no md5sum or md5 available" >&2
+      exit 1
+    fi
+    local hex=${hash:0:8}
+    # 4. convert hex to decimal
+    local seed=$((16#$hex))
+    seed=$(( seed % 2147483647 ))
+    echo "${seed}"
   fi
-  local hex=${hash:0:8}
-  # 4. convert hex to decimal
-  local seed=$((16#$hex))
-  seed=$(( seed % 2147483647 ))
-  echo "${seed}"
 }
 seed=`generate_seed $n $ngt $ils $nbp $m $r $imethod`
 echo "> Unique seed: ${seed}"
@@ -91,6 +95,8 @@ echo "> Unique seed: ${seed}"
 if (( start_step <= 1 )); then
   # 1. Generate ground truth network
   echo "> Generating ground truth network."
+  module load R-4.4.0
+  export R_LIBS_PATH="/mnt/home/nkolbow/R/x86_64-pc-linux-gnu-library/4.4"
   Rscript "${scriptdir}/generate_true_network.R" $n $ils $seed "${basedir}/true.net"
 fi
 

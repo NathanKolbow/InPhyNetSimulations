@@ -30,22 +30,19 @@ else
 end
 
 
-rows = Array{Any}(undef, 5*2*2*2*2*10*4)
-is_valid = falses(5*2*2*2*2*10*4)
-
-global j = Atomic{Int}(0)
-for ntaxa in [25, 30, 50, 100, 200]
+global j = 0
+for imethod in ["phylonet-ml", "phylonet", "snaq", "squirrel"]
+for ntaxa in [25, 50, 100, 200]
 for ngt in [100, 1000]
 for ils in ["low", "high"]
 for nbp in [100, 1000]
 for m in [10, 20]
 for r = 1:10
-for imethod in ["phylonet", "snaq", "squirrel", "phylonet-ml"]
-    global j
-    atomic_add!(j, 1)
-    if Threads.threadid() == 1
-        print("\r$(j[]) / $(length(rows)) (total $(sum(is_valid) + nrow(df)))")
-    end
+    if imethod == "phylonet-ml" && m == 20 continue end
+
+    global j, ntot
+    j += 1
+    print("\r$(nrow(df)) / $(j)")
 
     if nrow(filter(row -> row.ntaxa == ntaxa && row.ngt == ngt && row.ils == ils && row.nbp == nbp && row.m == m && row.r == r && row.imethod == imethod, df)) > 0 continue end
 
@@ -54,7 +51,6 @@ for imethod in ["phylonet", "snaq", "squirrel", "phylonet-ml"]
     if !isfile(joinpath(basedir, "inphynet-$(imethod).net")) || !isfile(joinpath(basedir, "inphynet-$(imethod).runtime"))
         continue
     end
-    is_valid[j[]] = true
 
     tnet = readnewick(joinpath(basedir, "true.net"))
     enet = readnewick(joinpath(basedir, "inphynet-$(imethod).net"))
@@ -81,11 +77,12 @@ for imethod in ["phylonet", "snaq", "squirrel", "phylonet-ml"]
         if D_error == 0 break end
     end
 
-    rows[j[]] = [
+    push!(df, [
         ntaxa, ngt, ils, nbp, m, r, imethod,
         gtee_val, hardwiredclusterdistance(tnet, enet, false), input_cerror + D_error,
         enet_runtime + maximum(constraint_runtimes), enet_runtime + sum(constraint_runtimes)
-    ]
+    ])
+    CSV.write(output_path, df)
 end
 end
 end
@@ -94,8 +91,5 @@ end
 end
 end
 
-println("\n$(sum(is_valid)) / $(length(is_valid))")
-for idx in findall(is_valid)
-    push!(df, rows[idx])
-end
+println("\n$(nrow(df)) / $(ntot)")
 CSV.write(output_path, df)
