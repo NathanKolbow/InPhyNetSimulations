@@ -1,0 +1,20 @@
+# find . -type f \( -name '*.out' -o -name '*.log' -o -name '*.err' \) -delete
+universe = vanilla
+
+log = log/$(N)-$(NGT)-$(ILS)-$(NBP)-$(M)-$(R)-$(IMETHOD)-init.log
+error = err/$(N)-$(NGT)-$(ILS)-$(NBP)-$(M)-$(R)-$(IMETHOD)-init.err
+output = out/$(N)-$(NGT)-$(ILS)-$(NBP)-$(M)-$(R)-$(IMETHOD)-init.out
+
+should_transfer_files = NO
+
+executable = driver.sh
+arguments = $(N) $(NGT) $(ILS) $(NBP) $(M) $(R) $(IMETHOD)
+#environment="R_LIBS_PATH=/mnt/home/nkolbow/R/x86_64-pc-linux-gnu-library/4.4"
+
+requirements = (TARGET.Arch == "X86_64") && (TARGET.OpSys == "LINUX")
+
+request_cpus = 3
+request_memory = 12GB
+request_disk = 15GB
+
+queue N,NGT,ILS,NBP,M,R,IMETHOD from submit.table
