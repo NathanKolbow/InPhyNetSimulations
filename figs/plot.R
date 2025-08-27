@@ -25,8 +25,14 @@ df_plot <- df %>%
 levels(df_plot$ntaxa_char) = c("25 tips", "50 tips", "100 tips", "200 tips")
 
 # INPUT VS OUTPUT
-p_inout <- ggplot(df_plot, aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
-    geom_jitter(width = 0.05, height = 0.1, stroke=0.5, size=0.85, alpha=0.6) +
+p_inout <- df_plot %>%
+  mutate(
+    hwcd = hwcd + if_else(hwcd == 0, 0, runif(n(), -1, 1)),
+    input_error = input_error + if_else(input_error == 0, 0, runif(n(), -1, 1))
+  ) %>%
+  ggplot(aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
+    #geom_jitter(width = 0.05, height = 0.1, stroke=0.5, size=0.85, alpha=0.6) +
+    geom_point(size = 0.55, alpha = 0.6, stroke = 0.3) +
     geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
     scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1, "PhyloNet-MPL" = 8, "PhyloNet-ML" = 6)) +
     scale_color_manual(
@@ -88,7 +94,7 @@ p_rt <- df_plot %>%#filter(df_plot, runtime_serial < 1e8 & m == "m = 10" & imeth
     method   = "lm",
     formula  = y ~ x,
     se       = FALSE,
-    size     = 0.5,
+    linewidth= 0.5,
     linetype = "dashed",
     alpha    = 0.5,
     color    = "black"
@@ -154,17 +160,19 @@ dev.off()
 # }
 # rt_plot(df_plot, "PhyloNet-MPL") + rt_plot(df_plot, "SNaQ") + rt_plot(df_plot, "Squirrel")
 
+df_rt <- df_plot %>%
+  filter(ils == "Low ILS")
 
-summary_df <- df_plot %>%
-  filter(ils == "Low ILS" & imethod != "Squirrel") %>%
+summary_df <- df_rt %>%
+  filter(imethod != "Squirrel") %>%
   group_by(m, ils, ntaxa_num, imethod) %>%
   summarise(
     mean_rt = mean(runtime_serial),
     ymin = quantile(runtime_serial, 0.025),
     ymax = quantile(runtime_serial, 0.975)
   )
-nosquirrel <- df_plot %>%
-  filter(ils == "Low ILS" & imethod != "Squirrel") %>%
+nosquirrel <- df_rt %>%
+  filter(imethod != "Squirrel") %>%
   ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
   facet_grid(m ~ imethod, scales = "free") +
   geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red", linetype = "dashed") +
@@ -186,16 +194,16 @@ nosquirrel <- df_plot %>%
     breaks = unique(df$ntaxa),
     labels = unique(df$ntaxa)
   )
-summary_df <- df_plot %>%
-  filter(ils == "Low ILS" & imethod == "Squirrel") %>%
+summary_df <- df_rt %>%
+  filter(imethod == "Squirrel") %>%
   group_by(m, ils, ntaxa_num, imethod) %>%
   summarise(
     mean_rt = mean(runtime_serial),
     ymin = quantile(runtime_serial, 0.025),
     ymax = quantile(runtime_serial, 0.975)
   )
-squirrel <- df_plot %>%
-  filter(ils == "Low ILS" & imethod == "Squirrel") %>%
+squirrel <- df_rt %>%
+  filter(imethod == "Squirrel") %>%
   ggplot(aes(x = ntaxa_num, y = runtime_serial)) +
   facet_grid(m ~ imethod, scales = "free") +
   geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red", linetype = "dashed") +
