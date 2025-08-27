@@ -4,8 +4,8 @@ const FORCE_RESAMPLE_ALL = false
 
 using Pkg
 Pkg.activate(joinpath(@__DIR__, ".."))
-Pkg.instantiate();
-Pkg.update();
+# Pkg.instantiate();
+# Pkg.update();
 
 ENV["JULIA_DEPOT_PATH"] = joinpath(@__DIR__, "..")
 
@@ -29,10 +29,17 @@ else
     @warn "Resampling all data - this will take a while."
 end
 
+for imethod in unique(df[:,"imethod"])
+    @info "$(imethod): $(nrow(filter(r -> r.imethod == imethod, df)))"
+end
+
+
+
 
 global j = 0
-for imethod in ["phylonet-ml", "phylonet", "snaq", "squirrel"]
+global ncont = 0
 for ntaxa in [25, 50, 100, 200]
+for imethod in ["phylonet-ml", "phylonet", "snaq", "squirrel"]
 for ngt in [100, 1000]
 for ils in ["low", "high"]
 for nbp in [100, 1000]
@@ -40,11 +47,14 @@ for m in [10, 20]
 for r = 1:10
     if imethod == "phylonet-ml" && m == 20 continue end
 
-    global j, ntot
+    global j, ncont
     j += 1
-    print("\r$(nrow(df)) / $(j)")
+    print("\r$(ncont) / $(j) [total=$(nrow(df))] [n=$(ntaxa)]")
 
-    if nrow(filter(row -> row.ntaxa == ntaxa && row.ngt == ngt && row.ils == ils && row.nbp == nbp && row.m == m && row.r == r && row.imethod == imethod, df)) > 0 continue end
+    if nrow(filter(row -> row.ntaxa == ntaxa && row.ngt == ngt && row.ils == ils && row.nbp == nbp && row.m == m && row.r == r && row.imethod == imethod, df)) > 0
+        ncont += 1
+        continue
+    end
 
     basedir = joinpath(@__DIR__, "..", "data", string(ntaxa), string(ngt), ils, string(nbp), string(m), string(r))
     if !isdir(basedir) continue end
@@ -68,6 +78,7 @@ for r = 1:10
 
     # Input error calculation
     constraints = readmultinewick(joinpath(basedir, "$(imethod).net"))
+    length(constraints) > 0 || continue
     input_cerror = sum(hardwiredclusterdistance(c, prune_network(tnet, tiplabels(c)), false) for c in constraints)
     D, namelist = calculateAGID(egts)
     nj_tre = inphynet(D, namelist)
@@ -91,5 +102,9 @@ end
 end
 end
 
-println("\n$(nrow(df)) / $(ntot)")
+println("\n\n$(nrow(df)) / $(j)")
+for imethod in unique(df[:,"imethod"])
+    @info "$(imethod) entries: $(nrow(filter(r -> r.imethod == imethod, df)))"
+end
+
 CSV.write(output_path, df)

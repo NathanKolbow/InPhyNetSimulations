@@ -7,8 +7,8 @@ isfile(constraintfile) || exit()
 
 using Pkg
 Pkg.activate(joinpath(@__DIR__, ".."))
-Pkg.instantiate()
-Pkg.update()
+# Pkg.instantiate()
+# Pkg.update()
 
 using PhyloNetworks, InPhyNet
 estgts = readmultinewick(estgtfile)

@@ -1,7 +1,7 @@
 using Pkg
 Pkg.activate(joinpath(@__DIR__, "..", ".."))
-Pkg.instantiate()
-Pkg.update()
+# Pkg.instantiate()
+# Pkg.update()
 
 using PhyloNetworks, PhyloCoalSimulations, StatsBase, Random
 
