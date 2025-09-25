@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 16.0 and 309.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset7/snaq_s7_h3_run20
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(URDJ,(((SGTW,(XZUY,(WLIC,(GNQG,KAWQ)100.0:0.346868567829)100.0:2.44468184848)100.0:2.3870921731)100.0:0.408768499264,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(VSRH,JUWL)100.0:1.311689164743)100.0:0.41785969019,(IOVS,(AWQB,(Pinta_v2.0,DZQM)100.0:3.9931750729999997)94.0:0.5378512271289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,(RICC,(JKAA,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:3.02371337671)100.0:4.038463187489)100.0;
+2025-01-06 20:1:36.168
+seed: 20 for run 1, 2025-01-06 20:1:37.393
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 31 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 30 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is ((AWQB,((((GGEA,((JUWL,VSRH)100.0:1.4726391051765373)#H45:::0.80460763058337):1.2163813863452169,(((SGTW,(XZUY,(WLIC,(GNQG,KAWQ)100.0:0.3165037033470583)100.0:2.5317920390257793)100.0:3.5450362695035498)100.0:0.5177985057410797,(((RICC,(JKAA,GAON)100.0:2.7455629970716435)100.0:9.966730602091674,((PZRT,WTKZ)100.0:4.971097546975889,URDJ)100.0:9.948846397512899)100.0:1.6064242008997311)#H39:9.962067012513451::0.6293838919829047)100.0:2.8509799357850305,((TOXE,VDAO)100.0:2.4158236041421053,#H39:0.0::0.3706161080170954):9.776341215254288)100.0:3.5729152216724374)94.0:0.4637776432457109,(IOVS,#H45:::0.19539236941663002):0.7224134250177484)100.0:0.0)#H41:0.8622087643042392::0.9549331303787479)100.0:4.078392663662197,Pinta_v2.0,(DZQM,#H41:0.03536151637460195::0.04506686962125207):0.054110932207200854)100.0; 
+with -loglik 4855.924902433832

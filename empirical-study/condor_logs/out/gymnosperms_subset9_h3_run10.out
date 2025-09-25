@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 75.0 and 357.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset9/snaq_s9_h3_run10
+BEGIN: 1 runs on starting tree (GNQG,KAWQ,(SGTW,(((((NPRL,(AWQB,(IIOL,(DZQM,(JBND,MFTM)100.0:0.246099857069)97.0:1.7574752015019999)100.0:2.4652489672)94.0:0.0992915864719)100.0:0.438559640657,WVWN)100.0:0.247092931452,(VSRH,JUWL)100.0:1.7295488549329998)100.0:2.6244363767,GTHK)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,(RICC,((JKAA,Selmo_v1.0)100.0:2.920185712579,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:1.791943119)100.0:0.408768499264)100.0:5.178642589409)100.0;
+2025-01-07 1:7:41.708
+seed: 10 for run 1, 2025-01-07 1:7:42.985
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 24 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 29 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (MFTM,JBND,((IIOL,((((((((SGTW,(GNQG,KAWQ)100.0:4.296538065579891):0.9100189268564743,(((NWMY,(VZCI,#H45:::0.04504120147438839):0.12143746021954778)100.0:7.970673527364929,(FZJL)#H45:::0.9549587985256116)100.0:9.999999999994253,((RICC,((JKAA,Selmo_v1.0)100.0:4.188213537952688,GAON)100.0:2.6247980662949666)100.0:5.402337177904012,#H39:::0.30235243558976527):0.0)100.0:2.256013525887723)100.0:1.7270238972387695,(GTHK)#H39:::0.6976475644102347)100.0:2.715866902236128,(VSRH,JUWL)100.0:2.099450175528176)100.0:0.2973754435201775,WVWN)100.0:0.4788797430399174,NPRL)100.0:0.21261189880351272,AWQB)94.0:1.7802564668780392)#H43:1.0221684520114482::1.0)100.0:4.014671376141812,(DZQM,#H43:0.0::0.0):1.0252842543058813)97.0:0.33627441803318087)100.0; 
+with -loglik 6814.243189307557

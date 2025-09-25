@@ -16,6 +16,7 @@ output = ARGS[5]
 # the desired level of ILS
 # Low ILS:  2.0
 # High ILS: 0.5
+@show netfile
 truenet = readnewick(netfile)
 mean_length = mean(e.length for e in truenet.edge)
 desired_mean = ils == "low" ? 1.5 : 0.15

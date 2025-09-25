@@ -1,0 +1,17 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 83.0 and 358.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 1,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset11/snaq_s11_h1_run16
+BEGIN: 1 runs on starting tree (QFAE,HBGV,(NRXL,(XIRK,(((GMHZ,(OXGJ,FHST)100.0:0.724502796443)100.0:1.68099084109,(((ETCJ,YYPE)84.0:0.0577844550649,(IFLI,RMMV)100.0:3.55392687163)100.0:3.00172210456,(VFYZ,((QNGJ,XMGP)100.0:1.4270124045,(FRPM,(CGDN,(XQSG,BUWV)100.0:1.0369756931)99.0:0.112320675329)67.0:0.052519645479)100.0:1.8722870182740001)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,(QSNJ,ZQVF)100.0:0.560034017543)100.0:0.083850826253)96.0:1.36465136084)100.0:0.187706106428)100.0;
+2025-01-07 5:37:59.673
+seed: 16 for run 1, 2025-01-07 5:38:2.264
+best network and networks with different hybrid/gene flow directions printed to .networks file
+
+MaxNet is (QFAE,HBGV,(NRXL,(XIRK,((((VFYZ,((QNGJ,XMGP)100.0:2.1379293636475936,(FRPM,(CGDN,(XQSG,BUWV)100.0:1.5483258817228498)99.0:0.13435109360212763)67.0:0.09915408591523303)100.0:2.295597546622168)100.0:0.9382093885781521,(((IFLI,RMMV)100.0:4.222068672190157,(ETCJ,YYPE)84.0:0.12815319254243357)100.0:2.476584137978836)#H39:::0.9870166139080908)100.0:2.1069812129354535,((OXGJ,FHST)100.0:1.0628366670853486,(GMHZ,#H39:::0.012983386091909183):0.5798208723090522)100.0:2.723336547430174)100.0:1.8493257222505288,(QSNJ,ZQVF)100.0:1.1136658834483142)100.0:0.037138549743846276)96.0:1.9001186657846034)100.0:0.25234630220713966)100.0; 
+with -loglik 2729.772311422481

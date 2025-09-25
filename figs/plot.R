@@ -283,3 +283,136 @@ pdf("figs/accuracy/hwcd.pdf", width=5, height=5)
 p_hwcd
 dev.off()
 
+
+
+
+
+
+gen_plot <- function() {
+  df_plot %>%
+    mutate(ninput = factor(nbp * ngt), nbp = factor(nbp), ngt = factor(ngt)) %>%
+    mutate(
+      hwcd = hwcd + if_else(hwcd == 0, 0, runif(n(), -1, 1)),
+      input_error = input_error + if_else(input_error == 0, 0, runif(n(), -1, 1)),
+      ils = factor(paste0(str_to_title(ils), " ILS"), levels = c("Low ILS", "High ILS"))
+    ) %>%
+    ggplot(aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
+      geom_point(size = 0.35, alpha = 0.45, stroke = 0.3) +
+      geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed", alpha = 0.8) +
+      scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1, "PhyloNet-MPL" = 8, "PhyloNet-ML" = 6)) +
+      scale_color_manual(
+        breaks = levels(df_plot$ntaxa_char),
+        values = c("#1b9e77", "#d95f02", "#7570b3", "#e7298a")
+      ) +
+      labs(
+        x = "Input Error (HWCD)",
+        y = "Output Error (HWCD)",
+        color = "Number of Tips",
+        shape = "Method",
+        size = ""
+      ) +
+      theme_bw() +
+      scale_x_sqrt(limits = c(0.0, 450)) +
+      scale_y_sqrt(limits = c(0.0, 450)) +
+      expand_limits(x = 0, y = 0) +
+      theme_classic(base_size = 9) +
+      theme(
+        panel.border       = element_rect(colour = "black", fill = NA, linewidth = .4),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(colour = "grey90", linewidth = .25),
+        strip.text         = element_text(face = "bold", size = 8),
+        legend.position    = "bottom",
+        legend.box         = "vertical",
+        legend.spacing.y   = unit(-0.5, "lines")
+      ) +
+      guides(
+        color = guide_legend(
+          order = 2,
+          override.aes = list(size = 1.5, alpha = 1.0)
+        ),
+        shape = guide_legend(
+          order = 1,
+          override.aes = list(size = 1.5, alpha = 1.0)
+        )
+      ) +
+      facet_grid(ils ~ m)
+}
+pdf("figs/accuracy/input-vs-output.pdf", width=5, height=5.5)
+gen_plot()
+dev.off()
+
+
+p1 <- df_plot %>%
+  filter(m == "m = 10" & imethod == "SNaQ") %>%
+  mutate(
+    hwcd = hwcd + if_else(hwcd == 0, 0, runif(n(), -1, 1)),
+    input_error = input_error + if_else(input_error == 0, 0, runif(n(), -1, 1))
+  ) %>%
+  ggplot(aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
+    #geom_jitter(width = 0.05, height = 0.1, stroke=0.5, size=0.85, alpha=0.6) +
+    geom_point(size = 0.55, alpha = 0.6, stroke = 0.3) +
+    geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
+    scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1, "PhyloNet-MPL" = 8, "PhyloNet-ML" = 6)) +
+    scale_color_manual(
+      breaks = levels(df_plot$ntaxa_char),
+      values = c("#1b9e77", "#d95f02", "#7570b3", "#e7298a")
+    ) +
+    labs(
+      x = "Input Error (HWCD)",
+      y = "Output Error (HWCD)",
+      color = "Number of Tips",
+      shape = "Method",
+      size = ""
+    ) +
+    theme_bw() +
+    scale_x_sqrt(limits = c(-0.05, 450)) +
+    scale_y_sqrt(limits = c(-0.05, 450)) +
+    theme(
+      panel.grid.minor  = element_blank(),
+      legend.position   = "bottom",
+      legend.box        = "vertical",
+      legend.spacing.y  = unit(-0.5, "lines")
+    ) +
+    guides(
+      color = guide_legend(order = 2),
+      shape = guide_legend(order = 1)
+    )
+p2 <- df_plot %>%
+  filter(m == "m = 20") %>%
+  mutate(
+    hwcd = hwcd + if_else(hwcd == 0, 0, runif(n(), -1, 1)),
+    input_error = input_error + if_else(input_error == 0, 0, runif(n(), -1, 1))
+  ) %>%
+  ggplot(aes(x = input_error, y = hwcd, color = ntaxa_char, shape = imethod)) +
+    #geom_jitter(width = 0.05, height = 0.1, stroke=0.5, size=0.85, alpha=0.6) +
+    geom_point(size = 0.55, alpha = 0.6, stroke = 0.3) +
+    geom_abline(slope = 1, intercept = 0, color = "black", lty = "dashed") +
+    scale_shape_manual(values = c("SNaQ" = 3, "Squirrel" = 1, "PhyloNet-MPL" = 8, "PhyloNet-ML" = 6)) +
+    scale_color_manual(
+      breaks = levels(df_plot$ntaxa_char),
+      values = c("#1b9e77", "#d95f02", "#7570b3", "#e7298a")
+    ) +
+    labs(
+      x = "Input Error (HWCD)",
+      y = "Output Error (HWCD)",
+      color = "Number of Tips",
+      shape = "Method",
+      size = ""
+    ) +
+    theme_bw() +
+    scale_x_sqrt(limits = c(-0.05, 450)) +
+    scale_y_sqrt(limits = c(-0.05, 450)) +
+    theme(
+      panel.grid.minor  = element_blank(),
+      legend.position   = "bottom",
+      legend.box        = "vertical",
+      legend.spacing.y  = unit(-0.5, "lines")
+    ) +
+    guides(
+      color = guide_legend(order = 2),
+      shape = guide_legend(order = 1)
+    )
+
+pdf("~/insp.pdf", width=10, height=5)
+p1 + p2
+dev.off()

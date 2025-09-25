@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 84.0 and 363.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset12/snaq_s12_h3_run18
+BEGIN: 1 runs on starting tree (XIRK,HBGV,(((GMHZ,OXGJ)100.0:1.68099084109,(((ETCJ,(YYPE,OVIJ)100.0:0.247693844997)84.0:0.0577844550649,((GKCZ,AUDE)100.0:0.67629486105,(IFLI,(RMMV,JDQB)99.0:0.124795344086)100.0:2.93115235335)100.0:0.62277451828)100.0:3.00172210456,((NKIN,VFYZ)100.0:1.63287202463,((UEVI,AIGO)100.0:1.61907549831,(QNGJ,(CGDN,XQSG)99.0:0.164840320808)100.0:1.68863833806)100.0:0.183648680214)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,QSNJ)100.0:0.083850826253)96.0;
+2025-01-07 9:0:12.203
+seed: 18 for run 1, 2025-01-07 9:0:13.72
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 40 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 38 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (GKCZ,AUDE,((IFLI,(JDQB,(RMMV,#H41:0.6967417571734955::0.0060175905486315505):0.19356165092783323)99.0:0.13651609691829206)100.0:4.243300182214357,(((ETCJ,(YYPE,OVIJ)100.0:0.38035384100680836)84.0:0.11874064071139788,((((NKIN,VFYZ)100.0:2.686237231119915,((UEVI,AIGO)100.0:2.408333835678458,(QNGJ,(CGDN,XQSG)99.0:0.20577432333402856)100.0:2.2476658358150883)100.0:0.2122549605078219)100.0:1.0401268357440148,(((HBGV,(XIRK)#H43:::0.5914718610067505)96.0:0.30628974884943394,(QSNJ,#H43:::0.40852813899324947):0.30628974884943394)100.0:1.6497235893816633,(OXGJ,(GMHZ)#H39:0.8611827742847512::0.9919754935412141)100.0:2.51942243228766)100.0:1.9586357598032986)100.0:2.961973527260601,#H39:0.046721235742704405::0.008024506458785892):1.6659338581541685)100.0:0.871154144477609)#H41:0.009782168070272162::0.9939824094513684)100.0:0.8459633198271079)100.0; 
+with -loglik 2584.0389011128937

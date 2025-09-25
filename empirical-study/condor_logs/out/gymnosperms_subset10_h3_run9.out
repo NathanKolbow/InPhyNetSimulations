@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 18.0 and 346.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset10/snaq_s10_h3_run9
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(FZJL,(URDJ,(((XZUY,WLIC)100.0:2.7958606723640003,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,(IOVS,(IIOL,(Pinta_v2.0,(JBND,MFTM)100.0:0.475648952771)100.0:1.5279261058)100.0:3.0031001943289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:3.02371337671)100.0:0.264567061439)100.0:3.77389612605)100.0;
+2025-01-07 3:58:42.369
+seed: 9 for run 1, 2025-01-07 3:58:43.567
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 30 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 46 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (PZRT,WTKZ,(FZJL,(URDJ,(((TOXE,((VDAO,((IOVS,((Pinta_v2.0,(JBND,(MFTM,#H41:10.0::0.0087405343326185):8.185164556533794e-14)100.0:1.1051976983965621)100.0:1.5047437077926988,IIOL)100.0:2.776846866046579)100.0:0.32355957209566666,(GGEA,((((AREG,(GAMH)#H45:::0.9715189814962568)100.0:3.37360688021597,AQFM)36.0:0.8259694710129307,#H45:::0.02848101850374321):0.0)#H41:0.24000716997600008::0.9912594656673815)100.0:0.8323781545246017)100.0:4.481768818618987)100.0:1.0595067358831173e-20)#H39:4.127937217041759e-21::0.6407851405584251)100.0:9.99999999999861,((XZUY,WLIC)100.0:9.845454452372111,#H39:0.7930193408702685::0.35921485944157494):1.7682546487593842)100.0:1.424312489553603,((NWWI,MTGC):9.999998084716449,Selmo_v1.0)100.0:10.0)100.0:9.999999999999996)100.0:0.4799175794553013)100.0:4.941091002697722)100.0; 
+with -loglik 16403.150437117776

@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 83.0 and 358.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset11/snaq_s11_h3_run7
+BEGIN: 1 runs on starting tree (QFAE,HBGV,(NRXL,(XIRK,(((GMHZ,(OXGJ,FHST)100.0:0.724502796443)100.0:1.68099084109,(((ETCJ,YYPE)84.0:0.0577844550649,(IFLI,RMMV)100.0:3.55392687163)100.0:3.00172210456,(VFYZ,((QNGJ,XMGP)100.0:1.4270124045,(FRPM,(CGDN,(XQSG,BUWV)100.0:1.0369756931)99.0:0.112320675329)67.0:0.052519645479)100.0:1.8722870182740001)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,(QSNJ,ZQVF)100.0:0.560034017543)100.0:0.083850826253)96.0:1.36465136084)100.0:0.187706106428)100.0;
+2025-01-07 6:25:21.373
+seed: 7 for run 1, 2025-01-07 6:25:22.547
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 32 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is ((((((GMHZ,(OXGJ,FHST)100.0:1.0769013274208394)100.0:2.548345803062117,(((ETCJ,YYPE)84.0:0.13902052532671857,(IFLI,RMMV)100.0:4.107113418529284)100.0:4.642541056726323,(VFYZ,((QNGJ,XMGP)100.0:2.198190927496957,(((CGDN,((BUWV,XQSG)99.0:0.12993781142287686,#H41:::1.4960797561605062e-17):1.4074979504146834)100.0:0.09687621729836855,(FRPM)#H41:::1.0)67.0:0.11558526851436773)#H39:0.0::0.9970790729289813)100.0:2.4730697138125404)100.0:0.9811795264683023)100.0:2.003707165131394)100.0:1.8599173591249711,(QSNJ,ZQVF)100.0:1.1274903063492518)100.0:0.04857293181595093,(XIRK,#H39:6.284233440967871e-10::0.002920927071018667):0.7249074372413087)96.0:1.8891343887338008,(NRXL,#H43:::0.17215892994930906):0.31786111019437313)100.0:0.31786111019437313,HBGV,(QFAE)#H43:::0.8278410700506911)100.0; 
+with -loglik 2702.6916719728115

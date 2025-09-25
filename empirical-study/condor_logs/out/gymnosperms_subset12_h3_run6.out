@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 84.0 and 363.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset12/snaq_s12_h3_run6
+BEGIN: 1 runs on starting tree (XIRK,HBGV,(((GMHZ,OXGJ)100.0:1.68099084109,(((ETCJ,(YYPE,OVIJ)100.0:0.247693844997)84.0:0.0577844550649,((GKCZ,AUDE)100.0:0.67629486105,(IFLI,(RMMV,JDQB)99.0:0.124795344086)100.0:2.93115235335)100.0:0.62277451828)100.0:3.00172210456,((NKIN,VFYZ)100.0:1.63287202463,((UEVI,AIGO)100.0:1.61907549831,(QNGJ,(CGDN,XQSG)99.0:0.164840320808)100.0:1.68863833806)100.0:0.183648680214)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,QSNJ)100.0:0.083850826253)96.0;
+2025-01-07 8:42:10.275
+seed: 6 for run 1, 2025-01-07 8:42:14.112
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 22 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 35 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is ((((HBGV,XIRK)100.0:0.11379521838703624,QSNJ):1.6721789127992088,(((((YYPE,OVIJ)100.0:0.33123517882096165,(ETCJ)#H43:::0.9131843564289648)84.0:0.1699138737739449,((GKCZ,AUDE)100.0:0.8475675101223841,((IFLI,(JDQB,RMMV)99.0:0.12998086237312229)100.0:3.583158188983796,#H43:::0.08681564357103519):0.18395287343385705)100.0:0.9229778430966876)100.0:4.577678880115697,(((QNGJ,(CGDN,XQSG)99.0:0.20531700544620404)100.0:2.197804806010043,((UEVI,AIGO)100.0:1.9598433462680658)#H45:0.6638770616130777::0.9122777971172598)100.0:0.2917984276892144,((VFYZ,NKIN)100.0:0.010666431903110195,#H45:0.1394222599376791::0.08772220288274026):3.0516087209739826)100.0:1.001573550808173)100.0:0.04457247724531014)#H39:2.267812538926114::0.9821468774021351)100.0:2.925184959313468,OXGJ,(GMHZ,#H39:4.672299730793123::0.01785312259786487):0.22531891135416993)100.0; 
+with -loglik 2351.8017210364133

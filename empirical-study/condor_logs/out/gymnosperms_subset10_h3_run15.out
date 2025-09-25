@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 18.0 and 346.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset10/snaq_s10_h3_run15
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(FZJL,(URDJ,(((XZUY,WLIC)100.0:2.7958606723640003,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,(IOVS,(IIOL,(Pinta_v2.0,(JBND,MFTM)100.0:0.475648952771)100.0:1.5279261058)100.0:3.0031001943289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:3.02371337671)100.0:0.264567061439)100.0:3.77389612605)100.0;
+2025-01-07 4:7:20.899
+seed: 15 for run 1, 2025-01-07 4:7:22.02
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 30 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 28 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (GAMH,AREG,((AQFM,(GGEA,(((IOVS,((IIOL,((Pinta_v2.0)#H45:::0.7139897120965211,(MFTM,(JBND,#H45:::0.286010287903479):1.0316667153276275)100.0:3.2776854254342696)100.0:1.3418368790273325)100.0:2.3653207225821418)#H41:0.24110664178920893::0.7865233950155217)100.0:0.5298714696357982,(((VDAO,TOXE)100.0:3.4942387780333966,((XZUY,WLIC)100.0:9.999999999754142,((((PZRT,WTKZ)100.0:4.766086812763816,FZJL)100.0:0.4506931139397132,URDJ)100.0:9.999999999995717,((NWWI,MTGC):10.0,Selmo_v1.0)100.0:10.0)100.0:1.8526027216688379)100.0:0.5102221449622792)100.0:2.5355386568628795,#H41:0.0::0.21347660498447832):1.3614992415627079)100.0:0.00038174497755232717)#H43:0.7375460581783874::0.9840692892310912)100.0:1.0164411650993914)36.0:3.0630180534285336,#H43:0.0::0.015930710768908785):0.5088129247584101)100.0; 
+with -loglik 10192.279270740059

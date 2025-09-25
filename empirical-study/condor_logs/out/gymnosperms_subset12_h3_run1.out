@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 84.0 and 363.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset12/snaq_s12_h3_run1
+BEGIN: 1 runs on starting tree (XIRK,HBGV,(((GMHZ,OXGJ)100.0:1.68099084109,(((ETCJ,(YYPE,OVIJ)100.0:0.247693844997)84.0:0.0577844550649,((GKCZ,AUDE)100.0:0.67629486105,(IFLI,(RMMV,JDQB)99.0:0.124795344086)100.0:2.93115235335)100.0:0.62277451828)100.0:3.00172210456,((NKIN,VFYZ)100.0:1.63287202463,((UEVI,AIGO)100.0:1.61907549831,(QNGJ,(CGDN,XQSG)99.0:0.164840320808)100.0:1.68863833806)100.0:0.183648680214)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,QSNJ)100.0:0.083850826253)96.0;
+2025-01-07 8:38:47.043
+seed: 1 for run 1, 2025-01-07 8:38:48.897
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 44 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (HBGV,(((GMHZ,OXGJ)100.0:2.219115701062008,((((QNGJ,(CGDN,XQSG)99.0:0.2083118333744466)100.0:2.2458133858010627,(UEVI,AIGO)100.0:2.403043914305383)100.0:0.21104667921799275,(NKIN,VFYZ)100.0:2.6977473337041693)100.0:1.0420779430921814,(((GKCZ,AUDE)100.0:0.8483556700736999,((JDQB,RMMV)99.0:0.13122155527502824,(IFLI,#H39:0.08939132186446395::0.0009578992224059272):1.426269264020648)100.0:3.8164185918274534)100.0:0.8782434989377274,((((OVIJ,(YYPE)#H43:::0.6637838011187234)100.0:0.6710487259072099,ETCJ)84.0:0.04623458935065303,#H43:::0.3362161988812767):0.0014481797701654208)#H39:0.08022031356180688::0.999042100777594)100.0:4.598272578031244)100.0:1.9111115262755602)100.0:1.6545807182237844,(QSNJ,#H41:::0.4226664341337282):0.32301316010178666)100.0:0.32301316010178666,(XIRK)#H41:::0.5773335658662717)96.0; 
+with -loglik 2634.823141305637

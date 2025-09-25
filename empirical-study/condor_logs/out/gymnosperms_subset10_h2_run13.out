@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 18.0 and 346.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 2,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset10/snaq_s10_h2_run13
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(FZJL,(URDJ,(((XZUY,WLIC)100.0:2.7958606723640003,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,(IOVS,(IIOL,(Pinta_v2.0,(JBND,MFTM)100.0:0.475648952771)100.0:1.5279261058)100.0:3.0031001943289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:3.02371337671)100.0:0.264567061439)100.0:3.77389612605)100.0;
+2025-01-07 3:20:47.687
+seed: 13 for run 1, 2025-01-07 3:20:49.141
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 30 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (GAMH,(AQFM,(GGEA,(((IOVS,((((JBND,MFTM)100.0:1.0777377980751488,Pinta_v2.0):1.3758026141855413,IIOL)100.0:0.5720259793676945,#H39:0.27531736041587956::0.14353495920712533):3.220277698548751)100.0:0.5094415859293626,((((XZUY,WLIC)100.0:8.933063554771508,(((MTGC,NWWI)100.0:9.714550050268604,Selmo_v1.0)100.0:9.594818793306397,(((PZRT,WTKZ)100.0:4.570589496673643,FZJL)100.0:0.45894547251835294,URDJ)100.0:9.427854025038206)100.0:1.6676195305823813)100.0:0.5019220077951256,(VDAO,TOXE)100.0:3.5021406525421446)100.0:3.052444683011335)#H39:1.398112281973909::0.8564650407928747)100.0:0.005254290072844404)#H43:0.6267848301334992::0.9935553300973844)100.0:1.077636734833855)36.0:3.3442817745831444,(AREG,#H43:5.4512388762697075::0.006444669902615581):1.2199858582245895)100.0; 
+with -loglik 10081.445198489111

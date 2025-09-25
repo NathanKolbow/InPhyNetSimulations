@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 16.0 and 309.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 2,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset7/snaq_s7_h2_run9
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(URDJ,(((SGTW,(XZUY,(WLIC,(GNQG,KAWQ)100.0:0.346868567829)100.0:2.44468184848)100.0:2.3870921731)100.0:0.408768499264,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(VSRH,JUWL)100.0:1.311689164743)100.0:0.41785969019,(IOVS,(AWQB,(Pinta_v2.0,DZQM)100.0:3.9931750729999997)94.0:0.5378512271289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,(RICC,(JKAA,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:3.02371337671)100.0:4.038463187489)100.0;
+2025-01-06 19:21:42.825
+seed: 9 for run 1, 2025-01-06 19:21:44.614
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 32 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (GNQG,(WLIC,(XZUY,((((((IOVS,(AWQB,(Pinta_v2.0,DZQM)100.0:2.6466253074333546)94.0:0.7326044362009871)100.0:0.34941272043959637,(GGEA,(VSRH,JUWL)100.0:1.679246747708084)100.0:0.8257402225508551)100.0:4.545946830522432,((VDAO,TOXE)100.0:1.6340406728753738,#H39:0.00234151878781878::0.3207432358255432):5.762020453348418)100.0:3.3910720161847676,((((PZRT,WTKZ)100.0:5.431458176962385,URDJ)100.0:9.999999999982302,(RICC,(GAON,JKAA)100.0:3.613957958896376)100.0:9.999999999999998)100.0:2.52409874833386)#H39:0.0007864390723346357::0.6792567641744568)100.0:0.4786079727318687,SGTW)100.0:3.3569494000565907)#H41:0.5593219503852994::0.9574502034404246)100.0:4.895457586184691)100.0:0.3286059306363274,(KAWQ,#H41:0.0::0.042549796559575366):0.036340298803333566)100.0; 
+with -loglik 7174.389846882542

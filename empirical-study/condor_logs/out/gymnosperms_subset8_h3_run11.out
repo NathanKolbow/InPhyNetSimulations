@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 54.0 and 347.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset8/snaq_s8_h3_run11
+BEGIN: 1 runs on starting tree (XZUY,WLIC,(((VDAO,(TOXE,GTHK)100.0:0.764485462584)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,((NPRL,(IIOL,(JBND,MFTM)100.0:2.0035750585709997)100.0:2.5645405536719)100.0:0.438559640657,WVWN)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:1.791943119)100.0:2.7958606723640003)100.0;
+2025-01-06 22:25:48.564
+seed: 11 for run 1, 2025-01-06 22:25:50.457
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 44 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 46 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (GTHK,TOXE,(VDAO,(#H41:0.0::0.4600454499489352,((GGEA,((GAMH,AREG)100.0:3.5288993619355042,AQFM)36.0:0.9770651833732229)100.0:0.8908786723467039,(WVWN,((((NPRL,((JBND,MFTM)100.0:4.8343737044710995,(IIOL)#H45:::0.9854025353416451)100.0:3.6744476065946694)100.0:1.2223274357583518,(((XZUY,WLIC)100.0:9.706204723898844,(((FZJL,(VZCI,NWMY)100.0:3.8916880240402745)100.0:9.999999999990262,(Selmo_v1.0,(MTGC,NWWI)100.0:9.999999999995152)100.0:6.065809972547197)100.0:0.0)#H43:3.17001738909306::0.9142691976247841)100.0:0.10383074867013752,#H43:0.0::0.08573080237521594):1.0861644133180182):0.0,#H45:::0.014597464658354821):0.0)#H41:0.0::0.5399545500510647)100.0:0.0)100.0:8.343779820203059):4.082453220530905)100.0:0.7220941786114063)100.0; 
+with -loglik 68617.91741549622

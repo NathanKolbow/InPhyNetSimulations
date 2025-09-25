@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 75.0 and 357.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset9/snaq_s9_h3_run7
+BEGIN: 1 runs on starting tree (GNQG,KAWQ,(SGTW,(((((NPRL,(AWQB,(IIOL,(DZQM,(JBND,MFTM)100.0:0.246099857069)97.0:1.7574752015019999)100.0:2.4652489672)94.0:0.0992915864719)100.0:0.438559640657,WVWN)100.0:0.247092931452,(VSRH,JUWL)100.0:1.7295488549329998)100.0:2.6244363767,GTHK)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,(RICC,((JKAA,Selmo_v1.0)100.0:2.920185712579,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:1.791943119)100.0:0.408768499264)100.0:5.178642589409)100.0;
+2025-01-07 1:4:44.324
+seed: 7 for run 1, 2025-01-07 1:4:45.858
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 16 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (MFTM,(((AWQB,(((WVWN,((VSRH,JUWL)100.0:2.0649243026827304,(GTHK,((SGTW,(GNQG,KAWQ)100.0:4.299779144850519)100.0:0.9626085792572046,(((VZCI,NWMY)100.0:3.0173454153071217,FZJL)100.0:9.999998995401539,(RICC,(#H39:::0.031167752916184618,((Selmo_v1.0,JKAA):3.8581855911158898,GAON):1.1337107850620916):1.5096567920895436)100.0:6.988927200555605)100.0:1.947144598536815)100.0:0.4810892554356394)100.0:9.999999151539901)100.0:0.32142989979824066)100.0:0.5683588412062588,(NPRL)#H39:::0.9688322470838154)100.0:0.14357901453200952)#H43:0.014474153187342192::0.9900879551176971)94.0:3.2633701895906486,(IIOL,#H43:1.4404113950735213e-5::0.009912044882302929):2.1810578593799166)100.0:3.9113318038347398,(DZQM,#H47:::0.25758803455924323):0.6190232933963163)97.0:0.6190232933963163,(JBND)#H47:::0.7424119654407567)100.0; 
+with -loglik 6905.063263973933

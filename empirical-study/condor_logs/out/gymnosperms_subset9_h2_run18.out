@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 75.0 and 357.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 2,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset9/snaq_s9_h2_run18
+BEGIN: 1 runs on starting tree (GNQG,KAWQ,(SGTW,(((((NPRL,(AWQB,(IIOL,(DZQM,(JBND,MFTM)100.0:0.246099857069)97.0:1.7574752015019999)100.0:2.4652489672)94.0:0.0992915864719)100.0:0.438559640657,WVWN)100.0:0.247092931452,(VSRH,JUWL)100.0:1.7295488549329998)100.0:2.6244363767,GTHK)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,(RICC,((JKAA,Selmo_v1.0)100.0:2.920185712579,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:1.791943119)100.0:0.408768499264)100.0:5.178642589409)100.0;
+2025-01-07 0:54:44.811
+seed: 18 for run 1, 2025-01-07 0:54:46.317
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 31 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (RICC,(GAON,((JKAA,Selmo_v1.0)100.0:1.69213558268222,#H45:0.1590187356876957::0.046071731309890396):5.888143930909664)100.0:8.967415119613658,((((((WVWN,((AWQB,((DZQM,(MFTM,JBND)97.0:0.3319403021964231)100.0:4.00759224404501,(IIOL,#H41:0.36149595108724575::0.004318975482143544):0.2051868930304749)100.0:2.8363656702738482)94.0:0.21366559691552345,NPRL)100.0:0.4848168157753267)100.0:0.3059290891466202,(JUWL,VSRH)100.0:2.0781936748879066):3.8497389802009137,GTHK)100.0:0.47345500519597394,(SGTW,(GNQG,KAWQ)100.0:4.290904476310066):0.9653140841186076)100.0:1.9332147305622163,(((VZCI,NWMY)100.0:3.0156140671647633,FZJL)100.0:9.994677550351582)#H41:0.00655031466000294::0.9956810245178565)100.0:4.861723207515098)#H45:0.6410419044557819::0.9539282686901096)100.0; 
+with -loglik 9884.17535246877

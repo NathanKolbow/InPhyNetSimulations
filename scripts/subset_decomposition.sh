@@ -6,7 +6,7 @@ basedir="${scriptdir}/../data/${n}/${ngt}/${ils}/${nbp}/${m}/${r}/"
 
 
 # Infer species tree with ASTRAL
-if [[ ! -f "${basedir}/astral.tre" ]]; then
+if [[ ! -s "${basedir}/astral.tre" ]]; then
     echo "> Inferring ASTRAL tree"
     java -jar "${scriptdir}/../software/astral.5.7.1.jar" -i "${basedir}/estgts.tre" -t 0 -s ${seed} -o "${basedir}/astral.tre" &> /dev/null
 else
@@ -15,7 +15,7 @@ fi
 
 # Part 1
 export JULIA_DEPOT_PATH="${scriptdir}/../"
-if [[ ! -f "${basedir}/temp-data/subsets/nsubsets" ]]; then
+if [[ ! -s "${basedir}/temp-data/subsets/nsubsets" ]]; then
     julia ${scriptdir}/subscripts/subset_decomp_part1.jl "${basedir}/estgts.tre" "${basedir}/temp-data/"
 else
     echo "> Subset part 1 output already exists."
@@ -24,7 +24,7 @@ fi
 # Part 2
 while IFS=, read -r str num; do
     [ -z "$str" ] && continue
-    if [[ -f "${basedir}/temp-data/subsets/${str}${num}.tob" ]]; then
+    if [[ -s "${basedir}/temp-data/subsets/${str}${num}.tob" ]]; then
         echo "    > ${str} ${num} already finished."
     else
         echo "    > ${str} ${num} running."

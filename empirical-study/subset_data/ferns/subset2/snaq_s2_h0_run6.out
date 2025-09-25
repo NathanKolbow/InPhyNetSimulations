@@ -1,0 +1,7 @@
+(PKOX,PYHZ,((KJYC,(Selmo_v1.0,ABIJ)100.0:3.6292976771543857)100.0:10.0,(WDWX,AKCR)100.0:10.0)100.0:4.559865912264641)100.0; -Ploglik = 6.388569858170732
+ Dendroscope: (PKOX,PYHZ,((KJYC,(Selmo_v1.0,ABIJ)100.0:3.6292976771543857)100.0:10.0,(WDWX,AKCR)100.0:10.0)100.0:4.559865912264641)100.0;
+ Elapsed time: 19.04 seconds, 1 attempted runs
+-------
+List of estimated networks for all runs (sorted by log-pseudolik; the smaller, the better):
+ (PKOX,PYHZ,((KJYC,(Selmo_v1.0,ABIJ)100.0:3.6292976771543857)100.0:10.0,(WDWX,AKCR)100.0:10.0)100.0:4.559865912264641)100.0;, with -loglik 6.388569858170732
+-------

@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 83.0 and 358.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 2,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset11/snaq_s11_h2_run3
+BEGIN: 1 runs on starting tree (QFAE,HBGV,(NRXL,(XIRK,(((GMHZ,(OXGJ,FHST)100.0:0.724502796443)100.0:1.68099084109,(((ETCJ,YYPE)84.0:0.0577844550649,(IFLI,RMMV)100.0:3.55392687163)100.0:3.00172210456,(VFYZ,((QNGJ,XMGP)100.0:1.4270124045,(FRPM,(CGDN,(XQSG,BUWV)100.0:1.0369756931)99.0:0.112320675329)67.0:0.052519645479)100.0:1.8722870182740001)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,(QSNJ,ZQVF)100.0:0.560034017543)100.0:0.083850826253)96.0:1.36465136084)100.0:0.187706106428)100.0;
+2025-01-07 5:54:9.553
+seed: 3 for run 1, 2025-01-07 5:54:11.184
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 35 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (XQSG,BUWV,((FRPM,(((VFYZ,((((RMMV,IFLI)100.0:4.187923247491067,(YYPE,ETCJ)84.0:0.13465530885268726)100.0:4.156445427232705,#H39:0.0007995753066358408::0.017457670366030985)100.0:0.4676822979384677,((((NRXL,(QFAE,HBGV)100.0:0.24741855276714422)100.0:1.9036320448391133,XIRK)100.0:0.034151019151939646,(ZQVF,QSNJ)100.0:1.1118395089304964)96.0:1.8286620021170932,(((OXGJ,FHST)100.0:1.0602030844128814,GMHZ)100.0:0.21151349850158654)#H39:3.339344276452012::0.982542329633969):2.129112223397425)100.0:0.9537186814212639)100.0:2.293570842397653,(XMGP,QNGJ)100.0:2.133127022103213)100.0:0.09238111244861906)#H41:0.006666174357500481::0.9999579033128321)67.0:0.13453697225886468,(CGDN,#H41:1.3068304117328118e-7::4.2096687167869696e-5):0.935594729154287)99.0:1.5469294839928098)100.0; 
+with -loglik 2707.8292533714434

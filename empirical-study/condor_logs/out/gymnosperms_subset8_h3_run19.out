@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 54.0 and 347.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset8/snaq_s8_h3_run19
+BEGIN: 1 runs on starting tree (XZUY,WLIC,(((VDAO,(TOXE,GTHK)100.0:0.764485462584)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,((NPRL,(IIOL,(JBND,MFTM)100.0:2.0035750585709997)100.0:2.5645405536719)100.0:0.438559640657,WVWN)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:1.791943119)100.0:2.7958606723640003)100.0;
+2025-01-06 22:54:12.804
+seed: 19 for run 1, 2025-01-06 22:54:14.034
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 44 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (XZUY,WLIC,((((FZJL,(NWMY,VZCI)100.0:4.224154390827393)100.0:9.999927536069348,((MTGC,NWWI)100.0:9.999832101235953,Selmo_v1.0)100.0:6.950325337244801)100.0:0.35153981645478394,#H39:9.471005915085579e-7::0.3550547389325504):2.698680405809602,(((GGEA,(((GAMH,AREG)100.0:3.2699492719307663,AQFM)36.0:1.6032401449154354e-5,#H41:::0.11606871766308985):1.0507930634627496)100.0:0.7954507032134042,((NPRL,(IIOL,(JBND,MFTM)100.0:5.197573648558972)100.0:3.7351724836648597)100.0:0.4411892450033299,(WVWN)#H41:::0.8839312823369101)100.0:0.3168777999418676)100.0:3.783436452521058,(((VDAO,(GTHK,(TOXE)#H43:::0.9935450342860106)100.0:0.6511678525817212)100.0:4.609833569904326,#H43:::0.006454965713989402):0.0)#H39:4.6357554125430237e-7::0.6449452610674495)100.0:2.1460500379365652)100.0:9.999999999671418)100.0; 
+with -loglik 6424.015058369961

@@ -31,7 +31,7 @@ mkdir -p "${basedir}/temp-data/"
 
 step1_outputs=("${basedir}/true.net")
 step2_outputs=("${basedir}/estgts.tre")
-step3_outputs=("${basedir}/subsets")
+step3_outputs=("${basedir}/subsets" "${basedir}/astral.tre")
   step4_outputs=("${basedir}/${imethod}.net" "${basedir}/${imethod}.runtime")
   step5_outputs=("${basedir}/inphynet-${imethod}.net" "${basedir}/inphynet-${imethod}.runtime")
 
@@ -43,7 +43,7 @@ outputs_exist() {
   local arr_name="$1"
   local -n files=$arr_name
   for f in "${files[@]}"; do
-    [[ -e "$f" ]] || return 1
+    [[ -s "$f" ]] || return 1
   done
   return 0
 }
@@ -57,7 +57,7 @@ for i in {1..5}; do
 done
 
 if (( start_step > 5 )); then
-  echo "All steps 1–5 appear complete. Nothing to do."
+  #echo "All steps 1–5 appear complete. Nothing to do."
   exit 0
 else
   echo "> Starting from step $start_step"
@@ -97,6 +97,7 @@ if (( start_step <= 1 )); then
   echo "> Generating ground truth network."
   module load R-4.4.0
   export R_LIBS_PATH="/mnt/home/nkolbow/R/x86_64-pc-linux-gnu-library/4.4"
+  echo "${scriptdir}/generate_true_network.R $n $ils $seed ${basedir}/true.net"
   Rscript "${scriptdir}/generate_true_network.R" $n $ils $seed "${basedir}/true.net"
 fi
 

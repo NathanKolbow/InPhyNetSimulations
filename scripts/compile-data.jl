@@ -35,7 +35,7 @@ end
 
 
 
-
+global currnt = 0
 global j = 0
 global ncont = 0
 for ntaxa in [25, 50, 100, 200]
@@ -47,8 +47,10 @@ for m in [10, 20]
 for r = 1:10
     if imethod == "phylonet-ml" && m == 20 continue end
 
-    global j, ncont
+    global j, ncont, currnt
     j += 1
+    if currnt != ntaxa println() end
+    currnt = ntaxa
     print("\r$(ncont) / $(j) [total=$(nrow(df))] [n=$(ntaxa)]")
 
     if nrow(filter(row -> row.ntaxa == ntaxa && row.ngt == ngt && row.ils == ils && row.nbp == nbp && row.m == m && row.r == r && row.imethod == imethod, df)) > 0
@@ -58,7 +60,7 @@ for r = 1:10
 
     basedir = joinpath(@__DIR__, "..", "data", string(ntaxa), string(ngt), ils, string(nbp), string(m), string(r))
     if !isdir(basedir) continue end
-    if !isfile(joinpath(basedir, "inphynet-$(imethod).net")) || !isfile(joinpath(basedir, "inphynet-$(imethod).runtime"))
+    if !isfile(joinpath(basedir, "inphynet-$(imethod).net")) || !isfile(joinpath(basedir, "inphynet-$(imethod).runtime")) || !isfile(joinpath(basedir, "$(imethod).runtime"))
         continue
     end
 

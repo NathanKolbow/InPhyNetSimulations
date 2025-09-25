@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 75.0 and 357.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset9/snaq_s9_h3_run2
+BEGIN: 1 runs on starting tree (GNQG,KAWQ,(SGTW,(((((NPRL,(AWQB,(IIOL,(DZQM,(JBND,MFTM)100.0:0.246099857069)97.0:1.7574752015019999)100.0:2.4652489672)94.0:0.0992915864719)100.0:0.438559640657,WVWN)100.0:0.247092931452,(VSRH,JUWL)100.0:1.7295488549329998)100.0:2.6244363767,GTHK)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,(RICC,((JKAA,Selmo_v1.0)100.0:2.920185712579,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:1.791943119)100.0:0.408768499264)100.0:5.178642589409)100.0;
+2025-01-07 0:57:40.828
+seed: 2 for run 1, 2025-01-07 0:57:42.093
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 40 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 44 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (RICC,((((FZJL,(VZCI,NWMY)100.0:3.0166482764983167)100.0:9.93932471489876,((((VSRH,JUWL)100.0:2.0645984753483084,((((IIOL,(DZQM,(JBND,MFTM)100.0:0.3334219583502525)97.0:4.005753699886175)100.0:2.8010513661057796,AWQB)94.0:0.14458626550818596,(NPRL)#H39:5.205143132534217::0.9673439022946536)100.0:0.5705826339400754,WVWN)100.0:0.32173362135314293)100.0:9.989696541726309,GTHK)100.0:0.48091180429474534,((SGTW,(KAWQ,(GNQG)#H43:::0.9937310994014121)100.0:9.465707649477123)100.0:0.9702198890359454,#H43:::0.006268900598587828):0.0)100.0:1.9484392345635204)100.0:6.978420121033666,#H39:9.45482589957597::0.03265609770534635):0.004442627647591752)#H41:0.2639614121319229::0.9532128525267333,(GAON,(#H41:0.1481413221392817::0.046787147473266726,(Selmo_v1.0,JKAA)100.0:1.405608448346564):9.454054028936552)100.0:9.343277099007487)100.0; 
+with -loglik 6830.3953950409705

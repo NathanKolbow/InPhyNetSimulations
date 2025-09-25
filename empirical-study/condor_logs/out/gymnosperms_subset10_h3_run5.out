@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 18.0 and 346.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset10/snaq_s10_h3_run5
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(FZJL,(URDJ,(((XZUY,WLIC)100.0:2.7958606723640003,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,(IOVS,(IIOL,(Pinta_v2.0,(JBND,MFTM)100.0:0.475648952771)100.0:1.5279261058)100.0:3.0031001943289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:3.02371337671)100.0:0.264567061439)100.0:3.77389612605)100.0;
+2025-01-07 3:46:41.13
+seed: 5 for run 1, 2025-01-07 3:46:42.354
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 20 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 31 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (AREG,(AQFM,((((IOVS,(IIOL,(Pinta_v2.0,(JBND,MFTM)100.0:1.0726220643122744)100.0:1.3551251658322945):2.279462155175043)100.0:0.2561924660469618,((((VDAO,TOXE)100.0:3.657029680120204)#H43:0.2547013771123695::0.6288850965992296,((XZUY,WLIC)100.0:9.979939269114805,(((URDJ,(FZJL,(WTKZ,PZRT)100.0:4.731130968904509)100.0:0.45488473358888754)100.0:9.989609009152966,(Selmo_v1.0,(MTGC,NWWI)100.0:9.825238781793471):9.997809296933935)100.0:0.565571196754252,#H43:0.0005437098988721141::0.3711149034007703):1.9748893196619832)100.0:2.7091348080654125)100.0:1.0946954787084289)#H39:9.662458720502332::0.932997656687581)100.0:0.9228378068176001,(GGEA,#H39:2.774405187220312::0.0670023433124191):7.690185171643439)100.0:0.0)#H47:1.0986163433182896::0.9806160694880409)36.0:4.131793664207738,(GAMH,#H47:1.6642834099172144::0.01938393051195906):0.0007256009750262045)100.0; 
+with -loglik 4714.248637352626

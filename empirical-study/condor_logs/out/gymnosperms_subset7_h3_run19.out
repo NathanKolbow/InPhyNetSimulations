@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 16.0 and 309.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset7/snaq_s7_h3_run19
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(URDJ,(((SGTW,(XZUY,(WLIC,(GNQG,KAWQ)100.0:0.346868567829)100.0:2.44468184848)100.0:2.3870921731)100.0:0.408768499264,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(VSRH,JUWL)100.0:1.311689164743)100.0:0.41785969019,(IOVS,(AWQB,(Pinta_v2.0,DZQM)100.0:3.9931750729999997)94.0:0.5378512271289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,(RICC,(JKAA,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:3.02371337671)100.0:4.038463187489)100.0;
+2025-01-06 19:57:37.34
+seed: 19 for run 1, 2025-01-06 19:57:38.626
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 11 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 46 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is ((JUWL,VSRH)100.0:1.647199354118045,((((Pinta_v2.0,DZQM)100.0:2.8457685338699026,AWQB)94.0:0.7232369144666235,IOVS)100.0:0.33647431747885675,((((GNQG,KAWQ):1.9343761987295949,(((((VDAO,TOXE)100.0:4.408430803274759,((URDJ,(WTKZ,PZRT)100.0:5.8438321307260175)100.0:9.999999999999998,((RICC,(GAON,JKAA)100.0:3.6515419758137346)100.0:9.999999999999998)#H45:0.00029791073773883495::0.8457148333101521)100.0:9.491783260116387)100.0:0.3724019396896649,(SGTW,(WLIC,XZUY)100.0:0.6636671995464721)100.0:0.3336877886931322):0.0,#H45:1.7567511777359137::0.15428516668984796):0.0)#H43:0.0::0.5037482821656086)100.0:9.264523280688003,#H43:0.0::0.49625171783439137)100.0:2.0958784262943557)#H47:5.015659410571155::0.9380281187076673):0.9169473643872923,(GGEA,#H47:8.41899888417417::0.06197188129233267):7.5)100.0; 
+with -loglik 68118.51337287467

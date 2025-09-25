@@ -5,6 +5,7 @@ Pkg.activate(joinpath(@__DIR__, "..", ".."))
 
 # Parse ARGS
 est_gt_file = ARGS[1]
+@info est_gt_file
 tempdir = ARGS[2]
 k = 50
 
@@ -18,7 +19,9 @@ import InPhyNet: prune_network
 
 # Get NJ tree
 est_gts = readMultiTopology(est_gt_file)
+@info length(est_gts)
 D, namelist = calculateAGID(est_gts)
+@info namelist
 nj_tre = inphynet(D, Vector{HybridNetwork}([]), namelist)   # PhyloNetworks.nj is SUPER slow for large `n`
 k = min(k, length(namelist))
 cladewiseorder!(nj_tre)

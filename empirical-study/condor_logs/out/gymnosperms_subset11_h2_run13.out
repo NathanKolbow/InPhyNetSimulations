@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 83.0 and 358.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 2,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset11/snaq_s11_h2_run13
+BEGIN: 1 runs on starting tree (QFAE,HBGV,(NRXL,(XIRK,(((GMHZ,(OXGJ,FHST)100.0:0.724502796443)100.0:1.68099084109,(((ETCJ,YYPE)84.0:0.0577844550649,(IFLI,RMMV)100.0:3.55392687163)100.0:3.00172210456,(VFYZ,((QNGJ,XMGP)100.0:1.4270124045,(FRPM,(CGDN,(XQSG,BUWV)100.0:1.0369756931)99.0:0.112320675329)67.0:0.052519645479)100.0:1.8722870182740001)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,(QSNJ,ZQVF)100.0:0.560034017543)100.0:0.083850826253)96.0:1.36465136084)100.0:0.187706106428)100.0;
+2025-01-07 6:12:25.791
+seed: 13 for run 1, 2025-01-07 6:12:27.277
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 21 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (QFAE,HBGV,(NRXL,(XIRK,(((GMHZ,(OXGJ,FHST)100.0:1.0743033990221929)100.0:2.542474794796349,((VFYZ,(((CGDN,(XQSG,BUWV)100.0:1.546951207320618)99.0:0.1349590740794343,FRPM)67.0:0.0926536806762408,(QNGJ,(XMGP,#H39:1.1461502571473772e-5::0.017239524069504495)100.0:0.0)100.0:2.198793713795584):2.58450027990458)100.0:1.0531168664058845,(((YYPE,(ETCJ)#H41:::0.8156757089141767)84.0:0.26681263259283594,((IFLI,RMMV)100.0:3.0245362650734138,#H41:::0.18432429108582327):1.4681422167524498)100.0:2.046126038846337)#H39:3.6984700640553037::0.9827604759304955)100.0:1.9473516787848306)100.0:1.859222530494261,(QSNJ,ZQVF)100.0:1.1138349829095606)100.0:0.037064780668804004)96.0:1.900856505442393)100.0:0.2525296856884825)100.0; 
+with -loglik 2518.738097551026

@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 84.0 and 363.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 2,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset12/snaq_s12_h2_run17
+BEGIN: 1 runs on starting tree (XIRK,HBGV,(((GMHZ,OXGJ)100.0:1.68099084109,(((ETCJ,(YYPE,OVIJ)100.0:0.247693844997)84.0:0.0577844550649,((GKCZ,AUDE)100.0:0.67629486105,(IFLI,(RMMV,JDQB)99.0:0.124795344086)100.0:2.93115235335)100.0:0.62277451828)100.0:3.00172210456,((NKIN,VFYZ)100.0:1.63287202463,((UEVI,AIGO)100.0:1.61907549831,(QNGJ,(CGDN,XQSG)99.0:0.164840320808)100.0:1.68863833806)100.0:0.183648680214)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,QSNJ)100.0:0.083850826253)96.0;
+2025-01-07 8:34:46.804
+seed: 17 for run 1, 2025-01-07 8:34:48.257
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 35 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (UEVI,AIGO,((QNGJ,(XQSG,(CGDN,#H41:1.4104606652207532::0.01963160244533783):1.2817375043318338)99.0:0.2386357309386913)100.0:2.692845421311736,(((((ETCJ,(YYPE,OVIJ)100.0:0.37606381506682246)84.0:0.11931250796148045,((GKCZ,AUDE)100.0:0.8453963302478033,(IFLI,(RMMV,JDQB)99.0:0.1230470051961349)100.0:3.767551254832321)100.0:0.8752636193274215)100.0:4.579926545811074,((GMHZ,(OXGJ,#H39:0.6775896747607474::0.03095422385363549):0.09352972073938814)100.0:2.338623453160858,((XIRK,HBGV)96.0:0.10735357788401652,QSNJ)100.0:1.7124910444419044)100.0:2.008119530891427)100.0:1.1405854352396232,((NKIN,VFYZ)100.0:2.0052923718107727)#H39:0.8428653484909369::0.9690457761463646)100.0:0.10255431429169555)#H41:0.09356430040567042::0.9803683975546622)100.0:2.3773468635129875)100.0; 
+with -loglik 2403.2762968957923

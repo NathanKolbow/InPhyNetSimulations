@@ -1,0 +1,17 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 75.0 and 357.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset9/snaq_s9_h3_run5
+BEGIN: 1 runs on starting tree (GNQG,KAWQ,(SGTW,(((((NPRL,(AWQB,(IIOL,(DZQM,(JBND,MFTM)100.0:0.246099857069)97.0:1.7574752015019999)100.0:2.4652489672)94.0:0.0992915864719)100.0:0.438559640657,WVWN)100.0:0.247092931452,(VSRH,JUWL)100.0:1.7295488549329998)100.0:2.6244363767,GTHK)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,(RICC,((JKAA,Selmo_v1.0)100.0:2.920185712579,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:1.791943119)100.0:0.408768499264)100.0:5.178642589409)100.0;
+2025-01-07 1:3:44.569
+seed: 5 for run 1, 2025-01-07 1:3:46.106
+best network and networks with different hybrid/gene flow directions printed to .networks file
+
+MaxNet is (GNQG,KAWQ,(SGTW,((((((NPRL,(AWQB,#H41:10.0::0.11562144874611271):0.13997792276892965)100.0:0.0,((IIOL,((JBND,MFTM)100.0:0.3604558966711919,(DZQM)#H43:::1.0)97.0:5.043665348020315)100.0:4.137740583891906,(WVWN,#H43:::0.0):2.847186741310854e-12)100.0:6.842003057178351e-17)100.0:0.7658852049006235,((VSRH,JUWL)100.0:0.6858860992324832)#H41:9.999999999926601::0.8843785512538873)100.0:3.0371924603013896,GTHK):0.5967209338683916,(((FZJL,(VZCI,NWMY)100.0:3.857430336900133)100.0:10.0,(RICC,((JKAA,Selmo_v1.0)100.0:3.850457955012069,GAON)100.0:3.7041313568566236)100.0:5.676255881308234)100.0:0.0)#H45:2.7011073509492536::0.9607865753715901)100.0:7.943693636920759e-14,#H45:0.0::0.0392134246284099):0.9254366972406893)100.0:5.0)100.0; 
+with -loglik 14137.716761127089

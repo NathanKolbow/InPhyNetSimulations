@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 75.0 and 357.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset9/snaq_s9_h3_run16
+BEGIN: 1 runs on starting tree (GNQG,KAWQ,(SGTW,(((((NPRL,(AWQB,(IIOL,(DZQM,(JBND,MFTM)100.0:0.246099857069)97.0:1.7574752015019999)100.0:2.4652489672)94.0:0.0992915864719)100.0:0.438559640657,WVWN)100.0:0.247092931452,(VSRH,JUWL)100.0:1.7295488549329998)100.0:2.6244363767,GTHK)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,(RICC,((JKAA,Selmo_v1.0)100.0:2.920185712579,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:1.791943119)100.0:0.408768499264)100.0:5.178642589409)100.0;
+2025-01-07 7:38:55.926
+seed: 16 for run 1, 2025-01-07 7:38:57.394
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 31 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 40 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (GNQG,(SGTW,((((FZJL,(VZCI,NWMY)100.0:3.297447453686483)100.0:9.999999999874458,(RICC,(GAON,(((JKAA,(Selmo_v1.0)#H43:::1.0)100.0:5.9058390063208765,((VSRH,JUWL)100.0:0.0,#H43:::0.0):2.5):0.0)#H41:0.0::0.5644776357142751)100.0:0.4128116707992853)100.0:2.511047870287994)100.0:2.167243496608963,(GTHK,(((AWQB,(IIOL,(((JBND,MFTM)100.0:0.33983531169053643,DZQM)97.0:4.449477928619085,#H41:0.0::0.4355223642857249):3.4886011286494263e-16)100.0:0.14771459954098481)94.0:0.12008559435481717,NPRL)100.0:0.29482582260679613,WVWN)100.0:4.522914297000665)100.0:0.45333032308765286)100.0:0.0)#H45:1.113888729157643::0.9944272884578064)100.0:9.999999999365695,(KAWQ,#H45:0.0::0.005572711542193645):3.838105837214577e-13)100.0; 
+with -loglik 140460.07472874058

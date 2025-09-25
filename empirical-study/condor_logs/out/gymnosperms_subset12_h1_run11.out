@@ -1,0 +1,17 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 84.0 and 363.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 1,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset12/snaq_s12_h1_run11
+BEGIN: 1 runs on starting tree (XIRK,HBGV,(((GMHZ,OXGJ)100.0:1.68099084109,(((ETCJ,(YYPE,OVIJ)100.0:0.247693844997)84.0:0.0577844550649,((GKCZ,AUDE)100.0:0.67629486105,(IFLI,(RMMV,JDQB)99.0:0.124795344086)100.0:2.93115235335)100.0:0.62277451828)100.0:3.00172210456,((NKIN,VFYZ)100.0:1.63287202463,((UEVI,AIGO)100.0:1.61907549831,(QNGJ,(CGDN,XQSG)99.0:0.164840320808)100.0:1.68863833806)100.0:0.183648680214)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,QSNJ)100.0:0.083850826253)96.0;
+2025-01-07 7:41:20.759
+seed: 11 for run 1, 2025-01-07 7:41:22.877
+best network and networks with different hybrid/gene flow directions printed to .networks file
+
+MaxNet is (XIRK,HBGV,(((GMHZ,OXGJ)100.0:2.216491616103759,(((ETCJ,(YYPE,OVIJ)100.0:0.3781511523740225)84.0:0.11869894498519835,(((RMMV,JDQB)99.0:0.10494481265388891,(IFLI)#H39:::0.985384550921154)100.0:4.379544426164839,((GKCZ,AUDE)100.0:0.691115545787331,#H39:::0.014615449078846075):0.15855859096196545)100.0:0.8736469829155851)100.0:4.59925567896283,((NKIN,VFYZ)100.0:2.6951595937198736,((UEVI,AIGO)100.0:2.4048507327960325,(QNGJ,(CGDN,XQSG)99.0:0.20818723173383707)100.0:2.2467763753079444)100.0:0.2106284060586293)100.0:1.0421765100682776)100.0:1.9113331537489369)100.0:1.7173439603070204,QSNJ)100.0:0.10545038208631793)96.0; 
+with -loglik 2652.1156434908034

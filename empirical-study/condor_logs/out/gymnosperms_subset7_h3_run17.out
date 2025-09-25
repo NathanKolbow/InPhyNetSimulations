@@ -1,0 +1,17 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 16.0 and 309.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset7/snaq_s7_h3_run17
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(URDJ,(((SGTW,(XZUY,(WLIC,(GNQG,KAWQ)100.0:0.346868567829)100.0:2.44468184848)100.0:2.3870921731)100.0:0.408768499264,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(VSRH,JUWL)100.0:1.311689164743)100.0:0.41785969019,(IOVS,(AWQB,(Pinta_v2.0,DZQM)100.0:3.9931750729999997)94.0:0.5378512271289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,(RICC,(JKAA,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:3.02371337671)100.0:4.038463187489)100.0;
+2025-01-07 21:28:45.31
+seed: 17 for run 1, 2025-01-07 21:28:46.509
+best network and networks with different hybrid/gene flow directions printed to .networks file
+
+MaxNet is (PZRT,WTKZ,(URDJ,((((XZUY,((WLIC,#H47:::0.4179761400202368)100.0:1.1901609948217744,(KAWQ,(GNQG)#H47:::0.5820238599797632):1.1901609948217744):2.3798470214988567)100.0:3.7418957258303425,(SGTW,#H45:::0.38434621044985484):0.004473553242627595)100.0:2.1238663347694797,((VDAO,TOXE)100.0:2.8138425190212253,(((((Pinta_v2.0,DZQM)100.0:1.9878343139580954,AWQB):0.6793957248368018,IOVS)94.0:0.3355242293116073,(GGEA,(VSRH,JUWL)100.0:1.4336486050147093)100.0:0.732551196021767)100.0:4.0250592520427695)#H45:::0.6156537895501452)100.0:3.8537235255427342)100.0:1.4745960347476184,((JKAA,(GAON,#H49:::0.0):2.0050212780792884e-14)100.0:2.984773182439811,(RICC)#H49:::1.0)100.0:10.0)100.0:10.0)100.0:4.691999675413216)100.0; 
+with -loglik 7088.368038797818

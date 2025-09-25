@@ -1,0 +1,17 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 75.0 and 357.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 1,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset9/snaq_s9_h1_run7
+BEGIN: 1 runs on starting tree (GNQG,KAWQ,(SGTW,(((((NPRL,(AWQB,(IIOL,(DZQM,(JBND,MFTM)100.0:0.246099857069)97.0:1.7574752015019999)100.0:2.4652489672)94.0:0.0992915864719)100.0:0.438559640657,WVWN)100.0:0.247092931452,(VSRH,JUWL)100.0:1.7295488549329998)100.0:2.6244363767,GTHK)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,(RICC,((JKAA,Selmo_v1.0)100.0:2.920185712579,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:1.791943119)100.0:0.408768499264)100.0:5.178642589409)100.0;
+2025-01-06 23:55:7.045
+seed: 7 for run 1, 2025-01-06 23:55:9.261
+best network and networks with different hybrid/gene flow directions printed to .networks file
+
+MaxNet is (GNQG,KAWQ,(SGTW,((((WVWN,((((DZQM,(JBND,MFTM)100.0:0.3309992969798292)97.0:4.002336350404708,IIOL)100.0:2.8021720711695237,AWQB)94.0:0.14876811408802953,(NPRL)#H39:::0.9708076461569469)100.0:0.5645253205898881)100.0:0.32118755577593794,(VSRH,JUWL)100.0:2.065107450283406)100.0:9.719622409362913,GTHK)100.0:0.4810994826744874,(((VZCI,NWMY)100.0:3.017616932592256,FZJL)100.0:9.45008987173042,(RICC,(GAON,((JKAA,Selmo_v1.0)100.0:1.0669269406904722,#H39:::0.029192353843053104):3.232035542879674)100.0:2.681040602785797)100.0:6.926604941639621)100.0:1.946313366258808)100.0:0.962195638256087)100.0:4.294155065985737)100.0; 
+with -loglik 6954.78869162449

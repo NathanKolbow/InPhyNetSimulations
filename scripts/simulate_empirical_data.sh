@@ -38,7 +38,7 @@ while IFS= read -r line; do
     cat "${basedir}/temp-data/msa${count}.fasta" >> "${basedir}/msa.fasta"
 
     # 2. Infer gene tree
-    ${iqtree} -T 4 -m "HKY+F{0.3,0.2,0.2,0.3}" -s "${basedir}/temp-data/msa${count}.fasta" -pre "${basedir}/temp-data/iqtree${count}" -seed $seed -quiet &> /dev/null
+    ${iqtree} -T 3 -m "HKY+F{0.3,0.2,0.2,0.3}" -s "${basedir}/temp-data/msa${count}.fasta" -pre "${basedir}/temp-data/iqtree${count}" -seed $seed -quiet &> /dev/null
     cat "${basedir}/temp-data/iqtree${count}.treefile" >> "${basedir}/estgts-incomplete.tre"
 
     ((seed++))

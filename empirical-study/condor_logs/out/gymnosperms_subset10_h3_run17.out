@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 18.0 and 346.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset10/snaq_s10_h3_run17
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(FZJL,(URDJ,(((XZUY,WLIC)100.0:2.7958606723640003,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,(IOVS,(IIOL,(Pinta_v2.0,(JBND,MFTM)100.0:0.475648952771)100.0:1.5279261058)100.0:3.0031001943289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:3.02371337671)100.0:0.264567061439)100.0:3.77389612605)100.0;
+2025-01-07 4:14:27.484
+seed: 17 for run 1, 2025-01-07 4:14:29.144
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 31 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 7 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (GAMH,AREG,(AQFM,(((IOVS,(IIOL,(Pinta_v2.0,(JBND,MFTM)100.0:1.0760945122066345)100.0:1.3523707742383406)100.0:2.2817495341707583)100.0:0.25737894722657506,((((XZUY,WLIC)100.0:9.225203299829714,((((FZJL,((WTKZ,PZRT)100.0:4.7000807809999765)#H43:0.16523121999572343::0.8007021798194682)100.0:0.7291366250292453,(URDJ,#H43:0.16415864787668985::0.19929782018053174):0.6785392510628147)100.0:9.594269088904765,(Selmo_v1.0,(MTGC,NWWI)100.0:9.843186188869932)100.0:9.113494095381775)100.0:1.5863033855413837)#H39:7.464865806799876::0.6311718060823108)100.0:3.4536933866655044,((VDAO,TOXE)100.0:2.4317132935080585,#H39:6.68722865712151e-5::0.3688281939176891):3.702407196421322)100.0:1.5391654868961138)#H41:6.659929335598619::0.9337846997453487)100.0:0.9213167719153932,(GGEA,#H41:0.0364330953392796::0.06621530025465125):8.54131266995126)100.0:0.9572448542332828)36.0:2.596794985587308)100.0; 
+with -loglik 4403.043940199624

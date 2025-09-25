@@ -1,0 +1,17 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 16.0 and 309.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset7/snaq_s7_h3_run11
+BEGIN: 1 runs on starting tree (PZRT,WTKZ,(URDJ,(((SGTW,(XZUY,(WLIC,(GNQG,KAWQ)100.0:0.346868567829)100.0:2.44468184848)100.0:2.3870921731)100.0:0.408768499264,((VDAO,TOXE)100.0:2.06125327674,((GGEA,(VSRH,JUWL)100.0:1.311689164743)100.0:0.41785969019,(IOVS,(AWQB,(Pinta_v2.0,DZQM)100.0:3.9931750729999997)94.0:0.5378512271289)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001)100.0:1.791943119,(RICC,(JKAA,GAON)100.0:1.23201140167)100.0:3.3678810348)100.0:3.02371337671)100.0:4.038463187489)100.0;
+2025-01-06 19:26:18.846
+seed: 11 for run 1, 2025-01-06 19:26:20.497
+best network and networks with different hybrid/gene flow directions printed to .networks file
+
+MaxNet is (WTKZ,PZRT,(URDJ,((RICC,(JKAA,GAON)100.0:2.787169084044731)100.0:10.0,((SGTW,(XZUY,((GNQG,KAWQ)100.0:0.32056967981897366,(WLIC)#H43:::1.0)100.0:2.5060502101746445)100.0:3.514322949816469)100.0:1.0722814532306768,((((((VSRH,JUWL)100.0:1.4005184736063905,(GGEA)#H39:::0.9893134301088108)100.0:0.7782018846578541,(((Pinta_v2.0,DZQM)100.0:1.8554542122256126,(AWQB)#H41:::0.8762661172177482)94.0:0.915091728959742,(IOVS,#H41:::0.12373388278225182):9.99999999926865)100.0:0.28075785945267007)100.0:4.1372025152928735,(VDAO,TOXE)100.0:3.5728936888416882)100.0:0.21722020006583126,#H39:::0.01068656989118921):0.14477014439267746,#H43:::0.0):0.16257453258536203)100.0:1.8059228947754293)100.0:10.0)100.0:4.896194083186919)100.0; 
+with -loglik 15309.895332723218

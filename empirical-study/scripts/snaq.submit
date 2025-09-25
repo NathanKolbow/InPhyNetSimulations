@@ -1,0 +1,17 @@
+universe = vanilla
+
+log = ../condor_logs/log/$(GROUP)_subset$(SUBSETNUMBER)_h$(H)_run$(RUNNUMBER).log
+output = ../condor_logs/out/$(GROUP)_subset$(SUBSETNUMBER)_h$(H)_run$(RUNNUMBER).out
+error = ../condor_logs/err/$(GROUP)_subset$(SUBSETNUMBER)_h$(H)_run$(RUNNUMBER).err
+
+executable = /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/scripts/wrapper.sh
+arguments = /mnt/ws/home/nkolbow/julia-1.11.1/bin/julia /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/scripts/snaq.jl $(GROUP) $(SUBSETNUMBER) $(H) $(RUNNUMBER)
+
+priority = 10000
+request_cpus = 3
+request_memory = 72GB
+request_disk = 10MB
+
+periodic_release = True
+
+queue GROUP,SUBSETNUMBER,H,RUNNUMBER from snaq.tab

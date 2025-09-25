@@ -1,0 +1,18 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 83.0 and 358.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset11/snaq_s11_h3_run14
+BEGIN: 1 runs on starting tree (QFAE,HBGV,(NRXL,(XIRK,(((GMHZ,(OXGJ,FHST)100.0:0.724502796443)100.0:1.68099084109,(((ETCJ,YYPE)84.0:0.0577844550649,(IFLI,RMMV)100.0:3.55392687163)100.0:3.00172210456,(VFYZ,((QNGJ,XMGP)100.0:1.4270124045,(FRPM,(CGDN,(XQSG,BUWV)100.0:1.0369756931)99.0:0.112320675329)67.0:0.052519645479)100.0:1.8722870182740001)100.0:0.643195406061)100.0:1.16177976494)100.0:1.17158943197,(QSNJ,ZQVF)100.0:0.560034017543)100.0:0.083850826253)96.0:1.36465136084)100.0:0.187706106428)100.0;
+2025-01-07 6:46:55.184
+seed: 14 for run 1, 2025-01-07 6:46:57.315
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 21 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is (QFAE,HBGV,(NRXL,(XIRK,((((OXGJ,FHST)100.0:1.062058898882061,(GMHZ,#H41:0.03478580899810299::0.01385580547487085):0.5490130139746693)100.0:2.7302048770400726,((VFYZ,((FRPM,((XQSG,BUWV)100.0:1.5432709189910776,(CGDN,#H39:::0.033281187353765396):9.524486530240035)99.0:0.1390506243176346)67.0:0.10605108568102697,(XMGP,(QNGJ)#H39:::0.9667188126462346)100.0:2.5327214743191298)100.0:2.287060096426737)100.0:0.9370522892774483,(((YYPE,(ETCJ)#H43:::0.8267415414037619)84.0:0.26332750445897435,((IFLI,RMMV)100.0:2.84446558905708,#H43:::0.17325845859623812):1.716150684956874)100.0:4.291222002052204)#H41:0.27658656093104905::0.9861441945251291)100.0:2.1144393779081825)100.0:1.8484158570403613,(QSNJ,ZQVF)100.0:1.1145858598343044)100.0:0.03746535184517925)96.0:1.9004382189402238)100.0:0.2506815036963911)100.0; 
+with -loglik 2645.4370679114677

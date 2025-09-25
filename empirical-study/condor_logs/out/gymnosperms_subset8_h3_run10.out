@@ -1,0 +1,19 @@
+Reading in trees, looking at 4845 quartets in each...
+0+--------------------------------------------------+100%
+  **************************************************
+between 54.0 and 347.0 gene trees per 4-taxon set
+optimization of topology, BL and inheritance probabilities using:
+ hmax = 3,
+ tolerance parameters: ftolRel=1.0e-6, ftolAbs=1.0e-6,
+                       xtolAbs=0.001, xtolRel=0.01.
+ max number of failed proposals = 75, liktolAbs = 1.0e-6.
+rootname for files: /mnt/dv/wid/projects4/SolisLemus-network-merging/InPhyNet-Simulations/empirical-study/subset_data/gymnosperms/subset8/snaq_s8_h3_run10
+BEGIN: 1 runs on starting tree (XZUY,WLIC,(((VDAO,(TOXE,GTHK)100.0:0.764485462584)100.0:2.06125327674,((GGEA,(AQFM,(GAMH,AREG)100.0:2.36337319684)36.0:0.79979172419241)100.0:0.41785969019,((NPRL,(IIOL,(JBND,MFTM)100.0:2.0035750585709997)100.0:2.5645405536719)100.0:0.438559640657,WVWN)100.0:0.247092931452)100.0:2.6244363767)100.0:1.3391013927270001,((FZJL,(VZCI,NWMY)100.0:2.67998950103)100.0:5.9463945507760005,((MTGC,NWWI)100.0:10.0,Selmo_v1.0)100.0:3.3678810348)100.0:1.791943119)100.0:2.7958606723640003)100.0;
+2025-01-06 22:23:42.616
+seed: 10 for run 1, 2025-01-06 22:23:44.075
+best network and networks with different hybrid/gene flow directions printed to .networks file
+the network obtained by putting the new hybrid in node 25 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+the network obtained by putting the new hybrid in node 8 is not good, inCycle,gammaz,containRoot: Bool[1, 1, 0], we will skip it
+
+MaxNet is ((AQFM,(GGEA,(((WVWN,((NPRL)#H39:::0.9784001488930731,((JBND,MFTM):4.244981530019383,IIOL)100.0:2.7997478436977183)100.0:0.48859033866956314)100.0:0.32226433980644165,(((WLIC,XZUY)100.0:9.869925965724551,((FZJL,(VZCI,NWMY)100.0:2.996926535156066)100.0:9.8299520446186,((MTGC,NWWI)100.0:9.809942334527083,(Selmo_v1.0,#H39:::0.021599851106926835):4.365788053529797)100.0:9.579954645599768)100.0:1.5234860888742727)100.0:0.5123524240772526,((GTHK,(TOXE,#H43:::0.09540326291670558):2.675302515680483)100.0:0.9296004170801959,(VDAO)#H43:::0.9045967370832945)100.0:3.5500566575527794)100.0:3.955062209500937)100.0:0.41896024894794137)#H45:::0.991108720237262)100.0:1.0702161522728275)36.0:3.608488445144307,GAMH,(AREG,#H45:::0.008891279762738012):1.5657588151524073)100.0; 
+with -loglik 10355.54532167405
