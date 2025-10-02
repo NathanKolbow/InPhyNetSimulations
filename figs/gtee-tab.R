@@ -13,7 +13,6 @@ datadir <- function(ntaxa, ngt, ils, nbp, m, r) {
     return(paste0(paste("data", ntaxa, ngt, ils, nbp, m, r, sep = "/"), "/"))
 }
 completegts <- function(ntaxa, ngt, ils, nbp, m, r) {
-    #length(readLines(paste0(datadir(ntaxa, ngt, ils, nbp, m, r), "estgts.tre"))) == ngt
     nlines <- system2("wc", args = c("-l", paste0(datadir(ntaxa, ngt, ils, nbp, m, r), "estgts.tre")), stdout = TRUE)
     nlines <- as.integer(strsplit(nlines, " ")[[1]][1])
     nlines == ngt
@@ -36,8 +35,8 @@ ci_by_group <- completedf %>%
     summarise(
         n    = sum(!is.na(gtee)),
         mean = mean(gtee, na.rm = TRUE),
-        ci_low  = quantile(gtee, 0.025),
-        ci_high = quantile(gtee, 0.975),
+        ci_low  = quantile(gtee, 0.1),
+        ci_high = quantile(gtee, 0.9),
         .groups = "drop"
     ) %>%
     select(ils, ngt, nbp, n, mean, ci_low, ci_high) %>%
@@ -57,9 +56,14 @@ p <- completedf %>%
     ) %>%
     group_by(ntaxa, ngt, nbp, ils) %>%
     summarise(
-        y = mean(gtee),
-        ymin = quantile(gtee, 0.05),
-        ymax = quantile(gtee, 0.95)
+        y = median(gtee, na.rm=TRUE),
+        ysd = sd(gtee, na.rm=TRUE)
+    ) %>%
+    mutate(
+        ymin = y - ysd,
+        ymax = y + ysd
+        # ymin = quantile(gtee, 0.2, na.rm=TRUE),
+        # ymax = quantile(gtee, 0.8, na.rm=TRUE)
     ) %>%
     ggplot(aes(x = ils, y = y, ymin = ymin, ymax = ymax, color = ngt, group = interaction(ngt, nbp, ils, ntaxa))) +
     geom_point(position = position_dodge(width = 1)) +
@@ -99,7 +103,18 @@ paste0(
     round(100*mean(filter(cyandf, ntaxa == 100)$leq), digits=1), "%, and ",
     round(100*mean(filter(cyandf, ntaxa == 200)$leq), digits=1), "%"
 )
-
+paste0(
+    round(100*mean(filter(cyandf, m == 10)$leq), digits=1), "%, ",
+    round(100*mean(filter(cyandf, m == 20)$leq), digits=1), "%"
+)
+paste0(
+    round(100*mean(filter(cyandf, m == 10)$leq), digits=1), "%, ",
+    round(100*mean(filter(cyandf, m == 20)$leq), digits=1), "%"
+)
+paste0(
+    round(100*mean(filter(cyandf, ils == "low")$leq), digits=1), "%, ",
+    round(100*mean(filter(cyandf, ils == "high")$leq), digits=1), "%"
+)
 
 
 df$gtee_bin <- if_else(df$gtee < 0.25, "low", if_else(df$gtee < 0.5, "mid", if_else(df$gtee < 0.75, "high", "ultra-high")))
