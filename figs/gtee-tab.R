@@ -12,23 +12,8 @@ theme_set(theme_bw())
 datadir <- function(ntaxa, ngt, ils, nbp, m, r) {
     return(paste0(paste("data", ntaxa, ngt, ils, nbp, m, r, sep = "/"), "/"))
 }
-completegts <- function(ntaxa, ngt, ils, nbp, m, r) {
-    nlines <- system2("wc", args = c("-l", paste0(datadir(ntaxa, ngt, ils, nbp, m, r), "estgts.tre")), stdout = TRUE)
-    nlines <- as.integer(strsplit(nlines, " ")[[1]][1])
-    nlines == ngt
-}
 
-keepidxs <- c()
-for(j in 1:nrow(df)) {
-    if(completegts(df$ntaxa[j], df$ngt[j], df$ils[j], df$nbp[j], df$m[j], df$r[j])) {
-        keepidxs <- c(keepidxs, j)
-    }
-}
-completedf <- df[keepidxs,]
-nrow(completedf)
-
-
-ci_by_group <- completedf %>%
+ci_by_group <- df %>%
     filter(gtee < 0.9) %>%
     mutate(across(c(ils, ngt, nbp), as.factor)) %>%      # ensure factors
     group_by(ils, ngt, nbp) %>%
@@ -47,28 +32,24 @@ ci_by_group
 
 
 
-p <- completedf %>%
+p <- df %>%
     mutate(
         ngt = paste0(ngt, " gene trees"),
         nbp = paste0(nbp, " base pairs"),
         ils = factor(ils, levels=c("low", "high"), labels=c("Low ILS", "High ILS")),
         ntaxa = factor(ntaxa, levels=c(25, 50, 100, 200), labels=c("25 taxa", "50 taxa", "100 taxa", "200 taxa"))
     ) %>%
-    group_by(ntaxa, ngt, nbp, ils) %>%
+    group_by(nbp, ils) %>%
     summarise(
-        y = median(gtee, na.rm=TRUE),
-        ysd = sd(gtee, na.rm=TRUE)
+        y = median(gtee),
+        ymin = quantile(gtee, 0.0),
+        ymax = quantile(gtee, 0.75),
+        # ymin = max(0, y - sd(gtee)),
+        # ymax = y + sd(gtee)
     ) %>%
-    mutate(
-        ymin = y - ysd,
-        ymax = y + ysd
-        # ymin = quantile(gtee, 0.2, na.rm=TRUE),
-        # ymax = quantile(gtee, 0.8, na.rm=TRUE)
-    ) %>%
-    ggplot(aes(x = ils, y = y, ymin = ymin, ymax = ymax, color = ngt, group = interaction(ngt, nbp, ils, ntaxa))) +
+    ggplot(aes(x = ils, y = y, ymin = ymin, ymax = ymax, color = nbp, group = interaction(nbp, ils))) +
     geom_point(position = position_dodge(width = 1)) +
     geom_errorbar(position = position_dodge(width = 1), width = 0.5) +
-    facet_nested(nbp ~ ntaxa) +
     theme_bw() +
     theme(
       panel.grid.minor  = element_blank(),
@@ -126,8 +107,8 @@ summary(aov(hwcd ~ input_error + gtee_bin, df))
 
 
 
-for(idx in which(completedf$gtee > 0.75 | (completedf$gtee > 0.6 & completedf$ils == "Low ILS"))) {
-    row <- completedf[idx,]
+for(idx in which(df$gtee > 0.75 | (df$gtee > 0.6 & df$ils == "Low ILS"))) {
+    row <- df[idx,]
     cat(paste("rm -r data", row$ntaxa, row$ngt, row$ils, row$nbp, row$m, row$r, "*", sep="/"), ";  ")
     cat(paste("./scripts/perform_simulation.sh", row$ntaxa, row$ngt, row$ils, row$nbp, row$m, row$r, "fake", sep=" "))
 }
