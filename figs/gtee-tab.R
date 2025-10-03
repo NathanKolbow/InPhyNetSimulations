@@ -15,8 +15,8 @@ datadir <- function(ntaxa, ngt, ils, nbp, m, r) {
 
 ci_by_group <- df %>%
     filter(gtee < 0.9) %>%
-    mutate(across(c(ils, ngt, nbp), as.factor)) %>%      # ensure factors
-    group_by(ils, ngt, nbp) %>%
+    mutate(across(c(ils, nbp, ntaxa), as.factor)) %>%      # ensure factors
+    group_by(ils, nbp, ntaxa) %>%
     summarise(
         n    = sum(!is.na(gtee)),
         mean = mean(gtee, na.rm = TRUE),
@@ -24,9 +24,9 @@ ci_by_group <- df %>%
         ci_high = quantile(gtee, 0.9),
         .groups = "drop"
     ) %>%
-    select(ils, ngt, nbp, n, mean, ci_low, ci_high) %>%
-    complete(ils, ngt, nbp) %>%
-    arrange(ils, ngt, nbp)
+    select(ils, nbp, ntaxa, n, mean, ci_low, ci_high) %>%
+    complete(ils, nbp, ntaxa) %>%
+    arrange(ils, nbp, ntaxa)
 ci_by_group
 
 
@@ -69,7 +69,7 @@ p <- df %>%
     scale_y_continuous(limits = c(0, 1))
 p
 
-pdf("figs/gtee.pdf", width=10, height=5)
+pdf("figs/gtee.pdf", width=4, height=4)
 p
 dev.off()
 
