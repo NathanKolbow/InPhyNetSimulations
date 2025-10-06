@@ -1,5 +1,25 @@
 # InPhyNetSimulations
 
+This repository contains the simulation study and empirical analysis for InPhyNet, a novel statistical method for inferring large phylogenetic networks. InPhyNet addresses the computational challenges of inferring species networks with hundreds of taxa by using a divide-and-conquer approach that decomposes the problem into smaller, manageable subproblems.
+
+## Overview
+
+Phylogenetic networks are mathematical models that represent evolutionary relationships among species, including both divergence (speciation) and reticulation (hybridization, horizontal gene transfer, introgression) events. Traditional network inference methods become computationally intractable for large datasets (>30 taxa). InPhyNet overcomes this limitation through:
+
+1. **Subset decomposition**: Breaking the full taxon set into smaller, non-overlapping subsets
+2. **Constraint network inference**: Inferring partial networks on each subset using existing methods
+3. **Network merging**: Combining constraint networks into a comprehensive species network
+
+## Repository Structure
+
+- **`condor/`**: HTCondor cluster configuration files for distributed computing
+- **`data/`**: Simulation results organized by parameter combinations (ntaxa/ngt/ILS/nbp/m/replicate/method)
+- **`empirical-study/`**: Real data analysis on primate datasets
+- **`figs/`**: R scripts for generating publication figures and result visualization
+- **`helpers/`**: Julia utility functions for data simulation, analysis, and plotting
+- **`scripts/`**: Main simulation pipeline scripts and workflow orchestration
+- **`software/`**: External phylogenetic software dependencies (PhyloNet, ASTRAL, IQ-TREE, etc.)
+
 ## How to replicate simulations
 
 Below are the set of parameter combinations that are enumerated in the original simulation experiment. To replicate the results of a given parameter combination, run the script `scripts/perform_simulation.sh <ntaxa> <ngt> <ILS> <nbp> <m> <rep number> <inference method>`. If data already exists from intermediate steps (e.g. estimated gene trees are already present), previous steps will be skipped. To clean the repo of all such intermediary data, run `scripts/remove_intermediary_data.sh`.
@@ -12,10 +32,9 @@ Original simulations were performed with SNaQ and PhyloNet simulations being per
 - [`ngt`] Number of gene trees (100, 1000)
 - [`ils`] ILS level (low, high)
 - [`nbp`] MSA number of base pairs (100, 1000)
-- [`m`] Maximum subset size (10)
+- [`m`] Maximum subset size (10, 20 (only 10 for PhyloNet-ML))
 - [`r`] Replicate number (1-10)
-- [`imethod`] Constraint network inference software (snaq, phylonet, squirrel)
-> NEED TO PICK ANOTHER SOFTWARE TO COMPARE AGAINST OTHER THAN SNAQ
+- [`imethod`] Constraint network inference software (SNaQ, PhyloNet-MPL, PhyloNet-ML, Squirrel)
 
 Each unique combation of parameters is used to generate a unique seed that is used as input to each algorithm where applicable. When software requires multiple seeds (e.g. we need to generate `ngt` MSAs--using the same seed for each would not yield productive results) we use this value `+i-1`, where `i` is the `i`th iteration of the software requiring a seed (e.g. the first MSA is generated with `seed`, then with `seed+1`, then `seed+2`, and so on). The function used to generate these random seeds is `generate_seed`, located in `scripts/perform_simualtion.sh`.
 
@@ -24,8 +43,8 @@ Each unique combation of parameters is used to generate a unique seed that is us
 Base directory (`basedir`) for the output data of the simulations corresponding to each unique combination of parameters:
 
 ```
-data/n/ngt/ils/nbp/m/r/imethod/
-e.g.: data/50/100/low/100/10/1/snaq/
+data/n/ngt/ils/nbp/m/r/
+e.g.: data/50/100/low/100/10/1/
 ```
 
 1. Ground truth network generation
@@ -53,16 +72,11 @@ e.g.: data/50/100/low/100/10/1/snaq/
 4. Constraint network inference
     - Script: `scripts/infer_constraints.sh`
     - Input: all input from step 3 AND `inference method`
-    - Output: constraint networks are output to `basedir/constraints.net`, total runtime output to `basedir/constraints.runtime`
+    - Output: constraint networks are output to `basedir/constraints-<method>.net`, total runtime output to `basedir/constraints-<method>.runtime`
     - Previously generated data used: estimated gene trees, subset decomposition
 5. Full network construction
     - Script: `scripts/run_inphynet.jl`
     - Input: all parameter values
-    - Output: final network output at `basedir/inphynet.net`, total runtime output to `basedir/inphynet.runtime`
+    - Output: final network output at `basedir/inphynet-<method>.net`, total runtime output to `basedir/inphynet-<method>.runtime`
     - Previously generated data used: constraint networks, estimated gene trees
-
-## Data summarization
-
-To summarize all of the simulations that have been run thus far, use the script file `scripts/summarize.sh`. This will gather hardwired cluster distances, gene tree estimation errors, etc. and write them to the CSV file `summary.csv` at the top-level directory folder.
-
 
