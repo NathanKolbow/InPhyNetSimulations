@@ -307,11 +307,12 @@ p_hwcd <- ggplot(df_clean,
     strip.text         = element_text(face = "bold", size = 8),
     legend.position    = "bottom"
   ) +
-  expand_limits(x = 0, y = 0)
+  expand_limits(x = 0, y = 0) +
+  theme(strip.text = element_text(size = 7))
 p_hwcd
 
 
-pdf("figs/accuracy/hwcd.pdf", width=5, height=5)
+pdf("figs/accuracy/hwcd.pdf", width=6, height=6)
 p_hwcd
 dev.off()
 
