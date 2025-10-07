@@ -1,6 +1,8 @@
-# InPhyNet Simulation Data and Scripts <img src="https://nathankolbow.github.io/InPhyNet.jl/stable/assets/logo.png" width=150 height=150/>
+# InPhyNet Simulation Data and Scripts
 
-This repository contains the simulation study and empirical analysis for InPhyNet, a novel statistical method for inferring large phylogenetic networks. InPhyNet addresses the computational challenges of inferring species networks with hundreds of taxa by using a divide-and-conquer approach that decomposes the problem into smaller, manageable subproblems.
+<img src="https://nathankolbow.github.io/InPhyNet.jl/stable/assets/logo.png" width=150 height=150 align=right>
+
+This repository contains the simulation study and empirical analysis for InPhyNet, a novel statistical method for inferring large phylogenetic networks. InPhyNet addresses the computational challenges of inferring species networks with hundreds of taxa by using a divide-and-conquer approach that decomposes the problem into smaller, manageable subproblems. 
 
 The InPhyNet software is available as the Julia package InPhyNet.jl with source code available at [github.com/NathanKolbow/InPhyNet.jl](https://github.com/NathanKolbow/InPhyNet.jl). 
 
